@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <strong>A modern, full-stack microservices application for a la carte online learning.</strong><br/>
+  <strong>A modern, full-stack microservices platform for online course purchasing and learning.</strong><br/>
   TRAINEE STARTER CODEBASE (V1)
 </p>
 
