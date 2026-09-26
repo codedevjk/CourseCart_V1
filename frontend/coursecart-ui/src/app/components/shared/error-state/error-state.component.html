@@ -1,0 +1,6 @@
+<div class="error-state">
+  <img src="assets/error-state.png" alt="Error state graphic" class="error-image">
+  <h3 class="error-message">{{ message }}</h3>
+  <p *ngIf="submessage" class="error-submessage">{{ submessage }}</p>
+  <ng-content></ng-content>
+</div>

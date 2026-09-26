@@ -1,0 +1,50 @@
+<nav class="navbar">
+  <div class="navbar-container">
+    
+    <!-- LEFT: Logo and Tabs -->
+    <div class="navbar-left">
+      <a routerLink="/" class="navbar-brand">
+        <span class="logo-text">Course<span class="logo-accent">Cart</span></span>
+      </a>
+      
+      <div class="navbar-tabs">
+        <a routerLink="/courses" routerLinkActive="active" class="nav-tab">Catalog</a>
+        
+        <ng-container *ngIf="isLoggedIn && !isAdmin">
+          <a routerLink="/learning" routerLinkActive="active" class="nav-tab">My Learning</a>
+          <a routerLink="/orders" routerLinkActive="active" class="nav-tab">Orders</a>
+        </ng-container>
+
+        <!-- Admin Tabs -->
+        <ng-container *ngIf="isAdmin">
+          <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-tab">Dashboard</a>
+          <a routerLink="/admin/categories" routerLinkActive="active" class="nav-tab">Categories</a>
+          <a routerLink="/admin/courses" routerLinkActive="active" class="nav-tab">Courses</a>
+          
+        </ng-container>
+      </div>
+    </div>
+
+    <!-- RIGHT: Auth / User Actions -->
+    <div class="navbar-right">
+      
+      <!-- Logged In State (User or Admin) -->
+      <div class="user-menu" *ngIf="isLoggedIn">
+        <a routerLink="/profile" class="user-greeting">{{ userName }}</a>
+        <button (click)="logout()" class="btn btn-outline nav-btn">Sign out</button>
+      </div>
+
+      <!-- Logged Out State (Guest) -->
+      <div class="guest-menu" *ngIf="!isLoggedIn">
+        <a routerLink="/login" class="nav-link">Log in</a>
+        <button routerLink="/register" class="btn btn-primary nav-btn-primary">Create account</button>
+      </div>
+
+    </div>
+
+  </div>
+</nav>
+
+
+
+

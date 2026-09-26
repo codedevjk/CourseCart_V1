@@ -1,0 +1,68 @@
+<div class="auth-page">
+  <div class="auth-container">
+    <div class="auth-row">
+      
+      <!-- Image Side -->
+      <div class="auth-image-panel">
+        <div class="auth-image-overlay"></div>
+        <img src="assets/login-learning.png" alt="Learning Graphic" class="auth-bg-image">
+        <div class="auth-image-text">
+          <h2 class="auth-banner-title">Expand your mind.</h2>
+          <p class="auth-banner-subtitle">Join thousands of learners achieving their goals with CourseCart's premium courses.</p>
+        </div>
+      </div>
+
+      <!-- Form Side -->
+      <div class="auth-form-panel">
+        <div class="auth-header text-center">
+          <h2 class="auth-title">Welcome Back</h2>
+          <p class="auth-subtitle">Please enter your details to sign in.</p>
+        </div>
+        
+        <div *ngIf="errorMessage" class="alert alert-danger auth-error-alert" role="alert">
+          <i class="bi bi-exclamation-circle-fill me-2"></i>{{ errorMessage }}
+        </div>
+        
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
+          <div class="input-group-custom">
+            <label for="username" class="custom-label">Username</label>
+            <input 
+              type="text" 
+              id="username" 
+              formControlName="username" 
+              class="form-control custom-input"
+              [ngClass]="{'is-invalid': username?.invalid && (username?.dirty || username?.touched)}"
+              placeholder="Username">
+            <div *ngIf="username?.invalid && (username?.dirty || username?.touched)" class="invalid-feedback">
+              Username is required.
+            </div>
+          </div>
+          
+          <div class="input-group-custom">
+            <label for="password" class="custom-label">Password</label>
+            <input 
+              type="password" 
+              id="password" 
+              formControlName="password" 
+              class="form-control custom-input"
+              [ngClass]="{'is-invalid': password?.invalid && (password?.dirty || password?.touched)}"
+              placeholder="Password">
+            <div *ngIf="password?.invalid && (password?.dirty || password?.touched)" class="invalid-feedback">
+              Password is required.
+            </div>
+          </div>
+          
+          <button type="submit" class="auth-submit-btn" [disabled]="isLoading || loginForm.invalid">
+            <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+            {{ isLoading ? 'Logging in...' : 'Log In' }}
+          </button>
+        </form>
+        
+        <div class="auth-footer text-center">
+          Don't have an account? <a routerLink="/register" class="auth-link">Sign up here</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

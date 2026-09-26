@@ -1,0 +1,88 @@
+<div class="auth-page">
+  <div class="auth-container">
+    <div class="auth-row">
+      
+      <!-- Image Side -->
+      <div class="auth-image-panel register-image-panel">
+        <div class="auth-image-overlay"></div>
+        <img src="assets/login-learning.png" alt="Learning Graphic" class="auth-bg-image">
+        <div class="auth-image-text">
+          <h2 class="auth-banner-title">Shape your future.</h2>
+          <p class="auth-banner-subtitle">Gain access to world-class instructors and interactive courses right at your fingertips.</p>
+        </div>
+      </div>
+
+      <!-- Form Side -->
+      <div class="auth-form-panel register-form-panel">
+        <div class="auth-header text-center">
+          <h2 class="auth-title">Create an Account</h2>
+          <p class="auth-subtitle">Join CourseCart to start learning today.</p>
+        </div>
+        
+        <div *ngIf="errorMessage" class="alert alert-danger auth-error-alert" role="alert">
+          <i class="bi bi-exclamation-circle-fill me-2"></i>{{ errorMessage }}
+        </div>
+        <div *ngIf="successMessage" class="alert alert-success auth-success-alert" role="alert">
+          <i class="bi bi-check-circle-fill me-2"></i>{{ successMessage }}
+        </div>
+        
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="auth-form">
+          <div class="input-group-custom">
+            <label for="name" class="custom-label">Full Name</label>
+            <input 
+              type="text" 
+              id="name" 
+              formControlName="name" 
+              class="form-control custom-input"
+              [ngClass]="{'is-invalid': name?.invalid && (name?.dirty || name?.touched)}"
+              placeholder="Full Name">
+            <div *ngIf="name?.invalid && (name?.dirty || name?.touched)" class="invalid-feedback">
+              <span *ngIf="name?.errors?.['required']">Full Name is required.</span>
+              <span *ngIf="name?.errors?.['minlength']">Name must be at least 2 characters.</span>
+            </div>
+          </div>
+
+          <div class="input-group-custom">
+            <label for="username" class="custom-label">Username</label>
+            <input 
+              type="text" 
+              id="username" 
+              formControlName="username" 
+              class="form-control custom-input"
+              [ngClass]="{'is-invalid': username?.invalid && (username?.dirty || username?.touched)}"
+              placeholder="Username">
+            <div *ngIf="username?.invalid && (username?.dirty || username?.touched)" class="invalid-feedback">
+              <span *ngIf="username?.errors?.['required']">Username is required.</span>
+              <span *ngIf="username?.errors?.['minlength']">Username must be at least 3 characters.</span>
+            </div>
+          </div>
+          
+          <div class="input-group-custom">
+            <label for="password" class="custom-label">Password</label>
+            <input 
+              type="password" 
+              id="password" 
+              formControlName="password" 
+              class="form-control custom-input"
+              [ngClass]="{'is-invalid': password?.invalid && (password?.dirty || password?.touched)}"
+              placeholder="Password">
+            <div *ngIf="password?.invalid && (password?.dirty || password?.touched)" class="invalid-feedback">
+              <span *ngIf="password?.errors?.['required']">Password is required.</span>
+              <span *ngIf="password?.errors?.['minlength']">Password must be at least 6 characters.</span>
+            </div>
+          </div>
+          
+          <button type="submit" class="auth-submit-btn" [disabled]="isLoading || registerForm.invalid">
+            <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+            {{ isLoading ? 'Creating Account...' : 'Sign Up' }}
+          </button>
+        </form>
+        
+        <div class="auth-footer text-center">
+          Already have an account? <a routerLink="/login" class="auth-link">Log in here</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

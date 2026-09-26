@@ -1,0 +1,24 @@
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.error-image {
+  max-width: 200px;
+  margin-bottom: 2rem;
+}
+
+.error-message {
+  font-size: 1.5rem;
+  color: var(--danger-color);
+  margin-bottom: 0.5rem;
+}
+
+.error-submessage {
+  color: var(--text-light);
+  margin-bottom: 1.5rem;
+}

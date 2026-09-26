@@ -1,0 +1,84 @@
+<div class="admin-header mb-4">
+  <div class="header-top">
+    <a routerLink="/admin/courses" class="back-link">&larr; Back to Courses</a>
+  </div>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Lessons for <span class="course-highlight course-title-highlight">{{ courseTitle }}</span></h1>
+    <button class="btn btn-primary" (click)="openCreateModal()">+ Add Lesson</button>
+  </div>
+</div>
+
+<app-error-state *ngIf="error" [message]="error" (retry)="loadLessons()"></app-error-state>
+
+<!-- Form Section -->
+<div class="modal-overlay" *ngIf="showForm">
+  <div class="admin-form-section modal-content">
+    <h3 class="card-title">{{ isEditing ? 'Edit Lesson' : 'Create Lesson' }}</h3>
+    <form (ngSubmit)="saveLesson()" #lessonForm="ngForm">
+      
+      <div class="row">
+        <div class="col-md-9 form-group mb-3">
+          <label class="form-label" for="title">Lesson Title</label>
+          <input type="text" id="title" name="title" class="form-control" [(ngModel)]="currentLesson.title" required>
+        </div>
+
+        <div class="col-md-3 form-group mb-3">
+          <label class="form-label" for="displayOrder">Display Order</label>
+          <input type="number" id="displayOrder" name="displayOrder" class="form-control" [(ngModel)]="currentLesson.displayOrder" required min="1">
+        </div>
+      </div>
+
+      <div class="form-group mb-4">
+        <label class="form-label" for="content">Lesson Content</label>
+        <textarea id="content" name="content" class="form-control" [(ngModel)]="currentLesson.content" required rows="6"></textarea>
+      </div>
+
+      <div class="alert alert-danger" *ngIf="formError">{{ formError }}</div>
+      
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary" [disabled]="!lessonForm.valid">Save Lesson</button>
+        <button type="button" class="btn btn-outline" (click)="cancelEdit()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<app-loading-spinner *ngIf="isLoading" message="Loading lessons..."></app-loading-spinner>
+
+<div class="syllabus-list" *ngIf="!isLoading && lessons.length > 0">
+  <div class="lesson-card" *ngFor="let lesson of lessons">
+    <div class="lesson-order-col">
+      <div class="order-badge">{{ lesson.displayOrder }}</div>
+    </div>
+    
+    <div class="lesson-content-col">
+      <h3 class="lesson-title">{{ lesson.title }}</h3>
+      <p class="lesson-preview">{{ (lesson.content.length > 120) ? (lesson.content | slice:0:120) + '...' : lesson.content }}</p>
+      
+    </div>
+
+    <div class="lesson-actions-col">
+      <button class="btn btn-outline-sm btn-icon-text mb-2" (click)="openEditModal(lesson)">
+         Edit
+      </button>
+      <button class="btn btn-danger-outline btn-icon-text" (click)="deleteLesson(lesson.id)">
+         Delete
+      </button>
+    </div>
+  </div>
+</div>
+
+<app-empty-state *ngIf="!isLoading && lessons.length === 0 && !error" message="No lessons found for this course."></app-empty-state>
+
+<!-- Confirmation Modal -->
+<div class="modal-overlay" *ngIf="showConfirmModal">
+  <div class="admin-form-section modal-content confirm-modal">
+    <h3 class="card-title confirm-title">Confirm Action</h3>
+    <p class="confirm-message">{{ confirmMessage }}</p>
+    <div class="form-actions justify-content-center mt-4 confirm-actions">
+      <button class="btn btn-outline" (click)="showConfirmModal = false">Cancel</button>
+      <button class="btn btn-primary" (click)="executeConfirm()">OK</button>
+    </div>
+  </div>
+</div>
+

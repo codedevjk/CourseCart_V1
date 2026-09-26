@@ -1,0 +1,133 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
+
+:root {
+  --primary-color: #b34b22; /* Rust orange for prices/accents */
+  --primary-hover: #9c3f1a;
+  --bg-color: #fbf8f1; /* Beige background */
+  --card-bg: #ffffff;
+  --text-dark: #3a322c; /* Deep dark brown/gray for text */
+  --text-light: #7b7169;
+  --border-color: #e5dfd5;
+  --success-color: #22c55e;
+  --danger-color: #ef4444;
+  --font-serif: 'Playfair Display', serif;
+  --font-sans: 'Source Sans 3', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background-color: var(--bg-color);
+  color: var(--text-dark);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+.btn:hover {
+  background-color: var(--primary-hover);
+  text-decoration: none;
+}
+.btn-outline {
+  background-color: transparent;
+  color: var(--text-dark);
+  border: 1px solid var(--border-color);
+}
+.btn-outline:hover {
+  background-color: rgba(0,0,0,0.05);
+  color: var(--text-dark);
+  text-decoration: none;
+}
+.btn:disabled {
+  background-color: var(--text-light);
+  cursor: not-allowed;
+}
+
+.card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Basic utility classes */
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-3 { margin-bottom: 1rem; }
+.mb-4 { margin-bottom: 1.5rem; }
+.mt-1 { margin-top: 0.25rem; }
+.mt-2 { margin-top: 0.5rem; }
+.mt-3 { margin-top: 1rem; }
+.mt-4 { margin-top: 1.5rem; }
+.text-danger { color: var(--danger-color); }
+.small { font-size: 0.875em; }
+.d-block { display: block; }
+.text-center { text-align: center; }
+.w-100 { width: 100%; }
+
+/* Grid basics managed by Bootstrap 5 */
+
+/* Flex utilities managed by Bootstrap 5 */
+
+/* Fix old-style figures for Playfair Display numbers */
+body, h1, h2, h3, h4, h5, h6, .category-name, .card-title, .hero-title, .admin-header h1, .price, .stats-value, .stat-value {
+  font-variant-numeric: lining-nums;
+}
+
+
+
+/* Ensure consistent number font globally */
+.price, .price-text, .meta-value, .lesson-num, .metric-value, .order-date, .course-meta {
+  font-family: var(--font-sans) !important;
+  font-variant-numeric: tabular-nums;
+}
+
+
+.back-nav-link {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  color: var(--text-light);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+  transition: color 0.2s ease;
+  font-family: var(--font-sans);
+}
+.back-nav-link:hover {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+.back-nav-link i {
+  font-size: 1.1rem;
+}
+

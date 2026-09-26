@@ -1,0 +1,64 @@
+.global-footer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-block: clamp(12px, 2vw, 16px);
+  background-color: #212529; /* Bootstrap bg-dark */
+  color: white;
+  border-top: 1px solid #6c757d; /* border-secondary */
+  margin-top: auto;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding-inline: clamp(16px, 2.5vw, 40px);
+}
+
+.footer-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.footer-logo {
+  object-fit: contain;
+  width: auto;
+  height: 28px;
+  /* Add invert if the logo is dark to make it visible on the dark background */
+  filter: brightness(0) invert(1);
+}
+
+.footer-title {
+  font-weight: 700;
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.footer-separator {
+  opacity: 0.5;
+  margin: 0 0.5rem;
+}
+
+.footer-creator {
+  font-size: clamp(13px, 1vw, 14px);
+  color: rgba(255, 255, 255, 0.75);
+  text-align: center;
+  margin-top: 2px;
+}
+
+@media (max-width: 576px) {
+  .footer-separator {
+    display: none;
+  }
+}

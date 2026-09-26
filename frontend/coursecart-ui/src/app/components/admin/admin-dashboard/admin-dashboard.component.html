@@ -1,0 +1,77 @@
+<div class="dashboard-page">
+  <div class="dashboard-header">
+    <h1>Dashboard</h1>
+    <p class="subtitle">A quick read on catalog health and sales activity.</p>
+  </div>
+
+  <app-loading-spinner *ngIf="isLoading" message="Loading metrics..."></app-loading-spinner>
+  <app-error-state *ngIf="error" [message]="error" (retry)="loadMetrics()"></app-error-state>
+
+  <div class="metrics-grid" *ngIf="!isLoading && !error">
+    
+    <div class="metric-card">
+      <div class="metric-label">Learners</div>
+      <div class="metric-value">{{ totalUsers | number }}</div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-label">Active courses</div>
+      <div class="metric-value">{{ activeCourses | number }}</div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-label">Enrollments</div>
+      <div class="metric-value">{{ totalEnrollments | number }}</div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-label">Total revenue</div>
+      <div class="metric-value">{{ totalRevenue | currency:'INR' }}</div>
+    </div>
+
+  </div>
+
+  <div class="recent-orders-section" *ngIf="!isLoading && !error">
+    <h2>Recent orders</h2>
+    <p class="empty-text" *ngIf="recentOrders.length === 0">No purchases have been made yet.</p>
+    
+    <div class="orders-list" *ngIf="recentOrders.length > 0">
+      <div class="recent-order-card" *ngFor="let item of recentOrders">
+        <div class="order-info">
+          <span class="category-text">{{ item.course?.category?.name || 'Unknown Category' }}</span>
+          <strong class="order-course-title">{{ item.course ? item.course.title : 'Unknown Course' }}</strong>
+          <span class="order-date">
+            Order #{{ item.order.id }} &bull; {{ item.order.orderDate | date:'mediumDate' }} &bull; 
+            <span class="payment-method">{{ item.order.paymentMethod || 'Credit Card' }}</span>
+          </span>
+        </div>
+        <div class="order-price">
+          {{ item.order.amountPaid === 0 ? 'Free' : (item.order.amountPaid | currency:'INR') }}
+        </div>
+      </div>
+      
+      <!-- Pagination Controls -->
+      <nav aria-label="Orders pagination" class="mt-4" *ngIf="totalPages > 1">
+        <ul class="pagination justify-content-center">
+          <li class="page-item" [class.disabled]="currentPage === 0">
+            <button class="page-link" (click)="prevPage()" tabindex="-1">Previous</button>
+          </li>
+          <li class="page-item disabled">
+            <span class="page-link">Page {{ currentPage + 1 }} of {{ totalPages }}</span>
+          </li>
+          <li class="page-item" [class.disabled]="currentPage >= totalPages - 1">
+            <button class="page-link" (click)="nextPage()">Next</button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+

@@ -1,0 +1,96 @@
+.course-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  height: 100%;
+}
+
+.course-card-link:hover, .course-card-link:focus {
+  text-decoration: none;
+  color: inherit;
+}
+
+.course-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 280px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background-color: white;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  padding: 1.5rem; /* Adjusted from 1.75rem to match reference closer */
+  box-sizing: border-box; /* Ensure padding is included in height */
+}
+
+.course-card:hover {
+  box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+  transform: translateY(-2px);
+}
+
+.course-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.course-category-pill {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #9ca3af; /* Light gray to match reference */
+  border: 1px solid #f3f4f6; /* Very light border */
+  padding: 0.35rem 0.8rem;
+  border-radius: 20px;
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+  background-color: white;
+}
+
+.course-title {
+  font-family: var(--font-serif);
+  font-size: 1.45rem;
+  font-weight: 800;
+  line-height: 1.3;
+  margin-bottom: 0.75rem;
+  color: var(--text-dark);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.course-desc {
+  font-size: 0.95rem;
+  color: #9ca3af; /* Slightly lighter gray */
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex-grow: 1;
+}
+
+.course-footer {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.price-current {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #b45309; /* Rust orange */
+}
+
+.lesson-count {
+  font-size: 0.85rem;
+  color: #9ca3af;
+  font-weight: 500;
+}
+

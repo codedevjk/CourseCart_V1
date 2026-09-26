@@ -1,0 +1,53 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        register: true
+        prefer-ip-address: true
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:4200"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+            allowCredentials: true
+      routes:
+        - id: user-service-route
+          uri: lb://user-service
+          predicates:
+            - Path=/api/users/**
+        
+        - id: catalog-service-route
+          uri: lb://catalog-service
+          predicates:
+            - Path=/api/catalog/**
+            
+        - id: enrollment-service-route
+          uri: lb://enrollment-service
+          predicates:
+            - Path=/api/enrollments/**
+            
+        - id: commerce-service-route
+          uri: lb://commerce-service
+          predicates:
+            - Path=/api/commerce/**
+
+# Actuator is required by Consul for health checks
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

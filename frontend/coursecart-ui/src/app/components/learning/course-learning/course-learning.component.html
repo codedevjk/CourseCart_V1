@@ -1,0 +1,85 @@
+<div *ngIf="isLoading" class="container state-container">
+  <app-loading-spinner></app-loading-spinner>
+</div>
+
+<div *ngIf="!isLoading && errorMessage" class="container state-container">
+  <app-error-state [message]="errorMessage"></app-error-state>
+</div>
+
+<div *ngIf="!isLoading && course && !errorMessage" class="learning-layout">
+  
+  <aside class="learning-sidebar">
+    <div class="sidebar-header">
+      <a routerLink="/learning" class="back-nav-link">
+        <i class="bi bi-arrow-left me-2"></i> Back to My Learning
+      </a>
+      <h2 class="course-sidebar-title">{{ course.title }}</h2>
+      <div class="progress-wrapper">
+        <span class="progress-text">{{ validCompletedCount }}/{{ course.lessons.length }} lessons &middot; {{ progressPercentage | number:'1.0-0' }}%</span>
+      </div>
+    </div>
+    
+    <div class="syllabus-list">
+      <button 
+        *ngFor="let lesson of course.lessons" 
+        class="lesson-btn"
+        [class.active]="activeLesson?.id === lesson.id"
+        (click)="selectLesson(lesson)">
+        
+        <div class="lesson-title-nav">
+          <span class="lesson-num">{{ (lesson.displayOrder < 10 ? '0' : '') + lesson.displayOrder }}</span>
+          <span class="lesson-name">{{ lesson.title }}</span>
+        </div>
+      </button>
+    </div>
+  </aside>
+
+  <main class="learning-main">
+    <div *ngIf="activeLesson" class="lesson-viewer-card">
+      <div class="lesson-content">
+        <h1 class="lesson-content-title">{{ activeLesson.title }}</h1>
+        <div class="content-body">{{ activeLesson.content }}</div>
+        
+                <hr class="lesson-divider">
+        
+        <div class="alert alert-danger action-error" *ngIf="actionError">
+          {{ actionError }}
+        </div>
+        
+        <label class="completion-checkbox">
+          <input 
+            type="checkbox" 
+            [checked]="isCompleted(activeLesson.id)"
+            (change)="toggleCompletion($event)">
+          <span class="checkbox-text">Mark this lesson complete</span>
+        </label>
+      </div>
+    </div>
+    
+    <div *ngIf="!activeLesson" class="no-lesson-selected">
+      <p>Please select a lesson from the list to begin.</p>
+    </div>
+  </main>
+  
+</div>
+
+
+
+
+
+<!-- Course Unavailable Modal -->
+<div class="modal-overlay" *ngIf="!isCourseAvailable">
+  <div class="admin-form-section modal-content unavailable-modal">
+    <div class="unavailable-icon">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+    </div>
+    <h3 class="card-title text-danger unavailable-title">Course Unavailable</h3>
+    <p class="unavailable-desc">
+      This course is no longer available because its category has been removed. Please contact support if you believe this is an error.
+    </p>
+    <div class="form-actions justify-content-center mt-4">
+      <a routerLink="/learning" class="btn btn-primary px-4">Back to My Learning</a>
+    </div>
+  </div>
+</div>
+

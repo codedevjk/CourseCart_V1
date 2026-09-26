@@ -1,0 +1,66 @@
+<div class="learning-dashboard-page">
+  <div class="hero-section">
+    <div class="container hero-container">
+      <div class="hero-content">
+        <h1 class="hero-title">My Learning</h1>
+        <p class="hero-subtitle">Pick up where you left off and achieve your goals.</p>
+      </div>
+      <div class="hero-image">
+        <img src="assets/learning-dashboard.png" alt="Learning Dashboard">
+      </div>
+    </div>
+  </div>
+
+  <div class="container dashboard-content">
+    
+    <div *ngIf="isLoading" class="loading-state">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+
+    <div *ngIf="!isLoading && errorMessage">
+      <app-error-state [message]="errorMessage"></app-error-state>
+    </div>
+
+    <div *ngIf="!isLoading && !errorMessage">
+      
+      <div *ngIf="enrolledCourses.length > 0" class="courses-grid">
+        <a [routerLink]="['/learning', item.course!.id]" class="course-card-link course-card" *ngFor="let item of enrolledCourses">
+          <div class="course-content">
+            <div class="course-category-pill">{{ item.course!.category?.name || 'Unknown Category' | uppercase }}</div>
+            
+            <h3 class="course-title" [title]="item.course!.title">{{ item.course!.title }}</h3>
+            
+            <p class="course-desc" [title]="item.course!.description">{{ item.course!.description }}</p>
+            
+            <div class="course-footer progress-footer">
+              <div class="progress-container w-100">
+                <div class="progress-stats">
+                  <span class="progress-label">Overall Progress</span>
+                  <span class="progress-percent">{{ item.progress | number:'1.0-0' }}%</span>
+                </div>
+                <div class="progress progress-sm">
+                  <div class="progress-bar" role="progressbar" [style.width]="(item.progress || 0) + '%'" [attr.aria-valuenow]="item.progress" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div *ngIf="enrolledCourses.length === 0">
+        <app-empty-state 
+          message="You aren't enrolled in any courses yet" 
+          submessage="Browse our catalog to start your learning journey."
+          imageUrl="assets/empty-learning-state.png">
+          <a routerLink="/courses" class="btn btn-primary mt-3">Explore Courses</a>
+        </app-empty-state>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+

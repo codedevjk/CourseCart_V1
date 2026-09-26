@@ -1,0 +1,85 @@
+<!-- TODO[TRAINEE]: Display loading spinner based on isLoading -->
+
+<!-- TODO[TRAINEE]: Display error message using app-error-state -->
+
+<!-- TODO[TRAINEE]: Display course details if not loading and course exists (US 09) -->
+<div class="course-detail-page">
+  <div class="container detail-container">
+    
+    <!-- LEFT COLUMN: Content -->
+    <div class="content-column">
+      
+      <!-- Header Area -->
+      <div class="header-area">
+        <a routerLink="/courses" class="back-nav-link">
+          <i class="bi bi-arrow-left me-2"></i> Back to Catalog
+        </a>
+        <div class="category-badge"><!-- TODO[TRAINEE]: Bind category name --></div>
+        <h1 class="course-title"><!-- TODO[TRAINEE]: Bind course title --></h1>
+        <p class="course-description"><!-- TODO[TRAINEE]: Bind course description --></p>
+      </div>
+
+      <!-- Syllabus Area -->
+      <div class="syllabus-area">
+        <h2 class="syllabus-title">Syllabus</h2>
+        
+        <div class="lesson-list">
+          <!-- TODO[TRAINEE]: Iterate over course lessons -->
+          <div class="lesson-card">
+            <span class="lesson-number"><!-- TODO[TRAINEE]: Bind lesson order --></span>
+            <span class="lesson-name"><!-- TODO[TRAINEE]: Bind lesson title --></span>
+          </div>
+          
+          <!-- TODO[TRAINEE]: Display if no lessons exist -->
+          <div class="lesson-card">
+            <span class="lesson-name text-muted">No lessons available yet.</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT COLUMN: Floating Card -->
+    <div class="sidebar-column">
+      <div class="enroll-card">
+        
+        <div class="price-display"><!-- TODO[TRAINEE]: Bind course price --></div>
+        
+        <div class="card-meta">
+          <!-- TODO[TRAINEE]: Bind course lesson count --> lesson(s) &middot; permanent access after purchase
+        </div>
+        
+        <!-- TODO[TRAINEE]: Display "Buy now" if logged in, not admin, not enrolled. Bind onEnrollClick() -->
+        <button class="btn btn-enroll w-100">
+          Buy now
+        </button>
+
+        <!-- TODO[TRAINEE]: Display "Continue learning" if logged in, not admin, IS enrolled. Bind onEnrollClick() -->
+        <div class="enrolled-state">
+          <div class="already-enrolled-label">Already enrolled</div>
+          <button class="btn btn-enroll w-100">
+            Continue learning
+          </button>
+        </div>
+
+        <!-- TODO[TRAINEE]: Display "Log in to buy" if not logged in -->
+        <button class="btn btn-enroll w-100">
+          Log in to buy
+        </button>
+        
+        <!-- Admin Warning -->
+        <!-- TODO[TRAINEE]: Display admin warning if user is admin -->
+        <p class="admin-warning mt-3">
+          Admin accounts review the catalog but cannot purchase courses.
+        </p>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+

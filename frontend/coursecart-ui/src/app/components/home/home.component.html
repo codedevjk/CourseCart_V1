@@ -1,0 +1,66 @@
+<div class="home-page">
+  
+  <div class="hero-section">
+    <div class="container hero-container">
+      <div class="hero-content">
+        <h1 class="hero-title">Learn without limits</h1>
+        <p class="hero-subtitle">Build skills with courses, certificates, and degrees online from world-class universities and companies.</p>
+        <div class="hero-actions">
+          <a routerLink="/courses" class="btn btn-primary hero-btn">Explore Courses</a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="assets/course-discovery.png" alt="CourseCart Hero" />
+      </div>
+    </div>
+  </div>
+
+  <div class="container my-5" *ngIf="isLoading">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+
+  <div class="container my-5" *ngIf="errorMessage">
+    <app-error-state [message]="errorMessage"></app-error-state>
+  </div>
+
+  <div *ngIf="!isLoading && !errorMessage">
+    <!-- Popular Categories Section -->
+    <section class="home-section" *ngIf="categories && categories.length > 0">
+      <div class="container">
+        <div class="section-header">
+          <div class="header-titles">
+            <h2 class="section-title">Popular categories</h2>
+          </div>
+        </div>
+
+        <div class="categories-grid">
+          <a [routerLink]="['/courses']" [queryParams]="{category: category.id}" class="category-item" *ngFor="let category of categories; let i = index">
+            <div class="category-icon" [ngClass]="getColorClass(i)">{{ getCategoryInitials(category.name) }}</div>
+            <div class="category-info">
+              <h3>{{ category.name }}</h3>
+              <p>Explore courses</p>
+            </div>
+            <span class="arrow">&rarr;</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Courses Section -->
+    <section class="home-section" *ngIf="trendingCourses && trendingCourses.length > 0">
+      <div class="container">
+        <div class="section-header">
+          <div class="header-titles">
+            <h2 class="section-title">Featured courses</h2>
+          </div>
+        </div>
+
+        <div class="courses-grid">
+          <div *ngFor="let course of trendingCourses">
+            <app-course-card [course]="course"></app-course-card>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

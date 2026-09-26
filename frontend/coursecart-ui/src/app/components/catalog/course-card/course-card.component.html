@@ -1,0 +1,20 @@
+<a [routerLink]="['/courses', course.id]" class="course-card-link course-card">
+  <div class="course-content">
+    <div class="course-category-pill">{{ course.category?.name || 'GENERAL' | uppercase }}</div>
+    
+    <h3 class="course-title" [title]="course.title">{{ course.title }}</h3>
+    
+    <p class="course-desc" [title]="course.description">{{ course.description }}</p>
+    
+    <div class="course-footer">
+      <div class="course-pricing">
+        <span class="price-current" *ngIf="course.price > 0">{{ course.price | currency:'INR' }}</span>
+        <span class="price-current" *ngIf="course.price === 0 || !course.price">Free</span>
+      </div>
+      <div class="course-meta">
+        <span class="lesson-count">{{ course.lessonCount || '0' }} lessons</span>
+      </div>
+    </div>
+  </div>
+</a>
+

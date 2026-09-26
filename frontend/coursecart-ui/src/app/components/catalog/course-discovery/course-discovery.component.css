@@ -1,0 +1,145 @@
+﻿.hero-section {
+  background-color: var(--bg-color); 
+  padding: 1.5rem 0 4rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.hero-container {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  justify-content: space-between;
+}
+
+.hero-content {
+  flex: 1;
+  max-width: 600px;
+}
+
+.hero-title {
+  font-family: var(--font-serif);
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: var(--text-dark);
+  margin: 0 0 1.5rem 0;
+  line-height: 1.1;
+  letter-spacing: -1px;
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  color: var(--text-light);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.hero-image {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.hero-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+}
+
+@media (max-width: 768px) {
+  .hero-container {
+    flex-direction: column;
+    text-align: center;
+  }
+  .hero-image {
+    justify-content: center;
+    margin-top: 2rem;
+  }
+  .hero-title {
+    font-size: 2.5rem;
+  }
+}
+
+.discovery-content {
+  padding-top: 2rem;
+  max-width: 1300px;
+}
+
+.discovery-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.discovery-filters-bar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding: 1rem 0 2rem;
+}
+
+.search-box {
+  flex: 0 0 320px;
+}
+
+.search-box .form-control {
+  border-radius: 6px;
+  padding: 0.7rem 1.2rem;
+  border: 1px solid var(--border-color);
+  width: 100%;
+}
+
+.category-filters {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.category-dropdown {
+  border-radius: 6px;
+  padding: 0.7rem 2rem 0.7rem 1.2rem;
+  border: 1px solid var(--border-color);
+  color: var(--text-dark);
+  font-size: 0.95rem;
+  background-color: white;
+  min-width: 200px;
+  cursor: pointer;
+}
+
+.category-dropdown:focus {
+  border-color: var(--text-light);
+  outline: none;
+}
+
+.courses-count {
+  font-size: 0.9rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+.discovery-main {
+  width: 100%;
+}
+
+.course-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .discovery-filters-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .search-box, .category-dropdown {
+    flex: 1 1 100%;
+  }
+}
+
+

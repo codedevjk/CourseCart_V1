@@ -1,0 +1,70 @@
+<div class="hero-section">
+  <div class="container hero-container">
+    <div class="hero-content">
+      <h1 class="hero-title">Short, readable courses you own forever.</h1>
+      <p class="hero-subtitle">Buy one course at a time, keep permanent access, and tick off lessons as you go. No subscriptions, no video queues.</p>
+    </div>
+    <div class="hero-image">
+      <img src="assets/coursecart-hero.png" alt="Course Catalog Hero" />
+    </div>
+  </div>
+</div>
+
+<div class="container discovery-content">
+  
+  <!-- TODO[TRAINEE]: Implement loading, error, and main content blocks using *ngIf based on isLoading and errorMessage -->
+
+  <div class="discovery-layout">
+    <!-- Horizontal Filters Bar -->
+    <div class="discovery-filters-bar">
+      <div class="search-box">
+        <!-- TODO[TRAINEE]: Bind input to searchQuery and trigger applyFilters() on Enter -->
+        <input 
+          type="text" 
+          placeholder="Search course titles... (press Enter to search)" 
+          class="form-control">
+      </div>
+
+      <div class="category-filters">
+        <!-- TODO[TRAINEE]: Bind select to selectedCategoryId and trigger applyFilters() on change. Iterate categories to populate options. -->
+        <select class="form-select category-dropdown">
+          <option [ngValue]="null">All categories</option>
+          <!-- TODO[TRAINEE]: Iterate over categories -->
+          <option>Category Placeholder</option>
+        </select>
+        <span class="courses-count"><!-- TODO[TRAINEE]: Bind totalElements --> total courses</span>
+      </div>
+    </div>
+
+    <!-- Course Grid -->
+    <main class="discovery-main">
+      
+      <!-- TODO[TRAINEE]: Display course-grid if courses exist. Iterate over courses and bind to app-course-card -->
+      <div class="course-grid">
+        <div class="course-col">
+          <!-- TODO[TRAINEE]: Pass course to app-course-card -->
+          <app-course-card></app-course-card>
+        </div>
+      </div>
+
+      <!-- TODO[TRAINEE]: Display empty state if no courses exist -->
+
+      <!-- True Pagination Controls -->
+      <!-- TODO[TRAINEE]: Display pagination if totalPages > 1. Bind prevPage/nextPage and active/disabled states -->
+      <nav aria-label="Course pagination" class="mt-5">
+        <ul class="pagination justify-content-center">
+          <li class="page-item">
+            <button class="page-link" tabindex="-1">Previous</button>
+          </li>
+          <li class="page-item disabled">
+            <span class="page-link">Page X of Y</span>
+          </li>
+          <li class="page-item">
+            <button class="page-link">Next</button>
+          </li>
+        </ul>
+      </nav>
+
+    </main>
+  </div>
+</div>

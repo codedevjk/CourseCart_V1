@@ -1,0 +1,37 @@
+server:
+  port: 8083
+  error:
+    include-message: always
+    include-binding-errors: always
+
+spring:
+  application:
+    name: enrollment-service
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/coursecart_enrollment_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
+    username: root
+    password: root
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        register: true
+        prefer-ip-address: true
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

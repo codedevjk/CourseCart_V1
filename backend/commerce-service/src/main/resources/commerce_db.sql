@@ -1,0 +1,42 @@
+-- =========================================================================
+-- COMMERCE SERVICE DATABASE
+-- No cross-DB foreign keys. Application-level validation ensures integrity.
+-- =========================================================================
+CREATE DATABASE IF NOT EXISTS coursecart_commerce_db;
+USE coursecart_commerce_db;
+
+CREATE TABLE orders (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    course_id BIGINT NOT NULL,
+    amount_paid DECIMAL(10,2) NOT NULL,
+    payment_method VARCHAR(255) NOT NULL,
+    order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+CREATE INDEX idx_orders_user_id ON orders(user_id);
+
+-- COMMERCE SERVICE SEED DATA
+USE coursecart_commerce_db;
+
+INSERT INTO orders (id, user_id, course_id, amount_paid, order_date, payment_method) VALUES 
+(1, 1002, 1022, 39.99, DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 17 DAY), 'Credit Card'),
+(2, 1002, 1017, 59.99, DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 26 DAY), 'PayPal'),
+(3, 1002, 1021, 89.99, DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 25 DAY), 'Credit Card'),
+(4, 1003, 1021, 89.99, DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 18 DAY), 'Debit Card'),
+(5, 1003, 1023, 49.99, DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 21 DAY), 'Credit Card'),
+(6, 1003, 1012, 39.99, DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 21 DAY), 'PayPal'),
+(7, 1003, 1020, 49.99, DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 2 DAY), 'Debit Card'),
+(8, 1003, 1017, 59.99, DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 5 DAY), 'Credit Card'),
+(9, 1004, 1003, 59.99, DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 16 DAY), 'PayPal'),
+(10, 1004, 1001, 49.99, DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 15 DAY), 'Credit Card'),
+(11, 1004, 1010, 49.99, DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 20 DAY), 'Debit Card'),
+(12, 1005, 1023, 49.99, DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 8 DAY), 'Credit Card'),
+(13, 1005, 1001, 49.99, DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 22 DAY), 'PayPal'),
+(14, 1005, 1018, 39.99, DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 15 DAY), 'Debit Card'),
+(15, 1005, 1003, 59.99, DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 7 DAY), 'Credit Card'),
+(16, 1006, 1017, 59.99, DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 10 DAY), 'PayPal'),
+(17, 1006, 1014, 39.99, DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 23 DAY), 'Credit Card'),
+(18, 1006, 1021, 89.99, DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 20 DAY), 'Debit Card'),
+(19, 1006, 1023, 49.99, DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 2 DAY), 'Credit Card');
+

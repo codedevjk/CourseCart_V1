@@ -1,0 +1,106 @@
+<div *ngIf="isLoading" class="container state-container">
+  <app-loading-spinner></app-loading-spinner>
+</div>
+
+<div *ngIf="!isLoading && errorMessage && !course" class="container state-container">
+  <app-error-state [message]="errorMessage"></app-error-state>
+</div>
+
+<div *ngIf="!isLoading && course" class="checkout-page container">
+  <div class="checkout-header">
+    <a [routerLink]="['/courses', course.id]" class="back-nav-link">
+      <i class="bi bi-arrow-left me-2"></i> Back to Course
+    </a>
+    <h1>Checkout</h1>
+  </div>
+  
+  <div class="checkout-content">
+    
+    <div class="checkout-main">
+      <div class="card payment-card">
+         <div class="payment-tabs-label">Payment method</div>
+         <div class="payment-tabs">
+            <button class="tab-btn" [class.active]="selectedTab === 'Card'" (click)="setTab('Card')">Card</button>
+            <button class="tab-btn" [class.active]="selectedTab === 'UPI'" (click)="setTab('UPI')">UPI</button>
+            <button class="tab-btn" [class.active]="selectedTab === 'Net Banking'" (click)="setTab('Net Banking')">Net Banking</button>
+         </div>
+
+         <div *ngIf="errorMessage" class="alert alert-danger mt-2">{{ errorMessage }}</div>
+
+         <form (ngSubmit)="onSubmit()" #checkoutForm="ngForm" class="mt-2">
+            
+            <ng-container *ngIf="selectedTab === 'Card'">
+               <div class="form-group mb-4">
+                  <label class="form-label">Card number</label>
+                  <input type="text" class="form-control form-control-lg" name="cardNumber" [(ngModel)]="cardNumber" #cardNum="ngModel" required pattern="^(\d\s*){16}$" placeholder="4242 4242 4242 4242">
+                  <span class="text-danger small d-block mt-1" *ngIf="cardNum.invalid && (cardNum.dirty || cardNum.touched)">Please enter a valid 16-digit card number.</span>
+               </div>
+               <div class="row">
+                  <div class="col-md-6 form-group mb-4">
+                     <label class="form-label">Expiry</label>
+                     <input type="text" class="form-control form-control-lg" name="cardExpiry" [(ngModel)]="cardExpiry" #cardExp="ngModel" required pattern="^(0[1-9]|1[0-2])\/\d{2}$" placeholder="12/29">
+                     <span class="text-danger small d-block mt-1" *ngIf="cardExp.invalid && (cardExp.dirty || cardExp.touched)">Please enter a valid expiry date (MM/YY).</span><span class="text-danger small d-block mt-1" *ngIf="!cardExp.invalid && isPastDate(cardExpiry) && (cardExp.dirty || cardExp.touched)">Card has expired.</span>
+                  </div>
+                  <div class="col-md-6 form-group mb-4">
+                     <label class="form-label">CVC</label>
+                     <input type="text" class="form-control form-control-lg" name="cardCvc" [(ngModel)]="cardCvc" #cardCvcCtrl="ngModel" required pattern="^\d{3}$" placeholder="123">
+                     <span class="text-danger small d-block mt-1" *ngIf="cardCvcCtrl.invalid && (cardCvcCtrl.dirty || cardCvcCtrl.touched)">Please enter a valid 3-digit CVC.</span>
+                  </div>
+               </div>
+            </ng-container>
+
+            <ng-container *ngIf="selectedTab === 'UPI'">
+               <div class="form-group mb-4">
+                  <label class="form-label">UPI ID</label>
+                  <input type="text" class="form-control form-control-lg" name="upiId" [(ngModel)]="upiId" #upiIdCtrl="ngModel" required pattern="^.+@.+$" placeholder="name@bank">
+                  <span class="text-danger small d-block mt-1" *ngIf="upiIdCtrl.invalid && (upiIdCtrl.dirty || upiIdCtrl.touched)">Please enter a valid UPI ID containing "@".</span>
+               </div>
+            </ng-container>
+
+            <ng-container *ngIf="selectedTab === 'Net Banking'">
+               <div class="form-group mb-4">
+                  <label class="form-label">Bank</label>
+                  <select class="form-control form-control-lg" name="selectedBank" [(ngModel)]="selectedBank" #bankCtrl="ngModel" required>
+                     <option *ngFor="let bank of banks" [value]="bank">{{ bank }}</option>
+                  </select>
+                  <span class="text-danger small d-block mt-1" *ngIf="bankCtrl.invalid && (bankCtrl.dirty || bankCtrl.touched)">Please select a bank.</span>
+               </div>
+            </ng-container>
+
+            
+
+            <button type="submit" class="btn btn-primary btn-lg w-100 pay-btn mt-4" [disabled]="isProcessing || checkoutForm.invalid || (selectedTab === 'Card' && isPastDate(cardExpiry))">
+               {{ isProcessing ? 'Processing...' : 'Pay ' + (course.price | currency:'INR') }}
+            </button>
+            
+            
+         </form>
+      </div>
+    </div>
+    
+    <div class="checkout-sidebar">
+      <div class="card summary-card">
+        <h2 class="summary-title">Order Summary</h2>
+        
+        <div class="summary-item course-info">
+          <div class="course-name">{{ course.title }}</div>
+          <div class="course-category">{{ course.category?.name || 'Category' }}</div>
+        </div>
+        
+        <div class="summary-item total-info">
+          <span>Total</span>
+          <span class="total-price">{{ course.price | currency:'INR' }}</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+

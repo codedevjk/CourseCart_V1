@@ -1,0 +1,115 @@
+<div class="admin-header mb-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Course Management</h1>
+    <button class="btn btn-primary" (click)="openCreateModal()">+ New Course</button>
+  </div>
+</div>
+
+<app-error-state *ngIf="error" [message]="error" (retry)="loadCourses()"></app-error-state>
+
+<!-- Form Section -->
+<div class="modal-overlay" *ngIf="showForm">
+  <div class="admin-form-section modal-content">
+    <h3 class="card-title">{{ isEditing ? 'Edit Course' : 'Create Course' }}</h3>
+    <form (ngSubmit)="saveCourse()" #courseForm="ngForm">
+
+      <div class="form-group mb-3">
+        <label class="form-label" for="title">Course Title</label>
+        <input type="text" id="title" name="title" class="form-control" [(ngModel)]="currentCourse.title" required>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 form-group mb-3">
+          <label class="form-label" for="categoryId">Category</label>
+          <select id="categoryId" name="categoryId" class="form-control" [(ngModel)]="currentCourse.categoryId"
+            required>
+            <option [ngValue]="null" disabled>Select Category</option>
+            <option *ngFor="let cat of categories" [ngValue]="cat.id">{{ cat.name }}</option>
+          </select>
+        </div>
+
+        <div class="col-md-6 form-group mb-3">
+          <label class="form-label" for="price">Price (?)</label>
+          <input type="number" id="price" name="price" class="form-control" [(ngModel)]="currentCourse.price" required
+            min="0" step="0.01">
+        </div>
+      </div>
+
+      <div class="form-group mb-4">
+        <label class="form-label" for="description">Description</label>
+        <textarea id="description" name="description" class="form-control" [(ngModel)]="currentCourse.description"
+          required rows="3"></textarea>
+      </div>
+
+      <div class="alert alert-danger" *ngIf="formError">{{ formError }}</div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary" [disabled]="!courseForm.valid">Save Course</button>
+        <button type="button" class="btn btn-outline" (click)="cancelEdit()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<app-loading-spinner *ngIf="isLoading" message="Loading courses..."></app-loading-spinner>
+
+<div class="courses-list" *ngIf="!isLoading && courses.length > 0">
+  <div class="admin-course-card" *ngFor="let course of courses">
+
+    <div class="card-main">
+      <div class="course-info">
+        <span class="category-text">{{ course.category?.name || 'Uncategorized' }}</span>
+        <h3 class="course-title">{{ course.title }}</h3>
+        <p class="course-meta">Price: {{ course.price === 0 ? 'Free' : (course.price | currency:'INR') }}</p>
+      </div>
+
+      <div class="status-col">
+        <span class="status-badge" [ngClass]="'status-' + course.status.toLowerCase()">
+          {{ course.status }}
+        </span>
+      </div>
+    </div>
+
+    <div class="card-actions">
+      <div class="action-group">
+        <a [routerLink]="['/admin/courses', course.id, 'lessons']" class="btn btn-outline-sm btn-icon-text">
+          Manage Lessons
+        </a>
+        <button class="btn btn-outline-sm btn-icon-text" (click)="openEditModal(course)">
+          Edit
+        </button>
+      </div>
+
+      <div class="action-group">
+        <button *ngIf="course.status !== 'ACTIVE'" class="btn btn-success-outline btn-icon-text"
+          (click)="changeStatus(course, 'ACTIVE')" [disabled]="!course.category"
+          title="Cannot publish an uncategorized course">
+          Publish
+        </button>
+        <button *ngIf="course.status === 'ACTIVE'" class="btn btn-warning-outline btn-icon-text"
+          (click)="changeStatus(course, 'INACTIVE')">
+          Unpublish
+        </button>
+        <button *ngIf="course.status !== 'DRAFT'" class="btn btn-secondary-outline btn-icon-text"
+          (click)="changeStatus(course, 'DRAFT')">
+          Draft
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<app-empty-state *ngIf="!isLoading && courses.length === 0 && !error" message="No courses found."></app-empty-state>
+
+<!-- Confirmation Modal -->
+<div class="modal-overlay" *ngIf="showConfirmModal">
+  <div class="admin-form-section modal-content confirm-modal">
+    <h3 class="card-title confirm-title">Confirm Action</h3>
+    <p class="confirm-message">{{ confirmMessage }}</p>
+    <div class="form-actions justify-content-center mt-4 confirm-actions">
+      <button class="btn btn-outline" (click)="showConfirmModal = false">Cancel</button>
+      <button class="btn btn-primary" (click)="executeConfirm()">OK</button>
+    </div>
+  </div>
+</div>

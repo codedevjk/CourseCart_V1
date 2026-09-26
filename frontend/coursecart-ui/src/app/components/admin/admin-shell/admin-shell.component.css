@@ -1,0 +1,11 @@
+.admin-layout {
+  display: block;
+  min-height: calc(100vh - 72px);
+  background-color: var(--bg-color);
+}
+
+.admin-content {
+  padding: 0;
+  max-width: 1300px;
+  margin: 0 auto;
+}
