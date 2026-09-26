@@ -10,16 +10,16 @@
 
 <p align="center">
   <strong>A modern, full-stack microservices application for a la carte online learning.</strong><br/>
-  MASTER IMPLEMENTATION (Fully Implemented)
+  TRAINEE STARTER CODEBASE (V1)
 </p>
 
 ---
 
 ## 🎯 About This Project
 
-This is the **MASTER IMPLEMENTATION** of the CourseCart system. It is a fully functional, enterprise-grade microservices application designed to showcase modern development practices, featuring strict service isolation and resilient inter-service communication.
+This is the **TRAINEE STARTER CODEBASE (V1)** of the CourseCart system. It is a partially implemented microservices application designed for training, featuring strict service isolation and resilient inter-service communication.
 
-All features are fully implemented, and there are no trainee assignments or stubs in this version.
+Certain core features are intentionally stubbed as active assignments for trainees to implement. Refer to the SRS document for a detailed list of tasks.
 
 ---
 
