@@ -39,154 +39,68 @@ public class CatalogServiceImpl implements CatalogService {
 
     @Override
     public List<CategoryDTO> getAllCategories() {
-        return categoryRepository.findAll().stream()
-                .map(this::mapToCategoryDTO)
-                .collect(Collectors.toList());
+        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement getAllCategories");
     }
 
     @Override
     @Transactional
     public CategoryDTO createCategory(CategoryRequest request) {
-        if (categoryRepository.findByName(request.getName()).isPresent()) {
-            throw new CatalogServiceException(HttpStatus.CONFLICT, ErrorMessages.CATEGORY_NAME_EXISTS);
-        }
-        Category category = new Category();
-        category.setName(request.getName());
-        Category saved = categoryRepository.save(category);
-        return mapToCategoryDTO(saved);
+        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement createCategory");
     }
 
     @Override
     @Transactional
     public CategoryDTO updateCategory(Long id, CategoryRequest request) {
-        Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new CatalogServiceException(HttpStatus.NOT_FOUND, ErrorMessages.CATEGORY_NOT_FOUND));
-
-        if (!category.getName().equals(request.getName()) && categoryRepository.findByName(request.getName()).isPresent()) {
-            throw new CatalogServiceException(HttpStatus.CONFLICT, ErrorMessages.CATEGORY_NAME_EXISTS);
-        }
-
-        category.setName(request.getName());
-        Category updated = categoryRepository.save(category);
-        return mapToCategoryDTO(updated);
+        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement updateCategory");
     }
 
     @Override
     @Transactional
-        public void deleteCategory(Long id) {
-        Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new CatalogServiceException(HttpStatus.NOT_FOUND, ErrorMessages.CATEGORY_NOT_FOUND));
-        List<Course> attachedCourses = courseRepository.findByCategoryId(id);
-        
-        boolean hasActiveCourses = attachedCourses.stream()
-                .anyMatch(course -> course.getStatus() == CourseStatus.ACTIVE);
-                
-        if (hasActiveCourses) {
-            throw new CatalogServiceException(HttpStatus.BAD_REQUEST, ErrorMessages.CATEGORY_HAS_ACTIVE_COURSES);
-        }
-        categoryRepository.delete(category);
+    public void deleteCategory(Long id) {
+        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement deleteCategory");
     }
 
     // --- COURSES PUBLIC ---
 
     @Override
     public Page<CourseDTO> getActiveCourses(Pageable pageable, Long categoryId, String title) {
-        Page<Course> courses;
-        if (categoryId != null && title != null && !title.isEmpty()) {
-            courses = courseRepository.findByStatusAndCategoryIdAndTitleContainingIgnoreCase(CourseStatus.ACTIVE, categoryId, title, pageable);
-        } else if (categoryId != null) {
-            courses = courseRepository.findByStatusAndCategoryId(CourseStatus.ACTIVE, categoryId, pageable);
-        } else if (title != null && !title.isEmpty()) {
-            courses = courseRepository.findByStatusAndTitleContainingIgnoreCase(CourseStatus.ACTIVE, title, pageable);
-        } else {
-            courses = courseRepository.findByStatus(CourseStatus.ACTIVE, pageable);
-        }
-        return courses.map(this::mapToCourseDTO);
+        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement getActiveCourses");
     }
 
     @Override
     public CourseDetailDTO getActiveCourseById(Long id) {
-        Course course = courseRepository.findById(id)
-                .orElseThrow(() -> new CatalogServiceException(HttpStatus.NOT_FOUND, ErrorMessages.COURSE_NOT_FOUND));
-
-        return mapToCourseDetailDTO(course);
+        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement getActiveCourseById");
     }
 
     // --- COURSES ADMIN ---
 
     @Override
     public List<CourseDTO> getAllCoursesAdmin() {
-        return courseRepository.findAll().stream()
-                .map(this::mapToCourseDTO)
-                .collect(Collectors.toList());
+        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement getAllCoursesAdmin");
     }
 
     @Override
     @Transactional
     public CourseDTO createCourse(CourseRequest request) {
-        Category category = categoryRepository.findById(request.getCategoryId())
-                .orElseThrow(() -> new CatalogServiceException(HttpStatus.NOT_FOUND, ErrorMessages.CATEGORY_NOT_FOUND));
-
-        Course course = new Course();
-        course.setCategory(category);
-        course.setTitle(request.getTitle());
-        course.setDescription(request.getDescription());
-        course.setPrice(request.getPrice());
-        course.setStatus(CourseStatus.DRAFT);
-        course.setOriginalPrice(request.getOriginalPrice());
-        course.setInstructorName(request.getInstructorName());
-        course.setRatingCount(0);
-        course.setBestseller(false);
-        course.setLessonCount(0);
-        Course saved = courseRepository.save(course);
-        return mapToCourseDTO(saved);
+        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement createCourse");
     }
 
     @Override
     @Transactional
     public CourseDTO updateCourse(Long id, CourseRequest request) {
-        Course course = courseRepository.findById(id)
-                .orElseThrow(() -> new CatalogServiceException(HttpStatus.NOT_FOUND, ErrorMessages.COURSE_NOT_FOUND));
-
-        Category category = categoryRepository.findById(request.getCategoryId())
-                .orElseThrow(() -> new CatalogServiceException(HttpStatus.NOT_FOUND, ErrorMessages.CATEGORY_NOT_FOUND));
-
-        course.setCategory(category);
-        course.setTitle(request.getTitle());
-        course.setDescription(request.getDescription());
-        course.setPrice(request.getPrice());
-        course.setOriginalPrice(request.getOriginalPrice());
-        course.setInstructorName(request.getInstructorName());
-
-        Course updated = courseRepository.save(course);
-        return mapToCourseDTO(updated);
+        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement updateCourse");
     }
 
     @Override
     @Transactional
     public CourseDTO updateCourseStatus(Long id, CourseStatusRequest request) {
-        Course course = courseRepository.findById(id)
-                .orElseThrow(() -> new CatalogServiceException(HttpStatus.NOT_FOUND, ErrorMessages.COURSE_NOT_FOUND));
-                
-        if (request.getStatus() == CourseStatus.ACTIVE && course.getCategory() == null) {
-            throw new CatalogServiceException(HttpStatus.BAD_REQUEST, ErrorMessages.CATEGORY_REQUIRED_FOR_ACTIVATION);
-        }
-        
-        course.setStatus(request.getStatus());
-        Course updated = courseRepository.save(course);
-        return mapToCourseDTO(updated);
+        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement updateCourseStatus");
     }
 
     @Override
     @Transactional
-        public void deleteCourse(Long id) {
-        Course course = courseRepository.findById(id)
-                .orElseThrow(() -> new CatalogServiceException(HttpStatus.NOT_FOUND, ErrorMessages.COURSE_NOT_FOUND));
-        List<Lesson> lessons = lessonRepository.findByCourseIdOrderByDisplayOrderAsc(id);
-        for (Lesson l : lessons) {
-            lessonRepository.delete(l);
-        }
-        courseRepository.delete(course);
+    public void deleteCourse(Long id) {
+        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement deleteCourse");
     }
 
     @Override

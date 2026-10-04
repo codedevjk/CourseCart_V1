@@ -47,41 +47,12 @@ public class CommerceServiceImpl implements CommerceService {
     @Override
     @Transactional
     public CheckoutResponse processCheckout(CheckoutRequest request) {
-        CourseDTO course = catalogServiceClient.getCourseById(request.getCourseId());
-
-        if (!"ACTIVE".equals(course.getStatus())) {
-            throw new CommerceServiceException(HttpStatus.BAD_REQUEST, ErrorMessages.COURSE_UNAVAILABLE);
-        }
-
-        boolean isEnrolled = enrollmentServiceClient.checkEnrollment(request.getUserId(), request.getCourseId());
-        if (isEnrolled) {
-            throw new CommerceServiceException(HttpStatus.CONFLICT, ErrorMessages.ALREADY_ENROLLED);
-        }
-
-        if (request.getPaymentMethod() == null || request.getPaymentMethod().trim().isEmpty()) {
-             throw new CommerceServiceException(HttpStatus.BAD_REQUEST, "Payment method is required");
-        }
-
-        Order order = new Order();
-        order.setUserId(request.getUserId());
-        order.setCourseId(request.getCourseId());
-        order.setAmountPaid(course.getPrice());
-        order.setPaymentMethod(request.getPaymentMethod());
-        
-        Order savedOrder = orderRepository.save(order);
-
-        EnrollmentCreateRequest enrollmentReq = new EnrollmentCreateRequest(request.getUserId(), request.getCourseId());
-        enrollmentServiceClient.createEnrollment(enrollmentReq);
-
-        return new CheckoutResponse(savedOrder.getId(), "SUCCESS", "Enrolled");
+        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement processCheckout");
     }
 
     @Override
     public List<OrderDTO> getOrdersByUserId(Long userId) {
-        return orderRepository.findByUserIdOrderByOrderDateDesc(userId)
-                .stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
+        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement getOrdersByUserId");
     }
 
     @Override

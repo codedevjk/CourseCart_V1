@@ -27,14 +27,12 @@ public class CommerceController {
 
     @PostMapping("/checkout")
     public ResponseEntity<CheckoutResponse> checkout(@Valid @RequestBody CheckoutRequest request) {
-        CheckoutResponse response = commerceService.processCheckout(request);
-        return ResponseEntity.ok(response);
+        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement checkout");
     }
 
     @GetMapping("/orders")
     public ResponseEntity<List<OrderDTO>> getOrders(@RequestParam("userId") Long userId) {
-        List<OrderDTO> orders = commerceService.getOrdersByUserId(userId);
-        return ResponseEntity.ok(orders);
+        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement getOrders");
     }
 
     @GetMapping("/orders/recent")
