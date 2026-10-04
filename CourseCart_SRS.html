@@ -1405,16 +1405,8 @@
           DTOs, and repositories are pre-provided — do not modify them.</p>
 <h3 class="sub-title">12.1 Backend — Controllers &amp; Services</h3>
 <div class="file-group">
-<div class="fg-label">User Service</div>
+<div class="fg-label">Catalog Service</div>
 <ul>
-<li>backend/.../controller/<strong>UserController.java</strong> <span class="tag" style="background:rgba(16,185,129,0.15);color:#10b981;">← Pre-Implemented</span></li>
-<li>backend/.../service/<strong>UserService.java</strong> <span class="tag" style="background:rgba(16,185,129,0.15);color:#10b981;">← Pre-Implemented (getUser, login, register)</span></li>
-</ul>
-<p style="color:#9a3412;font-size:13.5px;margin:8px 0 0 4px;">⚑ US03 backend is fully wired. Trainee work for US03 is <strong>frontend-only</strong>: implement <code>user.service.ts::getProfile()</code>.</p>
-<div class="fg-label" style="margin-top:10px;">Catalog Service</div>
-<ul>
-<li>backend/.../controller/<strong>CategoryController.java</strong> <span class="tag" style="background:rgba(16,185,129,0.15);color:#10b981;">← Pre-Implemented</span></li>
-<li>backend/.../controller/<strong>CourseController.java</strong> <span class="tag" style="background:rgba(16,185,129,0.15);color:#10b981;">← Pre-Implemented</span></li>
 <li>backend/.../service/<strong>CatalogServiceImpl.java</strong> <span class="tag" style="background:rgba(16,185,129,0.15);color:#10b981;">← Pre-Implemented (US06)</span> <span class="tag">← TODO[TRAINEE] for US04, 05, 07, 08, 09</span></li>
 </ul>
 <p style="color:#9a3412;font-size:13.5px;margin:8px 0 0 4px;">⚑ Both controllers are fully wired. Implement the corresponding service methods in <code>CatalogServiceImpl.java</code> (including appropriate transaction annotations). Do not modify the pre-implemented US06 (Lessons) code.</p>
