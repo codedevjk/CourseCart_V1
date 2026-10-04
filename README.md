@@ -10,16 +10,16 @@
 
 <p align="center">
   <strong>A modern, full-stack microservices platform for online course purchasing and learning.</strong><br/>
-  TRAINEE STARTER CODEBASE (V1)
+  TRAINEE STARTER CODEBASE
 </p>
 
 ---
 
 ## 🎯 About This Project
 
-This is the **TRAINEE STARTER CODEBASE (V1)** of the CourseCart system. It is a partially implemented, enterprise-grade microservices application designed as a training assignment. 
+This is the **TRAINEE STARTER CODEBASE** of the CourseCart system. It is a partially implemented, enterprise-grade microservices application designed as a training assignment. 
 
-Certain core features are intentionally stubbed as active assignments for trainees to implement. Refer to the SRS document for a detailed list of tasks.
+Certain core features are intentionally stubbed as active assignments for trainees to implement. Refer to the `CourseCart_SRS.html` specification document for a detailed list of tasks.
 
 ---
 
