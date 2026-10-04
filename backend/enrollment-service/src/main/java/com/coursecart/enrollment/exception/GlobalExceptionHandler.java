@@ -12,40 +12,16 @@ import java.time.Instant;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ErrorMessage> handleResourceNotFoundException(ResourceNotFoundException ex, HttpServletRequest request) {
+    @ExceptionHandler(EnrollmentServiceException.class)
+    public ResponseEntity<ErrorMessage> handleEnrollmentServiceException(EnrollmentServiceException ex, HttpServletRequest request) {
         ErrorMessage message = new ErrorMessage(
                 Instant.now().toString(),
-                HttpStatus.NOT_FOUND.value(),
-                "Not Found",
+                ex.getStatus().value(),
+                ex.getStatus().getReasonPhrase(),
                 ex.getMessage(),
                 request.getRequestURI()
         );
-        return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ErrorMessage> handleIllegalArgumentException(IllegalArgumentException ex, HttpServletRequest request) {
-        ErrorMessage message = new ErrorMessage(
-                Instant.now().toString(),
-                HttpStatus.CONFLICT.value(),
-                "Conflict",
-                ex.getMessage(),
-                request.getRequestURI()
-        );
-        return new ResponseEntity<>(message, HttpStatus.CONFLICT);
-    }
-    
-    @ExceptionHandler(IllegalStateException.class)
-    public ResponseEntity<ErrorMessage> handleIllegalStateException(IllegalStateException ex, HttpServletRequest request) {
-        ErrorMessage message = new ErrorMessage(
-                Instant.now().toString(),
-                HttpStatus.BAD_REQUEST.value(),
-                "Bad Request",
-                ex.getMessage(),
-                request.getRequestURI()
-        );
-        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(message, ex.getStatus());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

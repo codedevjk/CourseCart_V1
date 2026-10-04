@@ -9,8 +9,7 @@ import com.coursecart.commerce.dto.EnrollmentCreateRequest;
 import com.coursecart.commerce.dto.EnrollmentDTO;
 import com.coursecart.commerce.dto.OrderDTO;
 import com.coursecart.commerce.entity.Order;
-import com.coursecart.commerce.exception.BadRequestException;
-import com.coursecart.commerce.exception.ConflictException;
+import com.coursecart.commerce.exception.CommerceServiceException;
 import com.coursecart.commerce.repository.OrderRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -101,7 +100,7 @@ public class CommerceServiceTest {
 
         when(catalogServiceClient.getCourseById(10L)).thenReturn(inactiveCourse);
 
-        assertThrows(BadRequestException.class, () -> commerceService.processCheckout(request));
+        assertThrows(CommerceServiceException.class, () -> commerceService.processCheckout(request));
 
         verify(orderRepository, never()).save(any());
         verify(enrollmentServiceClient, never()).createEnrollment(any());
@@ -122,7 +121,7 @@ public class CommerceServiceTest {
 
         when(catalogServiceClient.getCourseById(10L)).thenReturn(draftCourse);
 
-        assertThrows(BadRequestException.class, () -> commerceService.processCheckout(request));
+        assertThrows(CommerceServiceException.class, () -> commerceService.processCheckout(request));
 
         verify(orderRepository, never()).save(any());
         verify(enrollmentServiceClient, never()).createEnrollment(any());
@@ -138,7 +137,7 @@ public class CommerceServiceTest {
         when(catalogServiceClient.getCourseById(10L)).thenReturn(activeCourse);
         when(enrollmentServiceClient.checkEnrollment(1L, 10L)).thenReturn(true);
 
-        assertThrows(ConflictException.class, () -> commerceService.processCheckout(request));
+        assertThrows(CommerceServiceException.class, () -> commerceService.processCheckout(request));
 
         verify(orderRepository, never()).save(any());
         verify(enrollmentServiceClient, never()).createEnrollment(any());
@@ -154,7 +153,7 @@ public class CommerceServiceTest {
         when(catalogServiceClient.getCourseById(10L)).thenReturn(activeCourse);
         when(enrollmentServiceClient.checkEnrollment(1L, 10L)).thenReturn(false);
 
-        assertThrows(BadRequestException.class, () -> commerceService.processCheckout(request));
+        assertThrows(CommerceServiceException.class, () -> commerceService.processCheckout(request));
 
         verify(orderRepository, never()).save(any());
         verify(enrollmentServiceClient, never()).createEnrollment(any());
@@ -170,7 +169,7 @@ public class CommerceServiceTest {
         when(catalogServiceClient.getCourseById(10L)).thenReturn(activeCourse);
         when(enrollmentServiceClient.checkEnrollment(1L, 10L)).thenReturn(false);
 
-        assertThrows(BadRequestException.class, () -> commerceService.processCheckout(request));
+        assertThrows(CommerceServiceException.class, () -> commerceService.processCheckout(request));
 
         verify(orderRepository, never()).save(any());
         verify(enrollmentServiceClient, never()).createEnrollment(any());
@@ -185,7 +184,7 @@ public class CommerceServiceTest {
         order.setAmountPaid(new BigDecimal("19.99"));
         order.setPaymentMethod("Credit Card");
         
-        when(orderRepository.findByUserId(1L)).thenReturn(Collections.singletonList(order));
+        when(orderRepository.findByUserIdOrderByOrderDateDesc(1L)).thenReturn(Collections.singletonList(order));
         
         OrderDTO dto = new OrderDTO();
         dto.setId(50L);

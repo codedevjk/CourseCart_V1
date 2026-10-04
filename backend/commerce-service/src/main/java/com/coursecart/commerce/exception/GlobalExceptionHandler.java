@@ -13,19 +13,9 @@ import java.util.Map;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFoundException ex, WebRequest request) {
-        return buildErrorResponse(HttpStatus.NOT_FOUND, HttpStatus.NOT_FOUND.getReasonPhrase(), ex.getMessage(), request);
-    }
-
-    @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<Object> handleBadRequestException(BadRequestException ex, WebRequest request) {
-        return buildErrorResponse(HttpStatus.BAD_REQUEST, HttpStatus.BAD_REQUEST.getReasonPhrase(), ex.getMessage(), request);
-    }
-
-    @ExceptionHandler(ConflictException.class)
-    public ResponseEntity<Object> handleConflictException(ConflictException ex, WebRequest request) {
-        return buildErrorResponse(HttpStatus.CONFLICT, HttpStatus.CONFLICT.getReasonPhrase(), ex.getMessage(), request);
+    @ExceptionHandler(CommerceServiceException.class)
+    public ResponseEntity<Object> handleCommerceServiceException(CommerceServiceException ex, WebRequest request) {
+        return buildErrorResponse(ex.getStatus(), ex.getStatus().getReasonPhrase(), ex.getMessage(), request);
     }
 
     private ResponseEntity<Object> buildErrorResponse(HttpStatus status, String error, String message, WebRequest request) {

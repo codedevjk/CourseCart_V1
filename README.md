@@ -30,7 +30,7 @@ Certain core features are intentionally stubbed as active assignments for traine
 | Feature | Details |
 | --- | --- |
 | **Registration** | Register with Full Name, Username, and Password. Usernames must be unique. Default role: `USER`. |
-| **Login / Logout** | Login with username and password. Session stored securely in `localStorage`. Logout clears session. |
+| **Login / Logout** | Login with username and password. Session stored securely in `sessionStorage`. Logout clears session. |
 | **Course Browsing** | Browse active courses; filter by category (e.g., Software Engineering, Data Science); search by course title. True backend pagination. |
 | **Course Details** | View full course details: title, description, category, price, and syllabus. Displays context-aware "Buy Now" or "Continue Learning". |
 | **Mock Checkout** | Unified checkout workspace. Simulates payment process. Creates Commerce order and triggers Enrollment service creation synchronously. Duplicate purchase strictly prevented. |
@@ -185,7 +185,7 @@ This project uses **Frontend-Managed Identity and Access Control**:
 
 - Login through User Service.
 - User credentials are validated against stored credentials.
-- User information is stored in `localStorage`.
+- User information is stored in `sessionStorage`.
 - `AuthGuard`/`AdminGuard` control frontend navigation.
 
 **Backend Identity:**

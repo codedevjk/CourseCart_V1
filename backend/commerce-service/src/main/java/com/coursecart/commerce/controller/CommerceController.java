@@ -27,12 +27,14 @@ public class CommerceController {
 
     @PostMapping("/checkout")
     public ResponseEntity<CheckoutResponse> checkout(@Valid @RequestBody CheckoutRequest request) {
-        throw new UnsupportedOperationException("TODO[TRAINEE]: Delegate checkout to CommerceService (US 10).");
+        CheckoutResponse response = commerceService.processCheckout(request);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/orders")
     public ResponseEntity<List<OrderDTO>> getOrders(@RequestParam("userId") Long userId) {
-        throw new UnsupportedOperationException("TODO[TRAINEE]: Delegate getting orders by userId to CommerceService (US 11).");
+        List<OrderDTO> orders = commerceService.getOrdersByUserId(userId);
+        return ResponseEntity.ok(orders);
     }
 
     @GetMapping("/orders/recent")

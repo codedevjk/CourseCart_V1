@@ -6,11 +6,11 @@ import com.coursecart.user.dto.UserRegistrationRequest;
 import com.coursecart.user.dto.UserResponse;
 import com.coursecart.user.entity.Role;
 import com.coursecart.user.entity.User;
-import com.coursecart.user.exception.DuplicateResourceException;
-import com.coursecart.user.exception.InvalidCredentialsException;
-import com.coursecart.user.exception.ResourceNotFoundException;
+import com.coursecart.user.exception.ErrorMessages;
+import com.coursecart.user.exception.UserServiceException;
 import com.coursecart.user.repository.UserRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,7 +26,7 @@ public class UserService {
 
     public UserResponse register(UserRegistrationRequest request) {
         if (userRepository.existsByUsername(request.getUsername())) {
-            throw new DuplicateResourceException("Username already exists");
+            throw new UserServiceException(HttpStatus.CONFLICT, ErrorMessages.USERNAME_EXISTS);
         }
         
         User user = modelMapper.map(request, User.class);
@@ -38,18 +38,20 @@ public class UserService {
 
     public UserResponse login(UserLoginRequest request) {
         User user = userRepository.findByUsername(request.getUsername())
-                .orElseThrow(() -> new InvalidCredentialsException("Invalid credentials"));
+                .orElseThrow(() -> new UserServiceException(HttpStatus.BAD_REQUEST, ErrorMessages.INVALID_CREDENTIALS));
                 
         // Plain-string comparison for this educational capstone
         if (!user.getPassword().equals(request.getPassword())) {
-            throw new InvalidCredentialsException("Invalid credentials");
+            throw new UserServiceException(HttpStatus.BAD_REQUEST, ErrorMessages.INVALID_CREDENTIALS);
         }
         
         return modelMapper.map(user, UserResponse.class);
     }
 
     public UserResponse getUser(Long userId) {
-        throw new UnsupportedOperationException("TODO[TRAINEE]: Fetch user by ID from repository. Throw ResourceNotFoundException if missing. Return mapped UserResponse (US 03).");
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserServiceException(HttpStatus.NOT_FOUND, ErrorMessages.USER_NOT_FOUND));
+        return modelMapper.map(user, UserResponse.class);
     }
 
     public CountResponse countUsers() {

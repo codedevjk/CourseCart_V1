@@ -274,7 +274,7 @@
       border-radius: 20px;
       font-size: 12px;
       font-weight: 700;
-      padding: 4px 12px;
+      padding: 6px 16px;
     }
 
     .badge-preimpl {
@@ -402,14 +402,36 @@
       line-height: 1.55;
     }
 
-    /* ── Inline Code ── */
+    /* ── Inline Code & Blocks ── */
     code {
-      background: #f1f5f9;
-      color: var(--primary);
+      background: #f8fafc;
+      color: #ea580c;
+      border: 1px solid #e2e8f0;
       border-radius: 6px;
       padding: 3px 8px;
       font-family: 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', monospace;
       font-size: 13.5px;
+      font-weight: 600;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+    }
+    
+    pre {
+      background: #1e293b;
+      color: #f8fafc;
+      padding: 16px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 16px 0;
+      border: 1px solid #334155;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+    }
+    
+    pre code {
+      background: transparent;
+      color: inherit;
+      border: none;
+      padding: 0;
+      box-shadow: none;
       font-weight: 500;
     }
 
@@ -644,11 +666,11 @@
     }
     .cover .contact {
       display: inline-block;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
       color: #5b45f5;
       background: #ede9fe;
-      padding: 6px 16px;
+      padding: 5px 14px;
       border-radius: 9999px;
       position: relative;
       z-index: 1;
@@ -673,15 +695,18 @@
 <!-- Cover -->
 <div class="cover" id="cover">
 <h1>
-<img src="frontend/coursecart-ui/assets/Logo.svg" alt="CourseCart Logo" style="height: 48px; width: auto;">
+<img alt="CourseCart Logo" src="frontend/coursecart-ui/assets/Logo.svg" style="height: 48px; width: auto;"/>
 <span>Course<span class="logo-accent">Cart</span></span>
 </h1>
-<div class="subtitle">Brownfield Capstone Project SRS</div>
-<div class="contact">Prepared by: Jagmohan Kushwaha</div>
+<div class="subtitle">Brownfield Capstone Project SRS <br/><span style="font-size:1.15rem; color:#64748b;">Version 1: The UI &amp; Catalog Flow</span></div>
+<div class="contact">Author : Jagmohan Kushwaha</div>
 </div>
 <!-- ── Section 1 ── -->
 <section id="sec-1">
 <h2 class="sec-title">1. Project Overview</h2>
+<div class="callout" style="background:#f0f9ff; border-left-color:#0284c7; color:#0369a1;">
+<strong>Version Focus (V1 - The UI &amp; Catalog Flow):</strong> This specific version of the project focuses heavily on public-facing discovery and commerce. Trainees will implement the catalog search, course details, and mock checkout workflows to build a seamless shopping experience before users begin learning.
+</div>
 <p>
 <strong>CourseCart</strong> is a modern, full-stack learning management application designed to streamline the
           process of discovering, purchasing, and managing educational courses. It provides an end-to-end digital
@@ -764,7 +789,7 @@
 <td>Angular Frontend</td>
 <td>4200</td>
 <td>None</td>
-<td>LocalStorage Session</td>
+<td>SessionStorage Session</td>
 </tr>
 </tbody>
 </table>
@@ -772,7 +797,7 @@
 <h3 class="sub-title" id="s2-2">2.2 Authentication &amp; Authorization Design</h3>
 <div class="callout">
 <strong>Important:</strong> CourseCart utilizes a <strong>Frontend-Managed Identity Design</strong>. Identity
-          (Username and Role) is managed in Angular `localStorage`. No JWTs, Spring Security, or HTTP Interceptors are
+          (Username and Role) is managed in Angular `sessionStorage` (clears automatically on browser/tab close). No JWTs, Spring Security, or HTTP Interceptors are
           used to pass headers. Usernames/IDs are passed as standard explicit API parameters where required.
         </div>
 </section><section id="sec-3">
@@ -834,278 +859,149 @@
 </div>
 </section><section id="sec-4">
 <h2 class="sec-title">4. User Stories</h2>
-<p>The following fifteen user stories define the complete functional scope of the application. <strong>US01, US02, US06, US12, US13, US14, and US15</strong> are pre-implemented in the starter codebase and must remain functional without redesign. <strong>US03, US04, US05, US07, US08, US09, US10, and US11</strong> are intentionally stubbed — trainees must implement these completely.</p><div class="callout warning" style="border-left: 4px solid #f59e0b; background-color: #fef3c7; padding: 12px 16px; margin: 16px 0; border-radius: 4px; color: #92400e;"><strong>Important: </strong>Do not modify any pre-implemented story. All TODO markers follow the format <code style="background-color: #e2e8f0; padding: 2px 6px; border-radius: 4px; color: #dc2626;">TODO[TRAINEE]</code>. Use VSCode's global search (Ctrl+Shift+F) to list every implementation point across the codebase.</div>
+<p>The following fifteen user stories define the complete functional scope of the application. <strong>US01, US02, US06, US12, US13, US14, and US15</strong> are pre-implemented in the starter codebase and must remain functional without redesign. <strong>US03, US04, US05, US07, US08, US09, US10, and US11</strong> are intentionally stubbed — trainees must implement these completely.</p><div class="callout warning" style="border-left: 4px solid #f59e0b; background-color: #fef3c7; padding: 12px 16px; margin: 16px 0; border-radius: 4px; color: #92400e;"><strong>Important: </strong>Do not modify any pre-implemented story. All TODO markers follow the format <code>TODO[TRAINEE]</code>. Use VSCode's global search (Ctrl+Shift+F) to list every implementation point across the codebase.</div>
 <!-- US01 -->
 <div class="us-card preimpl" id="us01">
-<h3>US 01 – User Registration <span class="badge-preimpl">🔒 Baseline Module (Read-Only)</span></h3>
+<h3>US 01 – User Registration</h3>
 <div class="us-meta">
 <span><strong>Priority:</strong> <span class="badge-must">Must Have</span></span>
 <span><strong>Primary Microservice:</strong> User Service</span>
 </div>
 <h4 class="sub2-title">Acceptance Criteria</h4>
-<ul>
-<li>As an anonymous visitor, I want to securely register so that I can access the CourseCart platform and
-              purchase courses.</li>
-<li>Customers shall be able to register using Full Name, Username, and Password.</li>
-<li>Usernames shall be unique across the system.</li>
-<li>Duplicate username registrations shall not be allowed; the system must return an appropriate validation
-              message.</li>
-<li>Newly registered users shall automatically receive the role <code>USER</code>.</li>
-<li>Mandatory fields shall be validated before registration (e.g., minimum lengths, no empty strings).</li>
-<li>Appropriate success, validation, and error messages shall be displayed.</li>
-<li>The implementation must include reactive forms and seamless redirect to login upon success.</li>
-</ul>
+<ul><li>As an anonymous visitor, I want to securely register so that I can access the CourseCart platform and purchase courses.</li><li>Customers shall be able to register using their Full Name, Username, and Password.</li><li>Usernames shall be unique across the system.</li><li>Duplicate username registrations shall not be allowed; the system must return a clear validation message.</li><li>Newly registered users shall automatically be assigned a standard customer role.</li><li>Mandatory fields shall be validated before registration (e.g., minimum lengths, no empty strings).</li><li>Appropriate success, validation, and error messages shall be displayed clearly to the user.</li><li>The registration form must provide immediate input validation and smoothly redirect the user to the login page upon successful registration.</li></ul>
 </div>
 <!-- US02 -->
 <div class="us-card preimpl" id="us02">
-<h3>US 02 – User Login <span class="badge-preimpl">🔒 Baseline Module (Read-Only)</span></h3>
+<h3>US 02 – User Login</h3>
 <div class="us-meta">
 <span><strong>Priority:</strong> <span class="badge-must">Must Have</span></span>
 <span><strong>Primary Microservice:</strong> User Service</span>
 </div>
 <h4 class="sub2-title">Acceptance Criteria</h4>
-<ul>
-<li>As a registered user, I want to log in so that I can access the application based on my assigned role.
-            </li>
-<li>Users shall be able to log in using their Username and Password.</li>
-<li>Authentication shall validate credentials against stored database records (plaintext for demo purposes).
-            </li>
-<li>User role shall be identified during successful login.</li>
-<li>Identity and role shall be stored securely in <code>localStorage</code> (Frontend-managed identity).
-            </li>
-<li>Valid login routes <code>USER</code> to Catalog/My Learning and <code>ADMIN</code> to the Dashboard.
-            </li>
-<li>Users shall be able to log out by clearing the active session.</li>
-<li>Mandatory fields shall be validated before login.</li>
-<li>Appropriate error messages (e.g., "Invalid credentials") shall be displayed.</li>
-</ul>
+<ul><li>As a registered user, I want to log in so that I can access the application based on my assigned role.</li><li>Users shall be able to log in using their Username and Password.</li><li>Authentication shall securely validate credentials against stored records.</li><li>The user's access level and role shall be identified during a successful login.</li><li>Identity and session information shall be stored securely for the duration of the visit and cleared automatically when the browser or tab is closed.</li><li>Upon successful login, standard users shall be directed to the course catalog or their learning area, while administrators shall be directed to the management dashboard.</li><li>Users shall be able to log out securely, which immediately clears their active session.</li><li>Mandatory fields shall be validated before attempting to log in.</li><li>Appropriate error messages (e.g., 'Invalid credentials') shall be displayed for failed attempts.</li></ul>
 </div>
 <!-- US03 -->
 <div class="us-card trainee-task" id="us03">
-<h3>US 03 – View Profile <span class="badge-trainee">🎯 Active Assignment</span></h3>
+<h3>US 03 – View Profile <span class="badge-trainee">Trainee Task</span></h3>
 <div class="us-meta">
 <span><strong>Priority:</strong> <span class="badge-must">Must Have</span></span>
 <span><strong>Primary Microservice:</strong> User Service</span>
 </div>
-<h4 class="sub2-title">Acceptance Criteria</h4><ul>
-<li>As a logged-in user, I want to view my basic profile details, so that I can verify my account
-              information.</li>
-<li>System displays the user's name and username securely.</li>
-<li>Profile data is fetched from the User Service using the active user ID.</li>
-<li>The UI should provide a clean card or view representing the user's identity.</li>
-</ul><div class="trainee-note"><div class="tn-title">Trainee Implementation Required</div><p style="margin-top: 8px; font-size: 0.95rem; margin-bottom: 0;">Implement frontend view and backend API to securely fetch and display the active user profile.</p></div>
-</div>
+<h4 class="sub2-title">Acceptance Criteria</h4><ul><li>As a logged-in user, I want to view my basic profile details, so that I can verify my account information.</li><li>The system shall display the user's name and username securely.</li><li>Profile data shall be retrieved securely using the logged-in user's identity.</li><li>The user interface must provide a clean and intuitive view representing the user's identity and details.</li></ul>
+<div class="trainee-note" style="margin-top: 15px; padding: 15px; background: #fffbeb; border-left: 4px solid #f59e0b; border-radius: 4px;"><h4 style="margin-bottom: 10px; color: #b45309; font-weight: 700; font-size: 14px;">Trainee Implementation &amp; Verification Guide</h4></div></div>
 <!-- US04 -->
 <div class="us-card trainee-task" id="us04">
-<h3>US 04 – Admin Category Management <span class="badge-trainee">🎯 Active Assignment</span></h3>
+<h3>US 04 – Admin Category Management <span class="badge-trainee">Trainee Task</span></h3>
 <div class="us-meta">
 <span><strong>Priority:</strong> <span class="badge-must">Must Have</span></span>
 <span><strong>Primary Microservice:</strong> Catalog Service</span>
 </div>
-<h4 class="sub2-title">Acceptance Criteria</h4><ul>
-<li>As an admin, I want to manage course categories, so that I can organize the catalog.</li>
-<li>Admin can view a paginated or list view of all categories.</li>
-<li>Admin can create a new category by providing a Name.</li>
-<li>Admin can edit an existing category's Name.</li>
-<li>Admin can attempt to delete a category.</li>
-<li>Deletion shall be blocked if active courses are attached to the category (enforced via database FK
-              constraint).</li>
-<li>The frontend must gracefully handle deletion rejections and display a user-friendly error popup (e.g.,
-              "Cannot delete category because it has active courses attached.").</li>
-</ul><div class="trainee-note"><div class="tn-title">Trainee Implementation Required</div><p style="margin-top: 8px; font-size: 0.95rem; margin-bottom: 0;">Implement full CRUD operations for category management, enforcing data integrity constraints on deletion.</p></div>
-</div>
+<h4 class="sub2-title">Acceptance Criteria</h4><ul><li>As an admin, I want to manage course categories, so that I can organize the catalog.</li><li>Administrators can view a paginated or structured list of all categories.</li><li>Administrators can create a new category by providing a unique name.</li><li>Administrators can edit the name of an existing category.</li><li>Administrators can attempt to delete a category.</li><li>A category cannot be deleted if there are active courses currently assigned to it.</li><li>If a deletion is prevented, the system must gracefully handle the rejection and display a user-friendly error message explaining the reason.</li></ul>
+<div class="trainee-note" style="margin-top: 15px; padding: 15px; background: #fffbeb; border-left: 4px solid #f59e0b; border-radius: 4px;"><h4 style="margin-bottom: 10px; color: #b45309; font-weight: 700; font-size: 14px;">Trainee Implementation &amp; Verification Guide</h4></div></div>
 <!-- US05 -->
 <div class="us-card trainee-task" id="us05">
-<h3>US 05 – Admin Course Management <span class="badge-trainee">🎯 Active Assignment</span></h3>
+<h3>US 05 – Admin Course Management <span class="badge-trainee">Trainee Task</span></h3>
 <div class="us-meta">
 <span><strong>Priority:</strong> <span class="badge-must">Must Have</span></span>
 <span><strong>Primary Microservice:</strong> Catalog Service</span>
 </div>
-<h4 class="sub2-title">Acceptance Criteria</h4><ul>
-<li>As an admin, I want to manage course metadata, so that I can define what is sold on the platform.</li>
-<li>Admin can view all courses regardless of status.</li>
-<li>Admin can create and edit courses with fields: Title, Description, Price, and Category ID.</li>
-<li>Admin must assign exactly one existing category to a course.</li>
-<li>Admin can set a fixed price (numeric, 0.00 for free).</li>
-<li>New courses shall default to <code>Draft</code> status upon creation.</li>
-<li>Form validation ensures price is non-negative and required fields are populated before submission.</li>
-            <li>Admin can delete a course. Deleting a course must cascade and delete its associated lessons.</li>
-</ul><div class="trainee-note"><div class="tn-title">Trainee Implementation Required</div><p style="margin-top: 8px; font-size: 0.95rem; margin-bottom: 0;">Implement course creation and modification logic, ensuring strict category assignment.</p></div>
-</div>
+<h4 class="sub2-title">Acceptance Criteria</h4><ul><li>As an admin, I want to manage course metadata, so that I can define what is sold on the platform.</li><li>Administrators can view all courses regardless of their current publishing status.</li><li>Administrators can create and edit courses by providing a Title, Description, Price, and Category.</li><li>Every course must be assigned to exactly one existing category.</li><li>Administrators can set a fixed price for the course, including setting it to free.</li><li>Newly created courses shall default to a 'Draft' status.</li><li>The system must validate that the price is not negative and that all required fields are provided before saving.</li><li>Administrators can delete a course. Deleting a course must also securely remove all of its associated lessons.</li></ul>
+<div class="trainee-note" style="margin-top: 15px; padding: 15px; background: #fffbeb; border-left: 4px solid #f59e0b; border-radius: 4px;"><h4 style="margin-bottom: 10px; color: #b45309; font-weight: 700; font-size: 14px;">Trainee Implementation &amp; Verification Guide</h4></div></div>
 <!-- US06 -->
 <div class="us-card preimpl" id="us06">
-<h3>US 06 – Admin Lesson Management <span class="badge-preimpl">🔒 Baseline Module (Read-Only)</span></h3>
+<h3>US 06 – Admin Lesson Management</h3>
 <div class="us-meta">
 <span><strong>Priority:</strong> <span class="badge-must">Must Have</span></span>
 <span><strong>Primary Microservice:</strong> Catalog Service</span>
 </div>
 <h4 class="sub2-title">Acceptance Criteria</h4>
-<ul>
-<li>As an admin, I want to manage lessons within a course, so that I can build the educational content.</li>
-<li>Admin can navigate into a specific course to manage its lessons.</li>
-<li>Admin can create a text-based lesson (Title, Text Content) for a course.</li>
-<li>Admin can edit existing lesson titles and text content.</li>
-<li>Admin can delete a lesson completely.</li>
-<li>Deleting a lesson should automatically cascade or handle completion records for enrolled users
-              appropriately without breaking their progress view.</li>
-</ul>
+<ul><li>As an admin, I want to manage lessons within a course, so that I can build the educational content.</li><li>Administrators can navigate into a specific course to manage its associated lessons.</li><li>Administrators can create a text-based lesson with a Title and Content for a course.</li><li>Administrators can edit existing lesson titles and their text content.</li><li>Administrators can completely delete a lesson from a course.</li><li>Deleting a lesson must be handled gracefully so that it does not corrupt or break the learning progress records of users currently enrolled in the course.</li></ul>
 </div>
 <!-- US07 -->
 <div class="us-card trainee-task" id="us07">
-<h3>US 07 – Admin Course Lifecycle Management <span class="badge-trainee">🎯 Active Assignment</span></h3>
+<h3>US 07 – Admin Course Lifecycle Management <span class="badge-trainee">Trainee Task</span></h3>
 <div class="us-meta">
 <span><strong>Priority:</strong> <span class="badge-must">Must Have</span></span>
 <span><strong>Primary Microservice:</strong> Catalog Service</span>
 </div>
-<h4 class="sub2-title">Acceptance Criteria</h4><ul>
-<li>As an admin, I want to toggle a course's status between Draft, Active, and Inactive, so that I can
-              control its public availability.</li>
-<li>Course statuses strictly allow: <code>Draft</code>, <code>Active</code>, <code>Inactive</code>.</li>
-<li>Admin can change a Draft course to Active to publish it.</li>
-<li>Admin can change an Active course to Inactive to retire it.</li>
-<li>Inactive courses must immediately disappear from the public catalog for new customers.</li>
-<li>Status changes must NOT affect existing enrolled users; they retain access to Inactive courses in My
-              Learning.</li>
-</ul><div class="trainee-note"><div class="tn-title">Trainee Implementation Required</div><p style="margin-top: 8px; font-size: 0.95rem; margin-bottom: 0;">Implement status toggling logic to handle Draft, Active, and Inactive transitions.</p></div>
-</div>
+<h4 class="sub2-title">Acceptance Criteria</h4><ul><li>As an admin, I want to toggle a course's status between Draft, Active, and Inactive, so that I can control its public availability.</li><li>Course publishing statuses are strictly limited to Draft, Active, or Inactive.</li><li>Administrators can change a Draft course to Active to publish it to the public catalog.</li><li>Administrators can change an Active course to Inactive to retire it from future sales.</li><li>Inactive courses must immediately be hidden from the public catalog for new customers.</li><li>Changing a course's status to Inactive must not affect previously enrolled users; they must retain full access to the course in their learning dashboard.</li></ul>
+<div class="trainee-note" style="margin-top: 15px; padding: 15px; background: #fffbeb; border-left: 4px solid #f59e0b; border-radius: 4px;"><h4 style="margin-bottom: 10px; color: #b45309; font-weight: 700; font-size: 14px;">Trainee Implementation &amp; Verification Guide</h4></div></div>
 <!-- US08 -->
 <div class="us-card trainee-task" id="us08">
-<h3>US 08 – Browse and Search Catalog <span class="badge-trainee">🎯 Active Assignment</span></h3>
+<h3>US 08 – Browse and Search Catalog <span class="badge-trainee">Trainee Task</span></h3>
 <div class="us-meta">
 <span><strong>Priority:</strong> <span class="badge-must">Must Have</span></span>
 <span><strong>Primary Microservice:</strong> Catalog Service</span>
 </div>
-<h4 class="sub2-title">Acceptance Criteria</h4><ul>
-<li>As a user, I want to browse and search the active course catalog, so that I can find courses to learn.
-            </li>
-<li>System displays a grid/list of ONLY <code>Active</code> courses.</li>
-<li>User can filter the catalog by selecting a specific Category.</li>
-<li>User can search for courses by Course Title (partial match logic).</li>
-<li>The list must support backend pagination (displaying 12 courses per page) for scalability.</li>
-<li>Each course card displays Title, Price, and Category name.</li>
-<li>The implementation must include loading spinners and empty state messages when no courses match.</li>
-</ul><div class="trainee-note"><div class="tn-title">Trainee Implementation Required</div><p style="margin-top: 8px; font-size: 0.95rem; margin-bottom: 0;">Implement public course discovery functionality with active filtering and backend pagination.</p></div>
-</div>
+<h4 class="sub2-title">Acceptance Criteria</h4><ul><li>As a user, I want to browse and search the active course catalog, so that I can find courses to learn.</li><li>The system shall display a visual grid or list containing only Active courses.</li><li>Users can filter the catalog by selecting a specific category.</li><li>Users can search for courses by entering part or all of a Course Title.</li><li>The catalog must support structured pagination to cleanly display a set number of courses per page.</li><li>Each course card shall display the Title, Price, and Category name clearly.</li><li>The interface must provide clear visual feedback during loading times and display helpful messages if no courses match the search criteria.</li></ul>
+<div class="trainee-note" style="margin-top: 15px; padding: 15px; background: #fffbeb; border-left: 4px solid #f59e0b; border-radius: 4px;"><h4 style="margin-bottom: 10px; color: #b45309; font-weight: 700; font-size: 14px;">Trainee Implementation &amp; Verification Guide</h4></div></div>
 <!-- US09 -->
 <div class="us-card trainee-task" id="us09">
-<h3>US 09 – View Course Details <span class="badge-trainee">🎯 Active Assignment</span></h3>
+<h3>US 09 – View Course Details <span class="badge-trainee">Trainee Task</span></h3>
 <div class="us-meta">
 <span><strong>Priority:</strong> <span class="badge-must">Must Have</span></span>
 <span><strong>Primary Microservice:</strong> Catalog Service</span>
 </div>
-<h4 class="sub2-title">Acceptance Criteria</h4><ul>
-<li>As a user, I want to view detailed information about a course, so that I can decide whether to purchase
-              it.</li>
-<li>System displays course Title, Description, Category, and Price.</li>
-<li>System displays a read-only list of Lesson titles (the syllabus).</li>
-<li>If the user is logged in and NOT enrolled, a "Buy Now" button is displayed.</li>
-<li>If the user is logged in and ALREADY enrolled, an "Already Enrolled" or "Go to Course" button is
-              displayed.</li>
-<li>If the user is anonymous, they are prompted to Login/Register to purchase.</li>
-</ul><div class="trainee-note"><div class="tn-title">Trainee Implementation Required</div><p style="margin-top: 8px; font-size: 0.95rem; margin-bottom: 0;">Implement course details view fetching course and lesson metadata.</p></div>
-</div>
+<h4 class="sub2-title">Acceptance Criteria</h4><ul><li>As a user, I want to view detailed information about a course, so that I can decide whether to purchase it.</li><li>The system shall display the course Title, Description, Category, and Price in a detailed view.</li><li>The system shall display a read-only list of the course syllabus (Lesson titles).</li><li>If the user is logged in and not yet enrolled, a clear option to purchase the course is displayed.</li><li>If the user is logged in and already enrolled, an option to directly navigate to the course material is displayed.</li><li>If the visitor is not logged in, they are prompted to log in or register before they can purchase the course.</li></ul>
+<div class="trainee-note" style="margin-top: 15px; padding: 15px; background: #fffbeb; border-left: 4px solid #f59e0b; border-radius: 4px;"><h4 style="margin-bottom: 10px; color: #b45309; font-weight: 700; font-size: 14px;">Trainee Implementation &amp; Verification Guide</h4></div></div>
 <!-- US10 -->
 <div class="us-card trainee-task" id="us10">
-<h3>US 10 – Single Course Purchase (Mock Checkout) <span class="badge-trainee">🎯 Active Assignment</span>
+<h3>US 10 – Single Course Purchase (Mock Checkout) <span class="badge-trainee">Trainee Task</span>
 </h3>
 <div class="us-meta">
 <span><strong>Priority:</strong> <span class="badge-must">Must Have</span></span>
 <span><strong>Primary Microservice:</strong> Commerce Service</span>
 </div>
-<h4 class="sub2-title">Acceptance Criteria</h4><ul>
-<li>As a user, I want to purchase a course through a simulated checkout, so that I can gain access to its
-              content.</li>
-<li>Clicking "Buy Now" directs the user to a mock checkout flow.</li>
-<li>System displays the course details and total price to be paid.</li>
-<li>User selects a mock payment method and system simulates processing.</li>
-<li>Duplicate purchase is strictly prevented via API validation if the user is already enrolled.</li>
-<li>On success, the Commerce Service creates an Order record AND triggers the Enrollment Service to create
-              an Enrollment record.</li>
-<li>Failed mock attempts do not create Enrollment or Order records.</li>
-<li>User is redirected to My Learning or an Order Success page upon completion.</li>
-</ul><div class="trainee-note"><div class="tn-title">Trainee Implementation Required</div><p style="margin-top: 8px; font-size: 0.95rem; margin-bottom: 0;">Implement simulated checkout flow and distributed inter-service communication.</p></div>
-</div>
+<h4 class="sub2-title">Acceptance Criteria</h4><ul><li>As a user, I want to purchase a course through a simulated checkout, so that I can gain access to its content.</li><li>Initiating a purchase directs the user to a streamlined mock checkout flow.</li><li>The system shall clearly display the course details and the total price to be paid.</li><li>The user can select a simulated payment method, and the system simulates a successful transaction.</li><li>The system must strictly prevent duplicate purchases if the user is already enrolled in the course.</li><li>Upon a successful transaction, the system records the order and officially enrolls the user in the course.</li><li>Failed transaction attempts must not grant course access or create order records.</li><li>The user is seamlessly redirected to a success screen or their learning dashboard upon completion.</li></ul>
+<div class="trainee-note" style="margin-top: 15px; padding: 15px; background: #fffbeb; border-left: 4px solid #f59e0b; border-radius: 4px;"><h4 style="margin-bottom: 10px; color: #b45309; font-weight: 700; font-size: 14px;">Trainee Implementation &amp; Verification Guide</h4></div></div>
 <!-- US11 -->
 <div class="us-card trainee-task" id="us11">
-<h3>US 11 – View Order History <span class="badge-trainee">🎯 Active Assignment</span></h3>
+<h3>US 11 – View Order History <span class="badge-trainee">Trainee Task</span></h3>
 <div class="us-meta">
 <span><strong>Priority:</strong> <span class="badge-must">Must Have</span></span>
 <span><strong>Primary Microservice:</strong> Commerce Service</span>
 </div>
-<h4 class="sub2-title">Acceptance Criteria</h4><ul>
-<li>As a user, I want to view my past successful purchases, so that I have a record of my transactions.</li>
-<li>System displays a tabular list of the user's successful orders.</li>
-<li>Fields displayed: Course Title, Order Date, and Total Price Paid.</li>
-<li>Failed mock attempts are NOT shown in this history.</li>
-<li>The list should be ordered by Date descending (newest first).</li>
-</ul><div class="trainee-note"><div class="tn-title">Trainee Implementation Required</div><p style="margin-top: 8px; font-size: 0.95rem; margin-bottom: 0;">Implement order history view to retrieve user transaction records.</p></div>
-</div>
+<h4 class="sub2-title">Acceptance Criteria</h4><ul><li>As a user, I want to view my past successful purchases, so that I have a record of my transactions.</li><li>The system shall display a clear, tabular list of the user's successfully completed orders.</li><li>The history must display the Course Title, Order Date, and Total Price Paid for each transaction.</li><li>Failed or incomplete purchase attempts must not appear in this history.</li><li>The order history must be sorted chronologically, showing the most recent transactions first.</li></ul>
+<div class="trainee-note" style="margin-top: 15px; padding: 15px; background: #fffbeb; border-left: 4px solid #f59e0b; border-radius: 4px;"><h4 style="margin-bottom: 10px; color: #b45309; font-weight: 700; font-size: 14px;">Trainee Implementation &amp; Verification Guide</h4></div></div>
 <!-- US12 -->
 <div class="us-card preimpl" id="us12">
-<h3>US 12 – My Learning Dashboard <span class="badge-preimpl">🔒 Baseline Module (Read-Only)</span></h3>
+<h3>US 12 – My Learning Dashboard</h3>
 <div class="us-meta">
 <span><strong>Priority:</strong> <span class="badge-must">Must Have</span></span>
 <span><strong>Primary Microservice:</strong> Enrollment Service</span>
 </div>
 <h4 class="sub2-title">Acceptance Criteria</h4>
-<ul>
-<li>As a user, I want to see a list of all courses I am enrolled in, so that I can resume learning.</li>
-<li>System displays all enrolled courses (including those now marked Inactive by Admin).</li>
-<li>System calculates and displays the overall progress percentage (e.g., 50%) for each course.</li>
-<li>Empty states are handled gracefully if the user has no enrollments yet.</li>
-</ul>
+<ul><li>As a user, I want to see a list of all courses I am enrolled in, so that I can resume learning.</li><li>The system shall display a personalized dashboard of all courses the user is enrolled in, including any courses that have since been retired by administrators.</li><li>The system shall automatically calculate and display the user's overall progress percentage for each course.</li><li>The dashboard must display a welcoming and helpful message if the user has not yet enrolled in any courses.</li></ul>
 </div>
 <!-- US13 -->
 <div class="us-card preimpl" id="us13">
-<h3>US 13 – Access Course Content <span class="badge-preimpl">🔒 Baseline Module (Read-Only)</span></h3>
+<h3>US 13 – Access Course Content</h3>
 <div class="us-meta">
 <span><strong>Priority:</strong> <span class="badge-must">Must Have</span></span>
 <span><strong>Primary Microservice:</strong> Enrollment Service</span>
 </div>
 <h4 class="sub2-title">Acceptance Criteria</h4>
-<ul>
-<li>As an enrolled user, I want to read the lessons of a course, so that I can learn the material.</li>
-<li>User can click into an enrolled course to view the syllabus and lesson contents.</li>
-<li>User views the text-based content of the selected lesson in a reading view.</li>
-<li>Access is strictly denied (backend 403 or frontend redirect) if a non-enrolled user attempts to access
-              the lesson content directly via URL.</li>
-</ul>
+<ul><li>As an enrolled user, I want to read the lessons of a course, so that I can learn the material.</li><li>Enrolled users can navigate into a course to view the full syllabus and access lesson materials.</li><li>Users can comfortably view the text-based educational content of any selected lesson.</li><li>The system must strictly deny access and gracefully redirect any non-enrolled user attempting to view restricted lesson content directly.</li></ul>
 </div>
 <!-- US14 -->
 <div class="us-card preimpl" id="us14">
-<h3>US 14 – Track Lesson Progress <span class="badge-preimpl">🔒 Baseline Module (Read-Only)</span></h3>
+<h3>US 14 – Track Lesson Progress</h3>
 <div class="us-meta">
 <span><strong>Priority:</strong> <span class="badge-must">Must Have</span></span>
 <span><strong>Primary Microservice:</strong> Enrollment Service</span>
 </div>
 <h4 class="sub2-title">Acceptance Criteria</h4>
-<ul>
-<li>As an enrolled user, I want to mark lessons as complete, so that my overall course progress is updated.
-            </li>
-<li>User can toggle a lesson's completion status (Complete/Incomplete) via a checkbox or button.</li>
-<li>Toggling status immediately updates the backend tracking record for that specific user and lesson.</li>
-<li>The course's overall progress percentage recalculates immediately and updates the UI in real-time.</li>
-</ul>
+<ul><li>As an enrolled user, I want to mark lessons as complete, so that my overall course progress is updated.</li><li>Users can manually toggle a lesson's status between Complete and Incomplete.</li><li>Toggling a lesson's status immediately and securely saves the user's progress.</li><li>The course's overall progress percentage is recalculated and updated dynamically on the screen in real-time.</li></ul>
 </div>
 <!-- US15 -->
 <div class="us-card preimpl" id="us15">
-<h3>US 15 – Admin Dashboard <span class="badge-preimpl">🔒 Baseline Module (Read-Only)</span></h3>
+<h3>US 15 – Admin Dashboard</h3>
 <div class="us-meta">
 <span><strong>Priority:</strong> <span class="badge-must">Must Have</span></span>
 <span><strong>Primary Microservice:</strong> All Services</span>
 </div>
 <h4 class="sub2-title">Acceptance Criteria</h4>
-<ul>
-<li>As an admin, I want to view high-level platform metrics, so that I can understand business performance.
-            </li>
-<li>System displays Total Registered Users (count).</li>
-<li>System displays Total Active Courses (count).</li>
-<li>System displays Total Enrollments across all courses.</li>
-<li>System displays Total Revenue (Sum of successful order prices).</li>
-<li>Metrics should be fetched efficiently from the respective microservices and displayed in dashboard
-              cards.</li>
-<li>System displays recent orders in a tabular view, including the Order ID for admin reference.</li>
-</ul>
+<ul><li>As an admin, I want to view high-level platform metrics, so that I can understand business performance.</li><li>The system shall display the total count of registered users on the platform.</li><li>The system shall display the total count of published, active courses.</li><li>The system shall display the total number of course enrollments.</li><li>The system shall display the total aggregated revenue from all successful transactions.</li><li>These performance metrics must be gathered efficiently and displayed clearly in dashboard summaries.</li><li>The dashboard shall also display a list of recent transactions for administrative reference.</li></ul>
 </div>
 <!-- 3.1 Final List -->
 <h3 class="sub-title" id="s3-1">4.1 Final User Story List</h3>
@@ -1224,10 +1120,10 @@
 <li>All successful Create, Update, and Delete operations shall be immediately persisted in the database.</li>
 <li>All View and Search operations shall always retrieve the latest persisted records.</li>
 <li>Changes performed by one module shall be immediately reflected wherever the same data is consumed.</li>
-<li>No business data shall be maintained only in frontend memory; frontend LocalStorage is strictly reserved
+<li>No business data shall be maintained only in frontend memory; frontend sessionStorage is strictly reserved (clears on tab close)
             for managing active session state (user info and role).</li>
 <li>Data shall remain available after browser closure, frontend restart, backend restart, application restart,
-            or system reboot.</li>
+            or system reboot. ddl-auto: update ensures no data loss on restart; *.sql files are one-time setup, do not re-run</li>
 <li>The database shall always be considered the single source of truth for all business operations.</li>
 </ul>
 </section><section id="sec-6">
@@ -1284,13 +1180,13 @@
 <h2 class="sec-title">7. Frontend Components</h2>
 <div class="module-block">
 <h4>Authentication Module</h4>
-<p>Handles user registration, login, credential validation, and session management using LocalStorage.</p>
+<p>Handles user registration, login, credential validation, and session management using sessionStorage.</p>
 <p><strong>Features:</strong></p>
 <ul>
 <li>User Registration (Customers only)</li>
 <li>User Login (Customers and Administrators)</li>
 <li>Role-Based Route Guards (AuthGuard, AdminGuard)</li>
-<li>Session Management (via LocalStorage, no JWTs)</li>
+<li>Session Management (via sessionStorage; session clears on browser/tab close, no JWTs)</li>
 <li>Logout Functionality</li>
 </ul>
 </div>
@@ -1512,33 +1408,26 @@
 <h2 class="sec-title">12. Trainee Implementation Guide</h2>
 <p>The following files contain <code>TODO[TRAINEE]</code> markers and must be implemented in full. Entities,
           DTOs, and repositories are pre-provided — do not modify them.</p>
-<h3 class="sub-title">12.1 Backend — Controllers &amp; Services (7 Java files)</h3>
+<h3 class="sub-title">12.1 Backend — Controllers &amp; Services</h3>
 <div class="file-group">
 <div class="fg-label">User Service</div>
 <ul>
-<li>backend/.../controller/<strong>UserController.java</strong> <span class="tag">← TODO[TRAINEE] for
-                US03</span></li>
-<li>backend/.../service/<strong>UserServiceImpl.java</strong> <span class="tag">← TODO[TRAINEE] for
-                US03</span></li>
+<li>backend/.../controller/<strong>UserController.java</strong> <span class="tag">← TODO[TRAINEE] for US03</span></li>
+<li>backend/.../service/<strong>UserServiceImpl.java</strong> <span class="tag">← TODO[TRAINEE] for US03</span></li>
 </ul>
 <div class="fg-label" style="margin-top:10px;">Catalog Service</div>
 <ul>
-<li>backend/.../controller/<strong>CategoryController.java</strong> <span class="tag">← TODO[TRAINEE]
-                for US04</span></li>
-<li>backend/.../controller/<strong>CourseController.java</strong> <span class="tag">← TODO[TRAINEE] for
-                US05, 07, 08, 09</span></li>
-<li>backend/.../service/<strong>CatalogServiceImpl.java</strong> <span class="tag">← TODO[TRAINEE] for
-                US04, 05, 07, 08, 09</span></li>
+<li>backend/.../controller/<strong>CategoryController.java</strong> <span class="tag">← TODO[TRAINEE] for US04</span></li>
+<li>backend/.../controller/<strong>CourseController.java</strong> <span class="tag">← TODO[TRAINEE] for US05, 07, 08, 09</span></li>
+<li>backend/.../service/<strong>CatalogServiceImpl.java</strong> <span class="tag">← TODO[TRAINEE] for US04, 05, 07, 08, 09</span></li>
 </ul>
 <div class="fg-label" style="margin-top:10px;">Commerce Service</div>
 <ul>
-<li>backend/.../controller/<strong>CommerceController.java</strong> <span class="tag">← TODO[TRAINEE]
-                for US10, 11</span></li>
-<li>backend/.../service/<strong>CommerceServiceImpl.java</strong> <span class="tag">← TODO[TRAINEE] for
-                US10, 11</span></li>
+<li>backend/.../controller/<strong>CommerceController.java</strong> <span class="tag">← TODO[TRAINEE] for US10, 11</span></li>
+<li>backend/.../service/<strong>CommerceServiceImpl.java</strong> <span class="tag">← TODO[TRAINEE] for US10, 11</span></li>
 </ul>
 </div>
-<h3 class="sub-title">12.2 Frontend — Angular Components &amp; Services (17 files)</h3>
+<h3 class="sub-title">12.2 Frontend — Angular Components &amp; Services</h3>
 <div class="file-group">
 <div class="fg-label">Frontend Services</div>
 <ul>

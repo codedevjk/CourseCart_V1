@@ -1,7 +1,9 @@
 package com.coursecart.commerce.client;
 
 import com.coursecart.commerce.dto.CourseDTO;
-import com.coursecart.commerce.exception.ResourceNotFoundException;
+import com.coursecart.commerce.exception.CommerceServiceException;
+import com.coursecart.commerce.exception.ErrorMessages;
+import org.springframework.http.HttpStatus;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -35,13 +37,13 @@ public class CatalogServiceClient {
                     .bodyToMono(CourseDTO.class)
                     .block();
         } catch (WebClientResponseException.NotFound e) {
-            throw new ResourceNotFoundException("Course not found with id: " + courseId);
+            throw new CommerceServiceException(HttpStatus.NOT_FOUND, ErrorMessages.COURSE_NOT_FOUND);
         }
     }
 
     public CourseDTO getCourseFallback(Long courseId, Throwable t) {
-        if (t instanceof ResourceNotFoundException) {
-            throw (ResourceNotFoundException) t;
+        if (t instanceof CommerceServiceException) {
+            throw (CommerceServiceException) t;
         }
         throw new RuntimeException("Catalog service is currently unavailable. Please try again later.");
     }

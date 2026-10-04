@@ -5,7 +5,7 @@ import com.coursecart.catalog.entity.Category;
 import com.coursecart.catalog.entity.Course;
 import com.coursecart.catalog.entity.CourseStatus;
 import com.coursecart.catalog.entity.Lesson;
-import com.coursecart.catalog.exception.ResourceNotFoundException;
+import com.coursecart.catalog.exception.CatalogServiceException;
 import com.coursecart.catalog.repository.CategoryRepository;
 import com.coursecart.catalog.repository.CourseRepository;
 import com.coursecart.catalog.repository.LessonRepository;

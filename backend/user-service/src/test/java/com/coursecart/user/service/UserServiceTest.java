@@ -6,9 +6,7 @@ import com.coursecart.user.dto.UserRegistrationRequest;
 import com.coursecart.user.dto.UserResponse;
 import com.coursecart.user.entity.Role;
 import com.coursecart.user.entity.User;
-import com.coursecart.user.exception.DuplicateResourceException;
-import com.coursecart.user.exception.InvalidCredentialsException;
-import com.coursecart.user.exception.ResourceNotFoundException;
+import com.coursecart.user.exception.UserServiceException;
 import com.coursecart.user.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -80,7 +78,7 @@ public class UserServiceTest {
 
         when(userRepository.existsByUsername("jane_doe")).thenReturn(true);
 
-        assertThrows(DuplicateResourceException.class, () -> {
+        assertThrows(UserServiceException.class, () -> {
             userService.register(request);
         });
         
@@ -116,7 +114,7 @@ public class UserServiceTest {
 
         when(userRepository.findByUsername("jane_doe")).thenReturn(Optional.of(testUser));
 
-        assertThrows(InvalidCredentialsException.class, () -> {
+        assertThrows(UserServiceException.class, () -> {
             userService.login(request);
         });
     }
@@ -129,7 +127,7 @@ public class UserServiceTest {
 
         when(userRepository.findByUsername("unknown_user")).thenReturn(Optional.empty());
 
-        assertThrows(InvalidCredentialsException.class, () -> {
+        assertThrows(UserServiceException.class, () -> {
             userService.login(request);
         });
     }
@@ -160,7 +158,7 @@ public class UserServiceTest {
     @Test
     void testGetUser_NotFound_ThrowsResourceNotFoundException() {
         when(userRepository.findById(99L)).thenReturn(Optional.empty());
-        assertThrows(ResourceNotFoundException.class, () -> {
+        assertThrows(UserServiceException.class, () -> {
             userService.getUser(99L);
         });
     }

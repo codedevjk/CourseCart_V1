@@ -29,39 +29,40 @@ public class CourseController {
             Pageable pageable,
             @RequestParam(required = false) Long categoryId,
             @RequestParam(required = false) String title) {
-        throw new UnsupportedOperationException("TODO[TRAINEE]: Delegate fetching active courses to CatalogService (US 08).");
+        return ResponseEntity.ok(catalogService.getActiveCourses(pageable, categoryId, title));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<CourseDetailDTO> getCourseById(@PathVariable Long id) {
-        throw new UnsupportedOperationException("TODO[TRAINEE]: Delegate fetching course details to CatalogService (US 09).");
+        return ResponseEntity.ok(catalogService.getActiveCourseById(id));
     }
 
     // --- ADMIN COURSE APIs ---
 
     @GetMapping("/admin")
     public ResponseEntity<List<CourseDTO>> getAllCoursesAdmin() {
-        throw new UnsupportedOperationException("TODO[TRAINEE]: Delegate fetching all admin courses to CatalogService (US 05).");
+        return ResponseEntity.ok(catalogService.getAllCoursesAdmin());
     }
 
     @PostMapping
     public ResponseEntity<CourseDTO> createCourse(@Valid @RequestBody CourseRequest request) {
-        throw new UnsupportedOperationException("TODO[TRAINEE]: Delegate course creation to CatalogService (US 05).");
+        return new ResponseEntity<>(catalogService.createCourse(request), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<CourseDTO> updateCourse(@PathVariable Long id, @Valid @RequestBody CourseRequest request) {
-        throw new UnsupportedOperationException("TODO[TRAINEE]: Delegate course update to CatalogService (US 05).");
+        return ResponseEntity.ok(catalogService.updateCourse(id, request));
     }
 
     @PutMapping("/{id}/status")
     public ResponseEntity<CourseDTO> updateCourseStatus(@PathVariable Long id, @Valid @RequestBody CourseStatusRequest request) {
-        throw new UnsupportedOperationException("TODO[TRAINEE]: Delegate status update to CatalogService (US 07).");
+        return ResponseEntity.ok(catalogService.updateCourseStatus(id, request));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCourse(@PathVariable Long id) {
-        throw new UnsupportedOperationException("TODO[TRAINEE]: Delegate course deletion to CatalogService (US 05).");
+        catalogService.deleteCourse(id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/count")

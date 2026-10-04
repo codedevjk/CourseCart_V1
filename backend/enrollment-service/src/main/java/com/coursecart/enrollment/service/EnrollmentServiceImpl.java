@@ -3,7 +3,9 @@ package com.coursecart.enrollment.service;
 import com.coursecart.enrollment.dto.EnrollmentDTO;
 import com.coursecart.enrollment.entity.Enrollment;
 import com.coursecart.enrollment.entity.LessonProgress;
-import com.coursecart.enrollment.exception.ResourceNotFoundException;
+import com.coursecart.enrollment.exception.EnrollmentServiceException;
+import com.coursecart.enrollment.exception.ErrorMessages;
+import org.springframework.http.HttpStatus;
 import com.coursecart.enrollment.repository.EnrollmentRepository;
 import com.coursecart.enrollment.repository.LessonProgressRepository;
 import org.modelmapper.ModelMapper;
@@ -38,7 +40,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     @Override
     public List<Long> getCompletedLessonIds(Long enrollmentId) {
         if (!enrollmentRepository.existsById(enrollmentId)) {
-            throw new ResourceNotFoundException("Enrollment not found");
+            throw new EnrollmentServiceException(HttpStatus.NOT_FOUND, ErrorMessages.ENROLLMENT_NOT_FOUND);
         }
 
         return lessonProgressRepository.findByEnrollmentIdAndIsCompletedTrue(enrollmentId).stream()
@@ -50,7 +52,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     @Transactional
     public void markLessonComplete(Long enrollmentId, Long lessonId, boolean completed) {
         Enrollment enrollment = enrollmentRepository.findById(enrollmentId)
-                .orElseThrow(() -> new ResourceNotFoundException("Enrollment not found"));
+                .orElseThrow(() -> new EnrollmentServiceException(HttpStatus.NOT_FOUND, ErrorMessages.ENROLLMENT_NOT_FOUND));
 
         Optional<LessonProgress> existingProgress = lessonProgressRepository.findByEnrollmentIdAndLessonId(enrollmentId, lessonId);
 
@@ -83,7 +85,7 @@ public class EnrollmentServiceImpl implements EnrollmentService {
     @Transactional
     public EnrollmentDTO createEnrollment(Long userId, Long courseId) {
         if (checkEnrollment(userId, courseId)) {
-            throw new IllegalArgumentException("User is already enrolled in this course");
+            throw new EnrollmentServiceException(HttpStatus.CONFLICT, ErrorMessages.ALREADY_ENROLLED);
         }
 
         Enrollment enrollment = new Enrollment();

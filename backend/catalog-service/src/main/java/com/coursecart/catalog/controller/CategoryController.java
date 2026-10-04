@@ -22,21 +22,22 @@ public class CategoryController {
 
     @GetMapping
     public ResponseEntity<List<CategoryDTO>> getAllCategories() {
-        throw new UnsupportedOperationException("TODO[TRAINEE]: Delegate fetching all categories to CatalogService (US 04).");
+        return ResponseEntity.ok(catalogService.getAllCategories());
     }
 
     @PostMapping
     public ResponseEntity<CategoryDTO> createCategory(@Valid @RequestBody CategoryRequest request) {
-        throw new UnsupportedOperationException("TODO[TRAINEE]: Delegate creating category to CatalogService (US 04).");
+        return new ResponseEntity<>(catalogService.createCategory(request), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<CategoryDTO> updateCategory(@PathVariable Long id, @Valid @RequestBody CategoryRequest request) {
-        throw new UnsupportedOperationException("TODO[TRAINEE]: Delegate updating category to CatalogService (US 04).");
+        return ResponseEntity.ok(catalogService.updateCategory(id, request));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
-        throw new UnsupportedOperationException("TODO[TRAINEE]: Delegate deleting category to CatalogService (US 04).");
+        catalogService.deleteCategory(id);
+        return ResponseEntity.noContent().build();
     }
 }

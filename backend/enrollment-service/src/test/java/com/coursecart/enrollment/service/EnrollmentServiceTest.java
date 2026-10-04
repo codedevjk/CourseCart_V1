@@ -3,7 +3,7 @@ package com.coursecart.enrollment.service;
 import com.coursecart.enrollment.dto.EnrollmentDTO;
 import com.coursecart.enrollment.entity.Enrollment;
 import com.coursecart.enrollment.entity.LessonProgress;
-import com.coursecart.enrollment.exception.ResourceNotFoundException;
+import com.coursecart.enrollment.exception.EnrollmentServiceException;
 import com.coursecart.enrollment.repository.EnrollmentRepository;
 import com.coursecart.enrollment.repository.LessonProgressRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -84,7 +84,7 @@ public class EnrollmentServiceTest {
     void testGetCompletedLessonIds_EnrollmentNotFound_ThrowsResourceNotFoundException() {
         when(enrollmentRepository.existsById(999L)).thenReturn(false);
 
-        assertThrows(ResourceNotFoundException.class, () -> enrollmentService.getCompletedLessonIds(999L));
+        assertThrows(EnrollmentServiceException.class, () -> enrollmentService.getCompletedLessonIds(999L));
     }
 
     @Test
@@ -106,7 +106,7 @@ public class EnrollmentServiceTest {
     void testCreateEnrollment_Duplicate_ThrowsException() {
         when(enrollmentRepository.findByUserIdAndCourseId(1L, 5L)).thenReturn(Optional.of(enrollment));
 
-        assertThrows(IllegalArgumentException.class, () -> enrollmentService.createEnrollment(1L, 5L));
+        assertThrows(EnrollmentServiceException.class, () -> enrollmentService.createEnrollment(1L, 5L));
 
         verify(enrollmentRepository, never()).save(any());
     }
@@ -159,7 +159,7 @@ public class EnrollmentServiceTest {
     void testMarkLessonComplete_EnrollmentNotFound_ThrowsResourceNotFoundException() {
         when(enrollmentRepository.findById(999L)).thenReturn(Optional.empty());
 
-        assertThrows(ResourceNotFoundException.class,
+        assertThrows(EnrollmentServiceException.class,
                 () -> enrollmentService.markLessonComplete(999L, 101L, true));
     }
 

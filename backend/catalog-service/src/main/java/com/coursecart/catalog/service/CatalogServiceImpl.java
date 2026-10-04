@@ -5,12 +5,14 @@ import com.coursecart.catalog.entity.Category;
 import com.coursecart.catalog.entity.Course;
 import com.coursecart.catalog.entity.CourseStatus;
 import com.coursecart.catalog.entity.Lesson;
-import com.coursecart.catalog.exception.ResourceNotFoundException;
+import com.coursecart.catalog.exception.CatalogServiceException;
+import com.coursecart.catalog.exception.ErrorMessages;
 import com.coursecart.catalog.repository.CategoryRepository;
 import com.coursecart.catalog.repository.CourseRepository;
 import com.coursecart.catalog.repository.LessonRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,68 +39,154 @@ public class CatalogServiceImpl implements CatalogService {
 
     @Override
     public List<CategoryDTO> getAllCategories() {
-        throw new UnsupportedOperationException("TODO[TRAINEE]: Fetch all categories from repository and map to DTOs (US 04).");
+        return categoryRepository.findAll().stream()
+                .map(this::mapToCategoryDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
     @Transactional
     public CategoryDTO createCategory(CategoryRequest request) {
-        throw new UnsupportedOperationException("TODO[TRAINEE]: Validate category name uniqueness, save entity, and return DTO (US 04).");
+        if (categoryRepository.findByName(request.getName()).isPresent()) {
+            throw new CatalogServiceException(HttpStatus.CONFLICT, ErrorMessages.CATEGORY_NAME_EXISTS);
+        }
+        Category category = new Category();
+        category.setName(request.getName());
+        Category saved = categoryRepository.save(category);
+        return mapToCategoryDTO(saved);
     }
 
     @Override
     @Transactional
     public CategoryDTO updateCategory(Long id, CategoryRequest request) {
-        throw new UnsupportedOperationException("TODO[TRAINEE]: Find category, validate new name uniqueness, update, and save (US 04).");
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new CatalogServiceException(HttpStatus.NOT_FOUND, ErrorMessages.CATEGORY_NOT_FOUND));
+
+        if (!category.getName().equals(request.getName()) && categoryRepository.findByName(request.getName()).isPresent()) {
+            throw new CatalogServiceException(HttpStatus.CONFLICT, ErrorMessages.CATEGORY_NAME_EXISTS);
+        }
+
+        category.setName(request.getName());
+        Category updated = categoryRepository.save(category);
+        return mapToCategoryDTO(updated);
     }
 
     @Override
     @Transactional
-    public void deleteCategory(Long id) {
-        throw new UnsupportedOperationException("TODO[TRAINEE]: Delete category, ensuring no active courses are attached (US 04).");
+        public void deleteCategory(Long id) {
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new CatalogServiceException(HttpStatus.NOT_FOUND, ErrorMessages.CATEGORY_NOT_FOUND));
+        List<Course> attachedCourses = courseRepository.findByCategoryId(id);
+        
+        boolean hasActiveCourses = attachedCourses.stream()
+                .anyMatch(course -> course.getStatus() == CourseStatus.ACTIVE);
+                
+        if (hasActiveCourses) {
+            throw new CatalogServiceException(HttpStatus.BAD_REQUEST, ErrorMessages.CATEGORY_HAS_ACTIVE_COURSES);
+        }
+        categoryRepository.delete(category);
     }
 
     // --- COURSES PUBLIC ---
 
     @Override
     public Page<CourseDTO> getActiveCourses(Pageable pageable, Long categoryId, String title) {
-        throw new UnsupportedOperationException("TODO[TRAINEE]: Fetch ACTIVE courses using pagination, applying dynamic category or title filters (US 08).");
+        Page<Course> courses;
+        if (categoryId != null && title != null && !title.isEmpty()) {
+            courses = courseRepository.findByStatusAndCategoryIdAndTitleContainingIgnoreCase(CourseStatus.ACTIVE, categoryId, title, pageable);
+        } else if (categoryId != null) {
+            courses = courseRepository.findByStatusAndCategoryId(CourseStatus.ACTIVE, categoryId, pageable);
+        } else if (title != null && !title.isEmpty()) {
+            courses = courseRepository.findByStatusAndTitleContainingIgnoreCase(CourseStatus.ACTIVE, title, pageable);
+        } else {
+            courses = courseRepository.findByStatus(CourseStatus.ACTIVE, pageable);
+        }
+        return courses.map(this::mapToCourseDTO);
     }
 
     @Override
     public CourseDetailDTO getActiveCourseById(Long id) {
-        throw new UnsupportedOperationException("TODO[TRAINEE]: Fetch course by id and return detailed DTO (US 09).");
+        Course course = courseRepository.findById(id)
+                .orElseThrow(() -> new CatalogServiceException(HttpStatus.NOT_FOUND, ErrorMessages.COURSE_NOT_FOUND));
+
+        return mapToCourseDetailDTO(course);
     }
 
     // --- COURSES ADMIN ---
 
     @Override
     public List<CourseDTO> getAllCoursesAdmin() {
-        throw new UnsupportedOperationException("TODO[TRAINEE]: Fetch all courses regardless of status for admin (US 05).");
+        return courseRepository.findAll().stream()
+                .map(this::mapToCourseDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
     @Transactional
     public CourseDTO createCourse(CourseRequest request) {
-        throw new UnsupportedOperationException("TODO[TRAINEE]: Create new course with DRAFT status and associate with category (US 05).");
+        Category category = categoryRepository.findById(request.getCategoryId())
+                .orElseThrow(() -> new CatalogServiceException(HttpStatus.NOT_FOUND, ErrorMessages.CATEGORY_NOT_FOUND));
+
+        Course course = new Course();
+        course.setCategory(category);
+        course.setTitle(request.getTitle());
+        course.setDescription(request.getDescription());
+        course.setPrice(request.getPrice());
+        course.setStatus(CourseStatus.DRAFT);
+        course.setOriginalPrice(request.getOriginalPrice());
+        course.setInstructorName(request.getInstructorName());
+        course.setRatingCount(0);
+        course.setBestseller(false);
+        course.setLessonCount(0);
+        Course saved = courseRepository.save(course);
+        return mapToCourseDTO(saved);
     }
 
     @Override
     @Transactional
     public CourseDTO updateCourse(Long id, CourseRequest request) {
-        throw new UnsupportedOperationException("TODO[TRAINEE]: Update existing course metadata (US 05).");
+        Course course = courseRepository.findById(id)
+                .orElseThrow(() -> new CatalogServiceException(HttpStatus.NOT_FOUND, ErrorMessages.COURSE_NOT_FOUND));
+
+        Category category = categoryRepository.findById(request.getCategoryId())
+                .orElseThrow(() -> new CatalogServiceException(HttpStatus.NOT_FOUND, ErrorMessages.CATEGORY_NOT_FOUND));
+
+        course.setCategory(category);
+        course.setTitle(request.getTitle());
+        course.setDescription(request.getDescription());
+        course.setPrice(request.getPrice());
+        course.setOriginalPrice(request.getOriginalPrice());
+        course.setInstructorName(request.getInstructorName());
+
+        Course updated = courseRepository.save(course);
+        return mapToCourseDTO(updated);
     }
 
     @Override
     @Transactional
     public CourseDTO updateCourseStatus(Long id, CourseStatusRequest request) {
-        throw new UnsupportedOperationException("TODO[TRAINEE]: Update course status. Ensure it has a category before setting ACTIVE (US 07).");
+        Course course = courseRepository.findById(id)
+                .orElseThrow(() -> new CatalogServiceException(HttpStatus.NOT_FOUND, ErrorMessages.COURSE_NOT_FOUND));
+                
+        if (request.getStatus() == CourseStatus.ACTIVE && course.getCategory() == null) {
+            throw new CatalogServiceException(HttpStatus.BAD_REQUEST, ErrorMessages.CATEGORY_REQUIRED_FOR_ACTIVATION);
+        }
+        
+        course.setStatus(request.getStatus());
+        Course updated = courseRepository.save(course);
+        return mapToCourseDTO(updated);
     }
 
     @Override
     @Transactional
-    public void deleteCourse(Long id) {
-        throw new UnsupportedOperationException("TODO[TRAINEE]: Cascade delete course and its lessons (US 05).");
+        public void deleteCourse(Long id) {
+        Course course = courseRepository.findById(id)
+                .orElseThrow(() -> new CatalogServiceException(HttpStatus.NOT_FOUND, ErrorMessages.COURSE_NOT_FOUND));
+        List<Lesson> lessons = lessonRepository.findByCourseIdOrderByDisplayOrderAsc(id);
+        for (Lesson l : lessons) {
+            lessonRepository.delete(l);
+        }
+        courseRepository.delete(course);
     }
 
     @Override
@@ -111,7 +199,7 @@ public class CatalogServiceImpl implements CatalogService {
     @Override
     public List<LessonDTO> getLessonsForCourse(Long courseId) {
         Course course = courseRepository.findById(courseId)
-                .orElseThrow(() -> new ResourceNotFoundException("Course not found"));
+                .orElseThrow(() -> new CatalogServiceException(HttpStatus.NOT_FOUND, ErrorMessages.COURSE_NOT_FOUND));
         return lessonRepository.findByCourseIdOrderByDisplayOrderAsc(course.getId()).stream()
                 .map(this::mapToLessonDTO)
                 .collect(Collectors.toList());
@@ -121,7 +209,7 @@ public class CatalogServiceImpl implements CatalogService {
     @Transactional
     public LessonDTO createLesson(Long courseId, LessonRequest request) {
         Course course = courseRepository.findById(courseId)
-                .orElseThrow(() -> new ResourceNotFoundException("Course not found"));
+                .orElseThrow(() -> new CatalogServiceException(HttpStatus.NOT_FOUND, ErrorMessages.COURSE_NOT_FOUND));
 
         Lesson lesson = new Lesson();
         lesson.setCourse(course);
@@ -136,13 +224,13 @@ public class CatalogServiceImpl implements CatalogService {
     @Transactional
     public LessonDTO updateLesson(Long courseId, Long lessonId, LessonRequest request) {
         Course course = courseRepository.findById(courseId)
-                .orElseThrow(() -> new ResourceNotFoundException("Course not found"));
+                .orElseThrow(() -> new CatalogServiceException(HttpStatus.NOT_FOUND, ErrorMessages.COURSE_NOT_FOUND));
 
         Lesson lesson = lessonRepository.findById(lessonId)
-                .orElseThrow(() -> new ResourceNotFoundException("Lesson not found"));
+                .orElseThrow(() -> new CatalogServiceException(HttpStatus.NOT_FOUND, ErrorMessages.LESSON_NOT_FOUND));
 
         if (!lesson.getCourse().getId().equals(course.getId())) {
-            throw new IllegalArgumentException("Lesson does not belong to the specified course");
+            throw new CatalogServiceException(HttpStatus.BAD_REQUEST, ErrorMessages.LESSON_NOT_FOUND);
         }
 
         lesson.setTitle(request.getTitle());
@@ -157,13 +245,13 @@ public class CatalogServiceImpl implements CatalogService {
     @Transactional
     public void deleteLesson(Long courseId, Long lessonId) {
         Course course = courseRepository.findById(courseId)
-                .orElseThrow(() -> new ResourceNotFoundException("Course not found"));
+                .orElseThrow(() -> new CatalogServiceException(HttpStatus.NOT_FOUND, ErrorMessages.COURSE_NOT_FOUND));
 
         Lesson lesson = lessonRepository.findById(lessonId)
-                .orElseThrow(() -> new ResourceNotFoundException("Lesson not found"));
+                .orElseThrow(() -> new CatalogServiceException(HttpStatus.NOT_FOUND, ErrorMessages.LESSON_NOT_FOUND));
 
         if (!lesson.getCourse().getId().equals(course.getId())) {
-            throw new IllegalArgumentException("Lesson does not belong to the specified course");
+            throw new CatalogServiceException(HttpStatus.BAD_REQUEST, ErrorMessages.LESSON_NOT_FOUND);
         }
 
         lessonRepository.delete(lesson);

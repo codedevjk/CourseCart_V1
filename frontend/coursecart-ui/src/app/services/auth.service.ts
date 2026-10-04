@@ -12,7 +12,7 @@ export class AuthService {
   public currentUser$: Observable<User | null>;
 
   constructor() { 
-    const storedUser = localStorage.getItem(this.USER_KEY);
+    const storedUser = sessionStorage.getItem(this.USER_KEY);
     let initialUser: User | null = null;
     if (storedUser) {
       try {
@@ -24,7 +24,7 @@ export class AuthService {
   }
 
   setCurrentUser(user: User): void {
-    localStorage.setItem(this.USER_KEY, JSON.stringify(user));
+    sessionStorage.setItem(this.USER_KEY, JSON.stringify(user));
     this.currentUserSubject.next(user);
   }
 
@@ -33,7 +33,7 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.removeItem(this.USER_KEY);
+    sessionStorage.removeItem(this.USER_KEY);
     this.currentUserSubject.next(null);
   }
 
