@@ -52,6 +52,10 @@ export class CatalogService {
     throw new Error('TODO[TRAINEE]: Update course status via catalog-service (US 07).');
   }
 
+  deleteCourse(id: number): Observable<void> {
+    throw new Error('TODO[TRAINEE]: Delete course via catalog-service (US 05).');
+  }
+
   getCourseCount(): Observable<{ totalCourses: number }> { // Contract didn't specify exact JSON key but implied count
     return this.http.get<{ totalCourses: number }>(`${this.apiUrl}/courses/count`);
   }

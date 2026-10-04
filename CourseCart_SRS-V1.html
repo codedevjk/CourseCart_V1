@@ -547,10 +547,9 @@
 
       .us-card,
       .file-group,
-      .checklist-block,
-      
-
-      
+      .checklist-block {
+        break-inside: avoid;
+      }
     }
 
     /* ── Scrollbar ── */
@@ -698,15 +697,12 @@
 <img alt="CourseCart Logo" src="frontend/coursecart-ui/assets/Logo.svg" style="height: 48px; width: auto;"/>
 <span>Course<span class="logo-accent">Cart</span></span>
 </h1>
-<div class="subtitle">Brownfield Capstone Project SRS <br/><span style="font-size:1.15rem; color:#64748b;">Version 1: The UI &amp; Catalog Flow</span></div>
+<div class="subtitle">Brownfield Capstone Project SRS <br/></div>
 <div class="contact">Author : Jagmohan Kushwaha</div>
 </div>
 <!-- ── Section 1 ── -->
 <section id="sec-1">
 <h2 class="sec-title">1. Project Overview</h2>
-<div class="callout" style="background:#f0f9ff; border-left-color:#0284c7; color:#0369a1;">
-<strong>Version Focus (V1 - The UI &amp; Catalog Flow):</strong> This specific version of the project focuses heavily on public-facing discovery and commerce. Trainees will implement the catalog search, course details, and mock checkout workflows to build a seamless shopping experience before users begin learning.
-</div>
 <p>
 <strong>CourseCart</strong> is a modern, full-stack learning management application designed to streamline the
           process of discovering, purchasing, and managing educational courses. It provides an end-to-end digital
@@ -888,7 +884,7 @@
 <span><strong>Primary Microservice:</strong> User Service</span>
 </div>
 <h4 class="sub2-title">Acceptance Criteria</h4><ul><li>As a logged-in user, I want to view my basic profile details, so that I can verify my account information.</li><li>The system shall display the user's name and username securely.</li><li>Profile data shall be retrieved securely using the logged-in user's identity.</li><li>The user interface must provide a clean and intuitive view representing the user's identity and details.</li></ul>
-<div class="trainee-note" style="margin-top: 15px; padding: 15px; background: #fffbeb; border-left: 4px solid #f59e0b; border-radius: 4px;"><h4 style="margin-bottom: 10px; color: #b45309; font-weight: 700; font-size: 14px;">Trainee Implementation &amp; Verification Guide</h4></div></div>
+</div>
 <!-- US04 -->
 <div class="us-card trainee-task" id="us04">
 <h3>US 04 – Admin Category Management <span class="badge-trainee">Trainee Task</span></h3>
@@ -897,7 +893,7 @@
 <span><strong>Primary Microservice:</strong> Catalog Service</span>
 </div>
 <h4 class="sub2-title">Acceptance Criteria</h4><ul><li>As an admin, I want to manage course categories, so that I can organize the catalog.</li><li>Administrators can view a paginated or structured list of all categories.</li><li>Administrators can create a new category by providing a unique name.</li><li>Administrators can edit the name of an existing category.</li><li>Administrators can attempt to delete a category.</li><li>A category cannot be deleted if there are active courses currently assigned to it.</li><li>If a deletion is prevented, the system must gracefully handle the rejection and display a user-friendly error message explaining the reason.</li></ul>
-<div class="trainee-note" style="margin-top: 15px; padding: 15px; background: #fffbeb; border-left: 4px solid #f59e0b; border-radius: 4px;"><h4 style="margin-bottom: 10px; color: #b45309; font-weight: 700; font-size: 14px;">Trainee Implementation &amp; Verification Guide</h4></div></div>
+</div>
 <!-- US05 -->
 <div class="us-card trainee-task" id="us05">
 <h3>US 05 – Admin Course Management <span class="badge-trainee">Trainee Task</span></h3>
@@ -906,7 +902,7 @@
 <span><strong>Primary Microservice:</strong> Catalog Service</span>
 </div>
 <h4 class="sub2-title">Acceptance Criteria</h4><ul><li>As an admin, I want to manage course metadata, so that I can define what is sold on the platform.</li><li>Administrators can view all courses regardless of their current publishing status.</li><li>Administrators can create and edit courses by providing a Title, Description, Price, and Category.</li><li>Every course must be assigned to exactly one existing category.</li><li>Administrators can set a fixed price for the course, including setting it to free.</li><li>Newly created courses shall default to a 'Draft' status.</li><li>The system must validate that the price is not negative and that all required fields are provided before saving.</li><li>Administrators can delete a course. Deleting a course must also securely remove all of its associated lessons.</li></ul>
-<div class="trainee-note" style="margin-top: 15px; padding: 15px; background: #fffbeb; border-left: 4px solid #f59e0b; border-radius: 4px;"><h4 style="margin-bottom: 10px; color: #b45309; font-weight: 700; font-size: 14px;">Trainee Implementation &amp; Verification Guide</h4></div></div>
+</div>
 <!-- US06 -->
 <div class="us-card preimpl" id="us06">
 <h3>US 06 – Admin Lesson Management</h3>
@@ -925,7 +921,7 @@
 <span><strong>Primary Microservice:</strong> Catalog Service</span>
 </div>
 <h4 class="sub2-title">Acceptance Criteria</h4><ul><li>As an admin, I want to toggle a course's status between Draft, Active, and Inactive, so that I can control its public availability.</li><li>Course publishing statuses are strictly limited to Draft, Active, or Inactive.</li><li>Administrators can change a Draft course to Active to publish it to the public catalog.</li><li>Administrators can change an Active course to Inactive to retire it from future sales.</li><li>Inactive courses must immediately be hidden from the public catalog for new customers.</li><li>Changing a course's status to Inactive must not affect previously enrolled users; they must retain full access to the course in their learning dashboard.</li></ul>
-<div class="trainee-note" style="margin-top: 15px; padding: 15px; background: #fffbeb; border-left: 4px solid #f59e0b; border-radius: 4px;"><h4 style="margin-bottom: 10px; color: #b45309; font-weight: 700; font-size: 14px;">Trainee Implementation &amp; Verification Guide</h4></div></div>
+</div>
 <!-- US08 -->
 <div class="us-card trainee-task" id="us08">
 <h3>US 08 – Browse and Search Catalog <span class="badge-trainee">Trainee Task</span></h3>
@@ -934,7 +930,7 @@
 <span><strong>Primary Microservice:</strong> Catalog Service</span>
 </div>
 <h4 class="sub2-title">Acceptance Criteria</h4><ul><li>As a user, I want to browse and search the active course catalog, so that I can find courses to learn.</li><li>The system shall display a visual grid or list containing only Active courses.</li><li>Users can filter the catalog by selecting a specific category.</li><li>Users can search for courses by entering part or all of a Course Title.</li><li>The catalog must support structured pagination to cleanly display a set number of courses per page.</li><li>Each course card shall display the Title, Price, and Category name clearly.</li><li>The interface must provide clear visual feedback during loading times and display helpful messages if no courses match the search criteria.</li></ul>
-<div class="trainee-note" style="margin-top: 15px; padding: 15px; background: #fffbeb; border-left: 4px solid #f59e0b; border-radius: 4px;"><h4 style="margin-bottom: 10px; color: #b45309; font-weight: 700; font-size: 14px;">Trainee Implementation &amp; Verification Guide</h4></div></div>
+</div>
 <!-- US09 -->
 <div class="us-card trainee-task" id="us09">
 <h3>US 09 – View Course Details <span class="badge-trainee">Trainee Task</span></h3>
@@ -943,7 +939,7 @@
 <span><strong>Primary Microservice:</strong> Catalog Service</span>
 </div>
 <h4 class="sub2-title">Acceptance Criteria</h4><ul><li>As a user, I want to view detailed information about a course, so that I can decide whether to purchase it.</li><li>The system shall display the course Title, Description, Category, and Price in a detailed view.</li><li>The system shall display a read-only list of the course syllabus (Lesson titles).</li><li>If the user is logged in and not yet enrolled, a clear option to purchase the course is displayed.</li><li>If the user is logged in and already enrolled, an option to directly navigate to the course material is displayed.</li><li>If the visitor is not logged in, they are prompted to log in or register before they can purchase the course.</li></ul>
-<div class="trainee-note" style="margin-top: 15px; padding: 15px; background: #fffbeb; border-left: 4px solid #f59e0b; border-radius: 4px;"><h4 style="margin-bottom: 10px; color: #b45309; font-weight: 700; font-size: 14px;">Trainee Implementation &amp; Verification Guide</h4></div></div>
+</div>
 <!-- US10 -->
 <div class="us-card trainee-task" id="us10">
 <h3>US 10 – Single Course Purchase (Mock Checkout) <span class="badge-trainee">Trainee Task</span>
@@ -953,7 +949,7 @@
 <span><strong>Primary Microservice:</strong> Commerce Service</span>
 </div>
 <h4 class="sub2-title">Acceptance Criteria</h4><ul><li>As a user, I want to purchase a course through a simulated checkout, so that I can gain access to its content.</li><li>Initiating a purchase directs the user to a streamlined mock checkout flow.</li><li>The system shall clearly display the course details and the total price to be paid.</li><li>The user can select a simulated payment method, and the system simulates a successful transaction.</li><li>The system must strictly prevent duplicate purchases if the user is already enrolled in the course.</li><li>Upon a successful transaction, the system records the order and officially enrolls the user in the course.</li><li>Failed transaction attempts must not grant course access or create order records.</li><li>The user is seamlessly redirected to a success screen or their learning dashboard upon completion.</li></ul>
-<div class="trainee-note" style="margin-top: 15px; padding: 15px; background: #fffbeb; border-left: 4px solid #f59e0b; border-radius: 4px;"><h4 style="margin-bottom: 10px; color: #b45309; font-weight: 700; font-size: 14px;">Trainee Implementation &amp; Verification Guide</h4></div></div>
+</div>
 <!-- US11 -->
 <div class="us-card trainee-task" id="us11">
 <h3>US 11 – View Order History <span class="badge-trainee">Trainee Task</span></h3>
@@ -962,7 +958,7 @@
 <span><strong>Primary Microservice:</strong> Commerce Service</span>
 </div>
 <h4 class="sub2-title">Acceptance Criteria</h4><ul><li>As a user, I want to view my past successful purchases, so that I have a record of my transactions.</li><li>The system shall display a clear, tabular list of the user's successfully completed orders.</li><li>The history must display the Course Title, Order Date, and Total Price Paid for each transaction.</li><li>Failed or incomplete purchase attempts must not appear in this history.</li><li>The order history must be sorted chronologically, showing the most recent transactions first.</li></ul>
-<div class="trainee-note" style="margin-top: 15px; padding: 15px; background: #fffbeb; border-left: 4px solid #f59e0b; border-radius: 4px;"><h4 style="margin-bottom: 10px; color: #b45309; font-weight: 700; font-size: 14px;">Trainee Implementation &amp; Verification Guide</h4></div></div>
+</div>
 <!-- US12 -->
 <div class="us-card preimpl" id="us12">
 <h3>US 12 – My Learning Dashboard</h3>
@@ -1004,7 +1000,7 @@
 <ul><li>As an admin, I want to view high-level platform metrics, so that I can understand business performance.</li><li>The system shall display the total count of registered users on the platform.</li><li>The system shall display the total count of published, active courses.</li><li>The system shall display the total number of course enrollments.</li><li>The system shall display the total aggregated revenue from all successful transactions.</li><li>These performance metrics must be gathered efficiently and displayed clearly in dashboard summaries.</li><li>The dashboard shall also display a list of recent transactions for administrative reference.</li></ul>
 </div>
 <!-- 3.1 Final List -->
-<h3 class="sub-title" id="s3-1">4.1 Final User Story List</h3>
+<h3 class="sub-title" id="s4-1">4.1 Final User Story List</h3>
 <div class="tbl-wrap">
 <table>
 <thead>
@@ -1302,8 +1298,7 @@
 <ul>
 <li>Data Transfer Objects (DTOs) must be used for all API request and response payloads.</li>
 <li>Database Entities shall NEVER be exposed directly through REST APIs.</li>
-<li>Use manual mapping to strictly enforce deep conversions between Entities and DTOs within the Service
-            layer.</li>
+<li>Use <strong>ModelMapper</strong> (configured as a Spring <code>@Bean</code> in each service) for DTO/Entity conversions. Add explicit mappings for any fields that do not auto-map by convention.</li>
 </ul>
 <h3 class="sub-title">10.4 Database Interaction</h3>
 <ul>
@@ -1412,15 +1407,17 @@
 <div class="file-group">
 <div class="fg-label">User Service</div>
 <ul>
-<li>backend/.../controller/<strong>UserController.java</strong> <span class="tag">← TODO[TRAINEE] for US03</span></li>
-<li>backend/.../service/<strong>UserServiceImpl.java</strong> <span class="tag">← TODO[TRAINEE] for US03</span></li>
+<li>backend/.../controller/<strong>UserController.java</strong> <span class="tag" style="background:rgba(16,185,129,0.15);color:#10b981;">← Pre-Implemented</span></li>
+<li>backend/.../service/<strong>UserService.java</strong> <span class="tag" style="background:rgba(16,185,129,0.15);color:#10b981;">← Pre-Implemented (getUser, login, register)</span></li>
 </ul>
+<p style="color:#9a3412;font-size:13.5px;margin:8px 0 0 4px;">⚑ US03 backend is fully wired. Trainee work for US03 is <strong>frontend-only</strong>: implement <code>user.service.ts::getProfile()</code>.</p>
 <div class="fg-label" style="margin-top:10px;">Catalog Service</div>
 <ul>
-<li>backend/.../controller/<strong>CategoryController.java</strong> <span class="tag">← TODO[TRAINEE] for US04</span></li>
-<li>backend/.../controller/<strong>CourseController.java</strong> <span class="tag">← TODO[TRAINEE] for US05, 07, 08, 09</span></li>
+<li>backend/.../controller/<strong>CategoryController.java</strong> <span class="tag" style="background:rgba(16,185,129,0.15);color:#10b981;">← Pre-Implemented</span></li>
+<li>backend/.../controller/<strong>CourseController.java</strong> <span class="tag" style="background:rgba(16,185,129,0.15);color:#10b981;">← Pre-Implemented</span></li>
 <li>backend/.../service/<strong>CatalogServiceImpl.java</strong> <span class="tag">← TODO[TRAINEE] for US04, 05, 07, 08, 09</span></li>
 </ul>
+<p style="color:#9a3412;font-size:13.5px;margin:8px 0 0 4px;">⚑ Both controllers are fully wired. Implement the corresponding service methods in <code>CatalogServiceImpl.java</code>.</p>
 <div class="fg-label" style="margin-top:10px;">Commerce Service</div>
 <ul>
 <li>backend/.../controller/<strong>CommerceController.java</strong> <span class="tag">← TODO[TRAINEE] for US10, 11</span></li>
