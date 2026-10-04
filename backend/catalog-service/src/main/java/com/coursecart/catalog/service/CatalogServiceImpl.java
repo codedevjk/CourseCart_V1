@@ -43,19 +43,19 @@ public class CatalogServiceImpl implements CatalogService {
     }
 
     @Override
-    @Transactional
+    // TODO[TRAINEE]: Add appropriate transaction annotation
     public CategoryDTO createCategory(CategoryRequest request) {
         throw new UnsupportedOperationException("TODO[TRAINEE]: Implement createCategory");
     }
 
     @Override
-    @Transactional
+    // TODO[TRAINEE]: Add appropriate transaction annotation
     public CategoryDTO updateCategory(Long id, CategoryRequest request) {
         throw new UnsupportedOperationException("TODO[TRAINEE]: Implement updateCategory");
     }
 
     @Override
-    @Transactional
+    // TODO[TRAINEE]: Add appropriate transaction annotation
     public void deleteCategory(Long id) {
         throw new UnsupportedOperationException("TODO[TRAINEE]: Implement deleteCategory");
     }
@@ -80,25 +80,25 @@ public class CatalogServiceImpl implements CatalogService {
     }
 
     @Override
-    @Transactional
+    // TODO[TRAINEE]: Add appropriate transaction annotation
     public CourseDTO createCourse(CourseRequest request) {
         throw new UnsupportedOperationException("TODO[TRAINEE]: Implement createCourse");
     }
 
     @Override
-    @Transactional
+    // TODO[TRAINEE]: Add appropriate transaction annotation
     public CourseDTO updateCourse(Long id, CourseRequest request) {
         throw new UnsupportedOperationException("TODO[TRAINEE]: Implement updateCourse");
     }
 
     @Override
-    @Transactional
+    // TODO[TRAINEE]: Add appropriate transaction annotation
     public CourseDTO updateCourseStatus(Long id, CourseStatusRequest request) {
         throw new UnsupportedOperationException("TODO[TRAINEE]: Implement updateCourseStatus");
     }
 
     @Override
-    @Transactional
+    // TODO[TRAINEE]: Add appropriate transaction annotation
     public void deleteCourse(Long id) {
         throw new UnsupportedOperationException("TODO[TRAINEE]: Implement deleteCourse");
     }
