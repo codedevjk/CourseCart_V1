@@ -47,12 +47,12 @@ public class CommerceServiceImpl implements CommerceService {
     @Override
     @Transactional
     public CheckoutResponse processCheckout(CheckoutRequest request) {
-        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement processCheckout");
+        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement processCheckout (US10)");
     }
 
     @Override
     public List<OrderDTO> getOrdersByUserId(Long userId) {
-        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement getOrdersByUserId");
+        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement getOrdersByUserId (US11)");
     }
 
     @Override

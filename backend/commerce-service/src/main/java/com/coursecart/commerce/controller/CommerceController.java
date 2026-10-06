@@ -25,14 +25,14 @@ public class CommerceController {
         this.commerceService = commerceService;
     }
 
-    // TODO[TRAINEE]: Map to POST /checkout and add validation annotations
-    public ResponseEntity<CheckoutResponse> checkout(CheckoutRequest request) {
-        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement checkout");
+    @PostMapping("/checkout")
+    public ResponseEntity<CheckoutResponse> checkout(@Valid @RequestBody CheckoutRequest request) {
+        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement checkout (US10)");
     }
 
-    // TODO[TRAINEE]: Map to GET /orders and add request parameter annotation
-    public ResponseEntity<List<OrderDTO>> getOrders(Long userId) {
-        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement getOrders");
+    @GetMapping("/orders")
+    public ResponseEntity<List<OrderDTO>> getOrders(@RequestParam("userId") Long userId) {
+        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement getOrders (US11)");
     }
 
     @GetMapping("/orders/recent")

@@ -39,68 +39,68 @@ public class CatalogServiceImpl implements CatalogService {
 
     @Override
     public List<CategoryDTO> getAllCategories() {
-        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement getAllCategories");
+        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement getAllCategories (US04)");
     }
 
     @Override
-    // TODO[TRAINEE]: Add appropriate transaction annotation
+    @Transactional
     public CategoryDTO createCategory(CategoryRequest request) {
-        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement createCategory");
+        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement createCategory (US04)");
     }
 
     @Override
-    // TODO[TRAINEE]: Add appropriate transaction annotation
+    @Transactional
     public CategoryDTO updateCategory(Long id, CategoryRequest request) {
-        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement updateCategory");
+        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement updateCategory (US04)");
     }
 
     @Override
-    // TODO[TRAINEE]: Add appropriate transaction annotation
+    @Transactional
     public void deleteCategory(Long id) {
-        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement deleteCategory");
+        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement deleteCategory (US04)");
     }
 
     // --- COURSES PUBLIC ---
 
     @Override
     public Page<CourseDTO> getActiveCourses(Pageable pageable, Long categoryId, String title) {
-        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement getActiveCourses");
+        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement getActiveCourses (US08)");
     }
 
     @Override
     public CourseDetailDTO getActiveCourseById(Long id) {
-        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement getActiveCourseById");
+        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement getActiveCourseById (US09)");
     }
 
     // --- COURSES ADMIN ---
 
     @Override
     public List<CourseDTO> getAllCoursesAdmin() {
-        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement getAllCoursesAdmin");
+        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement getAllCoursesAdmin (US05)");
     }
 
     @Override
-    // TODO[TRAINEE]: Add appropriate transaction annotation
+    @Transactional
     public CourseDTO createCourse(CourseRequest request) {
-        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement createCourse");
+        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement createCourse (US05)");
     }
 
     @Override
-    // TODO[TRAINEE]: Add appropriate transaction annotation
+    @Transactional
     public CourseDTO updateCourse(Long id, CourseRequest request) {
-        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement updateCourse");
+        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement updateCourse (US05)");
     }
 
     @Override
-    // TODO[TRAINEE]: Add appropriate transaction annotation
+    @Transactional
     public CourseDTO updateCourseStatus(Long id, CourseStatusRequest request) {
-        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement updateCourseStatus");
+        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement updateCourseStatus (US07)");
     }
 
     @Override
-    // TODO[TRAINEE]: Add appropriate transaction annotation
+    @Transactional
     public void deleteCourse(Long id) {
-        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement deleteCourse");
+        throw new UnsupportedOperationException("TODO[TRAINEE]: Implement deleteCourse (US05)");
     }
 
     @Override
