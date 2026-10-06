@@ -17,9 +17,9 @@
 
 ## 🎯 About This Project
 
-This is the **TRAINEE STARTER CODEBASE** of the CourseCart system. It is a partially implemented, enterprise-grade microservices application designed as a training assignment. 
+This is the **TRAINEE STARTER CODEBASE** of the CourseCart system. It is a partially implemented, enterprise-grade microservices application designed as a training assignment.
 
-Certain core features are intentionally stubbed as active assignments for trainees to implement. Refer to the `CourseCart_SRS.html` specification document for a detailed list of tasks.
+Certain core features are intentionally stubbed as active assignments for trainees to implement. Refer to the `CourseCart_V1-SRS.html` specification document for a detailed list of tasks.
 
 ---
 
@@ -27,26 +27,26 @@ Certain core features are intentionally stubbed as active assignments for traine
 
 ### 👤 Customer Portal
 
-| Feature | Details |
-| --- | --- |
-| **Registration** | Register with Full Name, Username, and Password. Usernames must be unique. Default role: `USER`. |
-| **Login / Logout** | Login with username and password. Session stored securely in `sessionStorage`. Logout clears session. |
-| **Course Browsing** | Browse active courses; filter by category (e.g., Software Engineering, Data Science); search by course title. True backend pagination. |
-| **Course Details** | View full course details: title, description, category, price, and syllabus. Displays context-aware "Buy Now" or "Continue Learning". |
-| **Mock Checkout** | Unified checkout workspace. Simulates payment process. Creates Commerce order and triggers Enrollment service creation synchronously. Duplicate purchase strictly prevented. |
-| **My Learning** | Dashboard listing all enrolled courses. Displays overall progress percentage per course. |
-| **Lesson Progress** | Access course content and mark individual lessons as complete. Real-time progress updates. |
-| **Order History** | View past successful purchases including course title, date, and amount paid. |
-| **View Profile** | View read-only profile detailing Name, Username, and Role. |
+| Feature             | Details                                                                                                                                                                      |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Registration**    | Register with Full Name, Username, and Password. Usernames must be unique. Default role: `USER`.                                                                             |
+| **Login / Logout**  | Login with username and password. Session stored securely in `sessionStorage`. Logout clears session.                                                                        |
+| **Course Browsing** | Browse active courses; filter by category (e.g., Software Engineering, Data Science); search by course title. True backend pagination.                                       |
+| **Course Details**  | View full course details: title, description, category, price, and syllabus. Displays context-aware "Buy Now" or "Continue Learning".                                        |
+| **Mock Checkout**   | Unified checkout workspace. Simulates payment process. Creates Commerce order and triggers Enrollment service creation synchronously. Duplicate purchase strictly prevented. |
+| **My Learning**     | Dashboard listing all enrolled courses. Displays overall progress percentage per course.                                                                                     |
+| **Lesson Progress** | Access course content and mark individual lessons as complete. Real-time progress updates.                                                                                   |
+| **Order History**   | View past successful purchases including course title, date, and amount paid.                                                                                                |
+| **View Profile**    | View read-only profile detailing Name, Username, and Role.                                                                                                                   |
 
 ### 🛡️ Administrator Portal
 
-| Feature | Details |
-| --- | --- |
-| **Admin Dashboard** | High-level platform metrics: total learners, active courses, total enrollments, total revenue. Tabular view of recent orders with Order ID. |
-| **Manage Courses** | Add, edit, draft, publish, and unpublish courses. Assign categories and fixed pricing. |
-| **Manage Lessons** | Add, edit, and delete text-based lesson content for a specific course. Cascading completion handling. |
-| **Manage Categories** | Create and edit categories. Attempting to delete a category with active courses attached is gracefully blocked. |
+| Feature               | Details                                                                                                                                     |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Admin Dashboard**   | High-level platform metrics: total learners, active courses, total enrollments, total revenue. Tabular view of recent orders with Order ID. |
+| **Manage Courses**    | Add, edit, draft, publish, and unpublish courses. Assign categories and fixed pricing.                                                      |
+| **Manage Lessons**    | Add, edit, and delete text-based lesson content for a specific course. Cascading completion handling.                                       |
+| **Manage Categories** | Create and edit categories. Attempting to delete a category with active courses attached is gracefully blocked.                             |
 
 ---
 
@@ -155,25 +155,25 @@ Open `http://localhost:4200`
 
 ### Login Credentials
 
-| Role     | User ID | Username | Password |
-| -------- | ------- | -------- | -------- |
-| Admin    | `1001`  | `admin` | `password` |
-| Customer | `1002`  | `rahul_s`    | `password` |
-| Customer | `1003`  | `priya_p`    | `password` |
-| Customer | `1004`  | `amit_s`     | `password` |
-| Customer | `1005`  | `pooja_v`    | `password` |
-| Customer | `1006`  | `rohan_g`    | `password` |
+| Role     | User ID | Username  | Password   |
+| -------- | ------- | --------- | ---------- |
+| Admin    | `1001`  | `admin`   | `password` |
+| Customer | `1002`  | `rahul_s` | `password` |
+| Customer | `1003`  | `priya_p` | `password` |
+| Customer | `1004`  | `amit_s`  | `password` |
+| Customer | `1005`  | `pooja_v` | `password` |
+| Customer | `1006`  | `rohan_g` | `password` |
 
 ### Seeded Records
 
-| Module   | Count | Details                                                                                                  |
-| -------- | ----- | -------------------------------------------------------------------------------------------------------- |
-| Users    | 6     | 1 Admin, 5 Customers                                                                                     |
-| Categories| 5     | Software Engineering, Cloud Computing, Data Science, Artificial Intelligence, Web Development |
-| Courses  | 15    | Distributed across categories, varying from Free to paid. Richly populated with draft/active status.     |
-| Lessons  | 60    | Distributed across various courses containing text-based learning material.                                  |
-| Enrollments| 19    | Verified historical enrollments distributed among customers.                                             |
-| Orders   | 19    | Completed purchase records for paid courses.                                                         |
+| Module      | Count | Details                                                                                              |
+| ----------- | ----- | ---------------------------------------------------------------------------------------------------- |
+| Users       | 6     | 1 Admin, 5 Customers                                                                                 |
+| Categories  | 5     | Software Engineering, Cloud Computing, Data Science, Artificial Intelligence, Web Development        |
+| Courses     | 15    | Distributed across categories, varying from Free to paid. Richly populated with draft/active status. |
+| Lessons     | 60    | Distributed across various courses containing text-based learning material.                          |
+| Enrollments | 19    | Verified historical enrollments distributed among customers.                                         |
+| Orders      | 19    | Completed purchase records for paid courses.                                                         |
 
 ---
 
