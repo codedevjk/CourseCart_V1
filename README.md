@@ -170,8 +170,8 @@ Open `http://localhost:4200`
 | -------- | ----- | -------------------------------------------------------------------------------------------------------- |
 | Users    | 6     | 1 Admin, 5 Customers                                                                                     |
 | Categories| 5     | Software Engineering, Cloud Computing, Data Science, Artificial Intelligence, Web Development |
-| Courses  | 80    | Distributed across categories, varying from Free to paid. Richly populated with draft/active status.     |
-| Lessons  | 75    | Distributed across various courses containing text-based learning material.                                  |
+| Courses  | 15    | Distributed across categories, varying from Free to paid. Richly populated with draft/active status.     |
+| Lessons  | 60    | Distributed across various courses containing text-based learning material.                                  |
 | Enrollments| 19    | Verified historical enrollments distributed among customers.                                             |
 | Orders   | 19    | Completed purchase records for paid courses.                                                         |
 
