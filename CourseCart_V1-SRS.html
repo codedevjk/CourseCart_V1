@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CourseCart Learning Platform — SRS V1 (Starter Assignment)</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap');
+
+    :root {
+      --primary: #4f46e5;
+      /* Indigo 600 */
+      --accent: #f97316;
+      /* Orange 500 */
+      --border: #e5e7eb;
+      --bg: #ffffff;
+      --surface: #f8fafc;
+      --white: #ffffff;
+      --text: #1e293b;
+      --muted: #64748b;
+      --badge-must: #ef4444;
+
+      --sidebar-bg: #f1f5f9;
+      --sidebar-text: #475569;
+      --sidebar-hover: #e2e8f0;
+      --sidebar-accent: #4f46e5;
+
+      --card-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+      --card-hover-shadow: 0 10px 25px -3px rgb(79 70 229 / 0.15), 0 4px 6px -4px rgb(79 70 229 / 0.05);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--text);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-family: 'Outfit', sans-serif;
+    }
+
+    /* ── Layout ── */
+    .wrapper {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ── Sidebar / TOC ── */
+    #toc {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      width: 280px;
+      min-width: 260px;
+      background: var(--sidebar-bg);
+      color: var(--sidebar-text);
+      padding: 32px 0 40px;
+      flex-shrink: 0;
+      border-right: 1px solid var(--border);
+    }
+
+    #toc h2 {
+      font-size: 13px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text);
+      padding: 0 24px 12px;
+      margin-bottom: 16px;
+      font-weight: 800;
+    }
+
+    #toc a {
+      display: block;
+      padding: 8px 24px;
+      color: var(--sidebar-text);
+      text-decoration: none;
+      font-size: 14px;
+      border-left: 4px solid transparent;
+      transition: all 0.2s ease;
+      font-weight: 500;
+    }
+
+    #toc a:hover,
+    #toc a.active {
+      background: var(--sidebar-hover);
+      border-left-color: var(--primary);
+      color: var(--primary);
+    }
+
+    #toc .toc-sub {
+      padding-left: 44px;
+      font-size: 13.5px;
+      color: #64748b;
+    }
+
+    #toc .toc-sub:hover {
+      color: var(--primary);
+    }
+
+    #toc .toc-sub.preimpl {
+      color: #10b981;
+      /* emerald-500 */
+    }
+
+    #toc .toc-sub.trainee {
+      color: #ea580c;
+      /* orange-600 */
+    }
+
+    /* ── Main content ── */
+    main {
+      flex: 1;
+      padding: 24px 48px 48px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* ── Cover ── */
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    /* ── Sections ── */
+    section {
+      margin-bottom: 32px;
+    }
+
+    h2.sec-title {
+      font-size: 1.75rem;
+      color: var(--text);
+      border-bottom: 3px solid #eef2ff;
+      padding-bottom: 8px;
+      margin-bottom: 16px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      display: inline-block;
+    }
+
+    h2.sec-title::after {
+      content: '';
+      display: block;
+      width: 40%;
+      height: 3px;
+      background: var(--primary);
+      margin-top: 12px;
+      border-radius: 4px;
+    }
+
+    h3.sub-title {
+      font-size: 1.25rem;
+      color: var(--text);
+      margin: 28px 0 16px;
+      font-weight: 700;
+    }
+
+    h4.sub2-title {
+      font-size: 1.05rem;
+      color: var(--text);
+      font-weight: 700;
+      margin: 20px 0 12px;
+    }
+
+    p { margin-bottom: 14px; }
+
+    ul, ol { padding-left: 24px; margin-bottom: 16px; }
+
+    li { margin-bottom: 6px; }
+
+    /* ── User Story cards ── */
+    .us-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--white);
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: var(--card-shadow);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .us-card:hover {
+      box-shadow: var(--card-hover-shadow);
+      transform: translateY(-4px);
+      border-color: #c7d2fe;
+    }
+
+    .us-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 100%;
+    }
+
+    .us-card.preimpl::before {
+      background: #10b981;
+      /* emerald-500 */
+    }
+
+    .us-card.trainee-task::before {
+      background: #f97316;
+      /* orange-500 */
+    }
+
+    .us-card h3 {
+      font-size: 1.25rem;
+      color: var(--text);
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid #f1f5f9;
+      font-weight: 800;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .us-meta {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      background: var(--surface);
+      padding: 12px 16px;
+      border-radius: 8px;
+      border: 1px solid #f1f5f9;
+    }
+
+    .us-meta span {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .us-meta strong {
+      color: var(--text);
+      margin-right: 6px;
+      font-weight: 600;
+    }
+
+    .badge-must {
+      background: #fee2e2;
+      color: #b91c1c;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 16px;
+    }
+
+    .badge-preimpl {
+      background: #ecfdf5;
+      color: #047857;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-trainee {
+      background: #fff7ed;
+      color: #c2410c;
+      border: 1px solid #ffedd5;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .trainee-note {
+      background: #fff7ed;
+      border: 1px solid #ffedd5;
+      border-left: 4px solid #f97316;
+      border-radius: 0 8px 8px 0;
+      padding: 16px;
+      margin: 20px 0 12px;
+    }
+
+    .trainee-note .tn-title {
+      font-weight: 800;
+      color: #c2410c;
+      font-size: 14px;
+      margin-bottom: 12px;
+      font-family: 'Outfit', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .trainee-note .tn-intro {
+      font-size: 14px;
+      color: #9a3412;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .trainee-note ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .trainee-note li {
+      font-size: 14.5px;
+      color: #7c2d12;
+      margin-bottom: 8px;
+    }
+
+    /* ── Tables ── */
+    .tbl-wrap {
+      overflow-x: auto;
+      margin-bottom: 24px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 14.5px;
+    }
+
+    thead th {
+      background: var(--surface);
+      color: var(--text);
+      padding: 12px 16px;
+      text-align: left;
+      font-weight: 700;
+      border-bottom: 2px solid var(--border);
+    }
+
+    tbody tr {
+      border-bottom: 1px solid #f1f5f9;
+      transition: background 0.2s ease;
+    }
+
+    tbody tr:hover {
+      background: var(--surface);
+    }
+
+    td {
+      padding: 12px 16px;
+      vertical-align: middle;
+      color: #475569;
+    }
+
+    td strong {
+      color: var(--text);
+    }
+
+    .scope-preimpl {
+      color: #059669;
+      font-weight: 700;
+    }
+
+    .scope-trainee {
+      color: #ea580c;
+      font-weight: 700;
+    }
+
+    /* ── Callout ── */
+    .callout {
+      border-left: 4px solid var(--primary);
+      background: #eef2ff;
+      padding: 16px 20px;
+      margin: 16px 0;
+      color: #3730a3;
+      font-size: 14px;
+      border-radius: 0 8px 8px 0;
+      line-height: 1.55;
+    }
+
+    /* ── Inline Code & Blocks ── */
+    code {
+      background: #f8fafc;
+      color: #ea580c;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 3px 8px;
+      font-family: 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', monospace;
+      font-size: 13.5px;
+      font-weight: 600;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+    }
+    
+    pre {
+      background: #1e293b;
+      color: #f8fafc;
+      padding: 16px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 16px 0;
+      border: 1px solid #334155;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+    }
+    
+    pre code {
+      background: transparent;
+      color: inherit;
+      border: none;
+      padding: 0;
+      box-shadow: none;
+      font-weight: 500;
+    }
+
+    /* ── File Groups ── */
+    .file-group {
+      background: #1e293b;
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin: 16px 0 24px;
+      box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    .file-group .fg-label {
+      color: #38bdf8;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+      display: inline-block;
+      border-bottom: 1px solid #334155;
+      padding-bottom: 6px;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .file-group ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .file-group li {
+      font-family: 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', monospace;
+      font-size: 14px;
+      color: #f8fafc;
+      padding: 6px 0;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .file-group li .tag {
+      color: #f97316;
+      background: rgba(249, 115, 22, 0.15);
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-left: 12px;
+    }
+
+    /* ── Checklist Blocks ── */
+    .checklist-block {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 20px;
+      box-shadow: var(--card-shadow);
+    }
+
+    .checklist-block h4 {
+      color: var(--text);
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin: 0 0 20px;
+    }
+
+    .checklist-block ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .checklist-block li {
+      padding: 12px 0 12px 36px;
+      font-size: 15.5px;
+      border-bottom: 1px solid #f1f5f9;
+      position: relative;
+      color: #475569;
+    }
+
+    .checklist-block li:last-child {
+      border-bottom: none;
+    }
+
+    .checklist-block li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      top: 12px;
+      font-size: 16px;
+      font-weight: 900;
+      color: var(--primary);
+      background: #eef2ff;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ── Print ── */
+    @media print {
+      #toc {
+        display: none;
+      }
+
+      main {
+        padding: 20px;
+        max-width: 100%;
+      }
+
+      .us-card,
+      .file-group,
+      .checklist-block {
+        break-inside: avoid;
+      }
+    }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  
+    .pill-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .pill {
+      background-color: #ebf0f8;
+      color: #1e3a5f;
+      padding: 6px 16px;
+      border-radius: 9999px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .tech-category {
+      font-style: italic;
+      font-weight: 800;
+      color: #1e293b;
+      font-size: 1.1rem;
+      margin-top: 16px;
+      margin-bottom: 12px;
+    }
+    
+
+    .cover {
+      text-align: center;
+      padding: 40px 32px;
+      border-radius: 24px;
+      background: #f8fafc;
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.03), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+      margin-bottom: 40px;
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      position: relative;
+      overflow: hidden;
+    }
+    .cover::before {
+      content: '';
+      position: absolute;
+      top: -30px;
+      left: -30px;
+      width: 200px;
+      height: 200px;
+      background: rgba(255, 237, 213, 0.6); /* soft orange/peach glow */
+      border-radius: 50%;
+      filter: blur(50px);
+      z-index: 0;
+    }
+    .cover::after {
+      content: '';
+      position: absolute;
+      bottom: -30px;
+      right: -30px;
+      width: 250px;
+      height: 250px;
+      background: rgba(233, 213, 255, 0.5); /* soft purple glow */
+      border-radius: 50%;
+      filter: blur(60px);
+      z-index: 0;
+    }
+    .cover h1 {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      font-size: 3.2rem;
+      color: #1e293b;
+      letter-spacing: -1.5px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 1;
+    }
+    .cover h1 .logo-accent {
+      color: #5b45f5; /* Bright indigo from the image */
+    }
+    .cover .subtitle {
+      font-size: 1.35rem;
+      color: #0f172a;
+      margin: 0 0 20px;
+      font-weight: 600;
+      position: relative;
+      z-index: 1;
+    }
+    .cover .tagline {
+      font-size: 1.15rem;
+      color: #64748b;
+      margin-bottom: 32px;
+      font-weight: 500;
+      position: relative;
+      z-index: 1;
+    }
+    .cover .contact {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      color: #5b45f5;
+      background: #ede9fe;
+      padding: 5px 14px;
+      border-radius: 9999px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    @media print {
+      .cover {
+        box-shadow: none;
+        border: 1px solid #cbd5e1;
+        background: none;
+      }
+      .cover::before, .cover::after {
+        display: none;
+      }
+    }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+<!-- ════════════════════════════ MAIN ════════════════════════════ -->
+<main>
+<!-- Cover -->
+<div class="cover" id="cover">
+<h1>
+<img alt="CourseCart Logo" src="frontend/coursecart-ui/assets/Logo.svg" style="height: 48px; width: auto;"/>
+<span>Course<span class="logo-accent">Cart</span></span>
+</h1>
+<div class="subtitle">Brownfield Capstone Project SRS</div>
+<div class="contact">Author : Jagmohan Kushwaha</div>
+</div>
+<!-- ── Section 1 ── -->
+<section id="sec-1">
+<h2 class="sec-title">1. Project Overview</h2>
+<p>
+<strong>CourseCart</strong> is a modern, full-stack learning management application designed to streamline the
+          process of discovering, purchasing, and managing educational courses. It provides an end-to-end digital
+          platform enabling customers to securely register, browse courses across categories, view detailed syllabuses,
+          simulate purchases for immediate enrollment, and access lesson content while tracking their progress.
+        </p>
+<p>The application strictly enforces role-based workflows for two primary user types:</p>
+<ul>
+<li>
+<strong>Customers (USER):</strong> Can register, log in, browse the active course catalog, purchase single
+            courses via simulated checkout, access purchased course content (lessons), track progress per lesson, and
+            view their order history.
+          </li>
+<li>
+<strong>Administrators (ADMIN):</strong> Can log in, manage categories and courses, manage course lifecycle
+            (Draft, Active, Inactive), manage text-based course lessons, and view basic platform reporting metrics
+            globally.
+          </li>
+</ul>
+<p>The project is built as a <strong>microservices-based architecture</strong> using Java 21, Spring Boot,
+          Spring Cloud, and Angular — demonstrating modern enterprise development practices at a capstone-level of
+          complexity.</p>
+</section><section id="sec-2">
+<h2 class="sec-title">2. System Architecture</h2>
+<p>
+          The solution follows a <strong>Microservices Architecture</strong> consisting of four business services: User
+          Service, Catalog Service, Commerce Service, and Enrollment Service, with communication managed through
+          <strong>Spring Cloud Gateway</strong> and <strong>Spring Cloud Consul</strong>. All frontend requests must
+          pass through the API Gateway.
+        </p>
+<h3 class="sub-title" id="s2-1">2.1 Infrastructure Mapping</h3>
+<div class="tbl-wrap">
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Port</th>
+<th>Consul Name</th>
+<th>Database Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>API Gateway</td>
+<td>8080</td>
+<td><code>api-gateway</code></td>
+<td>None</td>
+</tr>
+<tr>
+<td>Consul (Discovery)</td>
+<td>8500</td>
+<td>None</td>
+<td>None</td>
+</tr>
+<tr>
+<td>User Service</td>
+<td>8081</td>
+<td><code>user-service</code></td>
+<td>coursecart_user_db</td>
+</tr>
+<tr>
+<td>Catalog Service</td>
+<td>8082</td>
+<td><code>catalog-service</code></td>
+<td>coursecart_catalog_db</td>
+</tr>
+<tr>
+<td>Commerce Service</td>
+<td>8084</td>
+<td><code>commerce-service</code></td>
+<td>coursecart_commerce_db</td>
+</tr>
+<tr>
+<td>Enrollment Service</td>
+<td>8083</td>
+<td><code>enrollment-service</code></td>
+<td>coursecart_enrollment_db</td>
+</tr>
+<tr>
+<td>Angular Frontend</td>
+<td>4200</td>
+<td>None</td>
+<td>SessionStorage Session</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 class="sub-title" id="s2-2">2.2 Authentication &amp; Authorization Design</h3>
+<div class="callout">
+<strong>Important:</strong> CourseCart utilizes a <strong>Frontend-Managed Identity Design</strong>. Identity
+          (Username and Role) is managed in Angular `sessionStorage` (clears automatically on browser/tab close). No JWTs, Spring Security, or HTTP Interceptors are
+          used to pass headers. Usernames/IDs are passed as standard explicit API parameters where required.
+        </div>
+</section><section id="sec-3">
+<h2 class="sec-title">3. Getting Started</h2>
+<h3 class="sub-title">3.1 Setup Steps</h3>
+<ol class="steps">
+<li>
+<div>Start Consul for service discovery: <code>consul agent -dev</code></div>
+</li>
+<li>Ensure MySQL is running on port 3306.</li>
+<li>
+<div>Initialize the databases by running the consolidated SQL scripts from the
+              <code>src/main/resources</code> folder of each microservice:
+              <br/><code>mysql -u root -p &lt; backend/user-service/src/main/resources/user_db.sql</code>
+<br/><code>mysql -u root -p &lt; backend/catalog-service/src/main/resources/catalog_db.sql</code>
+<br/><code>mysql -u root -p &lt; backend/commerce-service/src/main/resources/commerce_db.sql</code>
+<br/><code>mysql -u root -p &lt; backend/enrollment-service/src/main/resources/enrollment_db.sql</code>
+</div>
+</li>
+<li>
+<div>Start each backend microservice in separate terminals:
+              <br/><code>cd backend/api-gateway &amp;&amp; mvn spring-boot:run</code>
+<br/><code>cd backend/user-service &amp;&amp; mvn spring-boot:run</code>
+<br/><code>cd backend/catalog-service &amp;&amp; mvn spring-boot:run</code>
+<br/><code>cd backend/enrollment-service &amp;&amp; mvn spring-boot:run</code>
+<br/><code>cd backend/commerce-service &amp;&amp; mvn spring-boot:run</code>
+</div>
+</li>
+<li>
+<div>Start the Angular application: run <code>npm install</code> then <code>ng serve</code> from
+              <code>frontend/coursecart-ui/</code>.
+            </div>
+</li>
+<li>
+<div>Open <code>http://localhost:4200</code>.</div>
+</li>
+</ol>
+<h3 class="sub-title">3.2 Technology Stack</h3>
+<h4 class="sub2-title">Frontend</h4>
+<div class="pill-group">
+<span class="pill">Angular 16.2.x (^16.2.0)</span>
+<span class="pill">TypeScript 5.1</span>
+<span class="pill">HTML5</span>
+<span class="pill">Bootstrap 5</span>
+</div>
+<h4 class="sub2-title" style="margin-top:16px;">Backend</h4>
+<div class="pill-group">
+<span class="pill">Java 21</span>
+<span class="pill">Spring Boot 3.2.5</span>
+<span class="pill">Spring Data JPA / Hibernate</span>
+<span class="pill">Spring Cloud Gateway</span>
+<span class="pill">Spring Cloud Consul</span>
+<span class="pill">REST APIs</span>
+<span class="pill">Bean Validation (Jakarta)</span>
+</div>
+<h4 class="sub2-title" style="margin-top:16px;">Database</h4>
+<div class="pill-group">
+<span class="pill">MySQL</span>
+</div>
+</section><section id="sec-4">
+<h2 class="sec-title">4. User Stories</h2>
+<p>The following fifteen user stories define the complete functional scope of the application. <strong>US01, US02, US06, US12, US13, US14, and US15</strong> are pre-implemented in the starter codebase and must remain functional without redesign. <strong>US03, US04, US05, US07, US08, US09, US10, and US11</strong> are intentionally stubbed — trainees must implement these completely.</p><div class="callout warning" style="border-left: 4px solid #f59e0b; background-color: #fef3c7; padding: 12px 16px; margin: 16px 0; border-radius: 4px; color: #92400e;"><strong>Important: </strong>Do not modify any pre-implemented story. All TODO markers follow the format <code>TODO[TRAINEE]</code>. Use VSCode's global search (Ctrl+Shift+F) to list every implementation point across the codebase.</div>
+<!-- US01 -->
+<div class="us-card preimpl" id="us01">
+<h3>US 01 – User Registration</h3>
+<div class="us-meta">
+<span><strong>Priority:</strong> <span class="badge-must">Must Have</span></span>
+<span><strong>Primary Microservice:</strong> User Service</span>
+</div>
+<h4 class="sub2-title">Acceptance Criteria</h4>
+<ul><li>As an anonymous visitor, I want to securely register so that I can access the CourseCart platform and purchase courses.</li><li>Customers shall be able to register using their Full Name, Username, and Password.</li><li>Usernames shall be unique across the system.</li><li>Duplicate username registrations shall not be allowed; the system must return a clear validation message.</li><li>Newly registered users shall automatically be assigned a standard customer role.</li><li>Mandatory fields shall be validated before registration (e.g., minimum lengths, no empty strings).</li><li>Appropriate success, validation, and error messages shall be displayed clearly to the user.</li><li>The registration form must provide immediate input validation and smoothly redirect the user to the login page upon successful registration.</li></ul>
+</div>
+<!-- US02 -->
+<div class="us-card preimpl" id="us02">
+<h3>US 02 – User Login</h3>
+<div class="us-meta">
+<span><strong>Priority:</strong> <span class="badge-must">Must Have</span></span>
+<span><strong>Primary Microservice:</strong> User Service</span>
+</div>
+<h4 class="sub2-title">Acceptance Criteria</h4>
+<ul><li>As a registered user, I want to log in so that I can access the application based on my assigned role.</li><li>Users shall be able to log in using their Username and Password.</li><li>Authentication shall securely validate credentials against stored records.</li><li>The user's access level and role shall be identified during a successful login.</li><li>Identity and session information shall be stored securely for the duration of the visit and cleared automatically when the browser or tab is closed.</li><li>Upon successful login, standard users shall be directed to the course catalog or their learning area, while administrators shall be directed to the management dashboard.</li><li>Users shall be able to log out securely, which immediately clears their active session.</li><li>Mandatory fields shall be validated before attempting to log in.</li><li>Appropriate error messages (e.g., 'Invalid credentials') shall be displayed for failed attempts.</li></ul>
+</div>
+<!-- US03 -->
+<div class="us-card trainee-task" id="us03">
+<h3>US 03 – View Profile <span class="badge-trainee">Trainee Task</span></h3>
+<div class="us-meta">
+<span><strong>Priority:</strong> <span class="badge-must">Must Have</span></span>
+<span><strong>Primary Microservice:</strong> User Service</span>
+</div>
+<h4 class="sub2-title">Acceptance Criteria</h4><ul><li>As a logged-in user, I want to view my basic profile details, so that I can verify my account information.</li><li>The system shall display the user's name and username securely.</li><li>Profile data shall be retrieved securely using the logged-in user's identity.</li><li>The user interface must provide a clean and intuitive view representing the user's identity and details.</li></ul>
+</div>
+<!-- US04 -->
+<div class="us-card trainee-task" id="us04">
+<h3>US 04 – Admin Category Management <span class="badge-trainee">Trainee Task</span></h3>
+<div class="us-meta">
+<span><strong>Priority:</strong> <span class="badge-must">Must Have</span></span>
+<span><strong>Primary Microservice:</strong> Catalog Service</span>
+</div>
+<h4 class="sub2-title">Acceptance Criteria</h4><ul><li>As an admin, I want to manage course categories, so that I can organize the catalog.</li><li>Administrators can view a paginated or structured list of all categories.</li><li>Administrators can create a new category by providing a unique name.</li><li>Administrators can edit the name of an existing category.</li><li>Administrators can attempt to delete a category.</li><li>A category cannot be deleted if there are active courses currently assigned to it.</li><li>If a deletion is prevented, the system must gracefully handle the rejection and display a user-friendly error message explaining the reason.</li></ul>
+</div>
+<!-- US05 -->
+<div class="us-card trainee-task" id="us05">
+<h3>US 05 – Admin Course Management <span class="badge-trainee">Trainee Task</span></h3>
+<div class="us-meta">
+<span><strong>Priority:</strong> <span class="badge-must">Must Have</span></span>
+<span><strong>Primary Microservice:</strong> Catalog Service</span>
+</div>
+<h4 class="sub2-title">Acceptance Criteria</h4><ul><li>As an admin, I want to manage course metadata, so that I can define what is sold on the platform.</li><li>Administrators can view all courses regardless of their current publishing status.</li><li>Administrators can create and edit courses by providing a Title, Description, Price, and Category.</li><li>Every course must be assigned to exactly one existing category.</li><li>Administrators can set a fixed price for the course, including setting it to free.</li><li>Newly created courses shall default to a 'Draft' status.</li><li>The system must validate that the price is not negative and that all required fields are provided before saving.</li><li>Administrators can delete a course. Deleting a course must also securely remove all of its associated lessons.</li></ul>
+</div>
+<!-- US06 -->
+<div class="us-card preimpl" id="us06">
+<h3>US 06 – Admin Lesson Management</h3>
+<div class="us-meta">
+<span><strong>Priority:</strong> <span class="badge-must">Must Have</span></span>
+<span><strong>Primary Microservice:</strong> Catalog Service</span>
+</div>
+<h4 class="sub2-title">Acceptance Criteria</h4>
+<ul><li>As an admin, I want to manage lessons within a course, so that I can build the educational content.</li><li>Administrators can navigate into a specific course to manage its associated lessons.</li><li>Administrators can create a text-based lesson with a Title and Content for a course.</li><li>Administrators can edit existing lesson titles and their text content.</li><li>Administrators can completely delete a lesson from a course.</li><li>Deleting a lesson must be handled gracefully so that it does not corrupt or break the learning progress records of users currently enrolled in the course.</li></ul>
+</div>
+<!-- US07 -->
+<div class="us-card trainee-task" id="us07">
+<h3>US 07 – Admin Course Lifecycle Management <span class="badge-trainee">Trainee Task</span></h3>
+<div class="us-meta">
+<span><strong>Priority:</strong> <span class="badge-must">Must Have</span></span>
+<span><strong>Primary Microservice:</strong> Catalog Service</span>
+</div>
+<h4 class="sub2-title">Acceptance Criteria</h4><ul><li>As an admin, I want to toggle a course's status between Draft, Active, and Inactive, so that I can control its public availability.</li><li>Course publishing statuses are strictly limited to Draft, Active, or Inactive.</li><li>Administrators can change a Draft course to Active to publish it to the public catalog.</li><li>Administrators can change an Active course to Inactive to retire it from future sales.</li><li>Inactive courses must immediately be hidden from the public catalog for new customers.</li><li>Changing a course's status to Inactive must not affect previously enrolled users; they must retain full access to the course in their learning dashboard.</li></ul>
+</div>
+<!-- US08 -->
+<div class="us-card trainee-task" id="us08">
+<h3>US 08 – Browse and Search Catalog <span class="badge-trainee">Trainee Task</span></h3>
+<div class="us-meta">
+<span><strong>Priority:</strong> <span class="badge-must">Must Have</span></span>
+<span><strong>Primary Microservice:</strong> Catalog Service</span>
+</div>
+<h4 class="sub2-title">Acceptance Criteria</h4><ul><li>As a user, I want to browse and search the active course catalog, so that I can find courses to learn.</li><li>The system shall display a visual grid or list containing only Active courses.</li><li>Users can filter the catalog by selecting a specific category.</li><li>Users can search for courses by entering part or all of a Course Title.</li><li>The catalog must support structured pagination to cleanly display a set number of courses per page.</li><li>Each course card shall display the Title, Price, and Category name clearly.</li><li>The interface must provide clear visual feedback during loading times and display helpful messages if no courses match the search criteria.</li></ul>
+</div>
+<!-- US09 -->
+<div class="us-card trainee-task" id="us09">
+<h3>US 09 – View Course Details <span class="badge-trainee">Trainee Task</span></h3>
+<div class="us-meta">
+<span><strong>Priority:</strong> <span class="badge-must">Must Have</span></span>
+<span><strong>Primary Microservice:</strong> Catalog Service</span>
+</div>
+<h4 class="sub2-title">Acceptance Criteria</h4><ul><li>As a user, I want to view detailed information about a course, so that I can decide whether to purchase it.</li><li>The system shall display the course Title, Description, Category, and Price in a detailed view.</li><li>The system shall display a read-only list of the course syllabus (Lesson titles).</li><li>If the user is logged in and not yet enrolled, a clear option to purchase the course is displayed.</li><li>If the user is logged in and already enrolled, an option to directly navigate to the course material is displayed.</li><li>If the visitor is not logged in, they are prompted to log in or register before they can purchase the course.</li></ul>
+</div>
+<!-- US10 -->
+<div class="us-card trainee-task" id="us10">
+<h3>US 10 – Single Course Purchase (Mock Checkout) <span class="badge-trainee">Trainee Task</span>
+</h3>
+<div class="us-meta">
+<span><strong>Priority:</strong> <span class="badge-must">Must Have</span></span>
+<span><strong>Primary Microservice:</strong> Commerce Service</span>
+</div>
+<h4 class="sub2-title">Acceptance Criteria</h4><ul><li>As a user, I want to purchase a course through a simulated checkout, so that I can gain access to its content.</li><li>Initiating a purchase directs the user to a streamlined mock checkout flow.</li><li>The system shall clearly display the course details and the total price to be paid.</li><li>The user can select a simulated payment method, and the system simulates a successful transaction.</li><li>The system must strictly prevent duplicate purchases if the user is already enrolled in the course.</li><li>Upon a successful transaction, the system records the order and officially enrolls the user in the course.</li><li>Failed transaction attempts must not grant course access or create order records.</li><li>The user is seamlessly redirected to a success screen or their learning dashboard upon completion.</li></ul>
+</div>
+<!-- US11 -->
+<div class="us-card trainee-task" id="us11">
+<h3>US 11 – View Order History <span class="badge-trainee">Trainee Task</span></h3>
+<div class="us-meta">
+<span><strong>Priority:</strong> <span class="badge-must">Must Have</span></span>
+<span><strong>Primary Microservice:</strong> Commerce Service</span>
+</div>
+<h4 class="sub2-title">Acceptance Criteria</h4><ul><li>As a user, I want to view my past successful purchases, so that I have a record of my transactions.</li><li>The system shall display a clear, tabular list of the user's successfully completed orders.</li><li>The history must display the Course Title, Order Date, and Total Price Paid for each transaction.</li><li>Failed or incomplete purchase attempts must not appear in this history.</li><li>The order history must be sorted chronologically, showing the most recent transactions first.</li></ul>
+</div>
+<!-- US12 -->
+<div class="us-card preimpl" id="us12">
+<h3>US 12 – My Learning Dashboard</h3>
+<div class="us-meta">
+<span><strong>Priority:</strong> <span class="badge-must">Must Have</span></span>
+<span><strong>Primary Microservice:</strong> Enrollment Service</span>
+</div>
+<h4 class="sub2-title">Acceptance Criteria</h4>
+<ul><li>As a user, I want to see a list of all courses I am enrolled in, so that I can resume learning.</li><li>The system shall display a personalized dashboard of all courses the user is enrolled in, including any courses that have since been retired by administrators.</li><li>The system shall automatically calculate and display the user's overall progress percentage for each course.</li><li>The dashboard must display a welcoming and helpful message if the user has not yet enrolled in any courses.</li></ul>
+</div>
+<!-- US13 -->
+<div class="us-card preimpl" id="us13">
+<h3>US 13 – Access Course Content</h3>
+<div class="us-meta">
+<span><strong>Priority:</strong> <span class="badge-must">Must Have</span></span>
+<span><strong>Primary Microservice:</strong> Enrollment Service</span>
+</div>
+<h4 class="sub2-title">Acceptance Criteria</h4>
+<ul><li>As an enrolled user, I want to read the lessons of a course, so that I can learn the material.</li><li>Enrolled users can navigate into a course to view the full syllabus and access lesson materials.</li><li>Users can comfortably view the text-based educational content of any selected lesson.</li><li>The system must strictly deny access and gracefully redirect any non-enrolled user attempting to view restricted lesson content directly.</li></ul>
+</div>
+<!-- US14 -->
+<div class="us-card preimpl" id="us14">
+<h3>US 14 – Track Lesson Progress</h3>
+<div class="us-meta">
+<span><strong>Priority:</strong> <span class="badge-must">Must Have</span></span>
+<span><strong>Primary Microservice:</strong> Enrollment Service</span>
+</div>
+<h4 class="sub2-title">Acceptance Criteria</h4>
+<ul><li>As an enrolled user, I want to mark lessons as complete, so that my overall course progress is updated.</li><li>Users can manually toggle a lesson's status between Complete and Incomplete.</li><li>Toggling a lesson's status immediately and securely saves the user's progress.</li><li>The course's overall progress percentage is recalculated and updated dynamically on the screen in real-time.</li></ul>
+</div>
+<!-- US15 -->
+<div class="us-card preimpl" id="us15">
+<h3>US 15 – Admin Dashboard</h3>
+<div class="us-meta">
+<span><strong>Priority:</strong> <span class="badge-must">Must Have</span></span>
+<span><strong>Primary Microservice:</strong> All Services</span>
+</div>
+<h4 class="sub2-title">Acceptance Criteria</h4>
+<ul><li>As an admin, I want to view high-level platform metrics, so that I can understand business performance.</li><li>The system shall display the total count of registered users on the platform.</li><li>The system shall display the total count of published, active courses.</li><li>The system shall display the total number of course enrollments.</li><li>The system shall display the total aggregated revenue from all successful transactions.</li><li>These performance metrics must be gathered efficiently and displayed clearly in dashboard summaries.</li><li>The dashboard shall also display a list of recent transactions for administrative reference.</li></ul>
+</div>
+<!-- 3.1 Final List -->
+<h3 class="sub-title" id="s4-1">4.1 Final User Story List</h3>
+<div class="tbl-wrap">
+<table>
+<thead>
+<tr>
+<th>User Story</th>
+<th>Module</th>
+<th>Microservice</th>
+<th>Ownership</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>US01</strong></td>
+<td>User Registration</td>
+<td>User Service</td>
+<td class="scope-preimpl">Fully Implemented</td>
+</tr>
+<tr>
+<td><strong>US02</strong></td>
+<td>User Login</td>
+<td>User Service</td>
+<td class="scope-preimpl">Fully Implemented</td>
+</tr>
+<tr>
+<td><strong>US03</strong></td>
+<td>View Profile</td>
+<td>User Service</td>
+<td class="scope-trainee">Trainee Assignment</td>
+</tr>
+<tr>
+<td><strong>US04</strong></td>
+<td>Admin Category Mgmt</td>
+<td>Catalog Service</td>
+<td class="scope-trainee">Trainee Assignment</td>
+</tr>
+<tr>
+<td><strong>US05</strong></td>
+<td>Admin Course Mgmt</td>
+<td>Catalog Service</td>
+<td class="scope-trainee">Trainee Assignment</td>
+</tr>
+<tr>
+<td><strong>US06</strong></td>
+<td>Admin Lesson Mgmt</td>
+<td>Catalog Service</td>
+<td class="scope-preimpl">Fully Implemented</td>
+</tr>
+<tr>
+<td><strong>US07</strong></td>
+<td>Admin Course Lifecycle</td>
+<td>Catalog Service</td>
+<td class="scope-trainee">Trainee Assignment</td>
+</tr>
+<tr>
+<td><strong>US08</strong></td>
+<td>Browse/Search Catalog</td>
+<td>Catalog Service</td>
+<td class="scope-trainee">Trainee Assignment</td>
+</tr>
+<tr>
+<td><strong>US09</strong></td>
+<td>View Course Details</td>
+<td>Catalog Service</td>
+<td class="scope-trainee">Trainee Assignment</td>
+</tr>
+<tr>
+<td><strong>US10</strong></td>
+<td>Single Course Purchase</td>
+<td>Commerce Service</td>
+<td class="scope-trainee">Trainee Assignment</td>
+</tr>
+<tr>
+<td><strong>US11</strong></td>
+<td>View Order History</td>
+<td>Commerce Service</td>
+<td class="scope-trainee">Trainee Assignment</td>
+</tr>
+<tr>
+<td><strong>US12</strong></td>
+<td>My Learning Dashboard</td>
+<td>Enrollment Service</td>
+<td class="scope-preimpl">Fully Implemented</td>
+</tr>
+<tr>
+<td><strong>US13</strong></td>
+<td>Access Course Content</td>
+<td>Enrollment Service</td>
+<td class="scope-preimpl">Fully Implemented</td>
+</tr>
+<tr>
+<td><strong>US14</strong></td>
+<td>Track Lesson Progress</td>
+<td>Enrollment Service</td>
+<td class="scope-preimpl">Fully Implemented</td>
+</tr>
+<tr>
+<td><strong>US15</strong></td>
+<td>Admin Dashboard</td>
+<td>All Services</td>
+<td class="scope-preimpl">Fully Implemented</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section><section id="sec-5">
+<h2 class="sec-title">5. Data Persistence Rules</h2>
+<p>The application shall use <strong>four separate MySQL databases</strong> — one per microservice — as the
+          permanent storage for all business data: <code>coursecart_user_db</code>, <code>coursecart_catalog_db</code>,
+          <code>coursecart_commerce_db</code>, and <code>coursecart_enrollment_db</code>. No cross-service database
+          joins are permitted; all cross-service data access is done through REST API calls.
+        </p>
+<ul>
+<li>All successful Create, Update, and Delete operations shall be immediately persisted in the database.</li>
+<li>All View and Search operations shall always retrieve the latest persisted records.</li>
+<li>Changes performed by one module shall be immediately reflected wherever the same data is consumed.</li>
+<li>No business data shall be maintained only in frontend memory; frontend sessionStorage is strictly reserved (clears on tab close)
+            for managing active session state (user info and role).</li>
+<li>Data shall remain available after browser closure, frontend restart, backend restart, application restart,
+            or system reboot. ddl-auto: update ensures no data loss on restart; *.sql files are one-time setup, do not re-run</li>
+<li>The database shall always be considered the single source of truth for all business operations.</li>
+</ul>
+</section><section id="sec-6">
+<h2 class="sec-title">6. Identifier Generation Rules</h2>
+<p>
+          The system enforces strict auto-increment rules for business entities. CourseCart utilizes standard
+          auto-incrementing numeric IDs for all entities. No custom string identifiers are used.
+        </p>
+<div class="tbl-wrap">
+<table>
+<thead>
+<tr>
+<th>Entity</th>
+<th>Format / Data Type</th>
+<th>Example</th>
+<th>Generation Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Users</strong></td>
+<td>Numeric Integer</td>
+<td><code>1, 2, 3</code></td>
+<td>Standard Database Auto-Increment ID.</td>
+</tr>
+<tr>
+<td><strong>Courses</strong></td>
+<td>Numeric Integer</td>
+<td><code>1, 2, 3</code></td>
+<td>Standard Database Auto-Increment ID.</td>
+</tr>
+<tr>
+<td><strong>Lessons</strong></td>
+<td>Numeric Integer</td>
+<td><code>1, 2, 3</code></td>
+<td>Standard Database Auto-Increment ID.</td>
+</tr>
+<tr>
+<td><strong>Orders</strong></td>
+<td>Numeric Integer</td>
+<td><code>1, 2, 3</code></td>
+<td>Standard Database Auto-Increment ID.</td>
+</tr>
+<tr>
+<td><strong>Enrollments</strong></td>
+<td>Numeric Integer</td>
+<td><code>1, 2, 3</code></td>
+<td>Standard Database Auto-Increment ID.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section><section id="sec-7">
+<h2 class="sec-title">7. Frontend Components</h2>
+<div class="module-block">
+<h4>Authentication Module</h4>
+<p>Handles user registration, login, credential validation, and session management using sessionStorage.</p>
+<p><strong>Features:</strong></p>
+<ul>
+<li>User Registration (Customers only)</li>
+<li>User Login (Customers and Administrators)</li>
+<li>Role-Based Route Guards (AuthGuard, AdminGuard)</li>
+<li>Session Management (via sessionStorage; session clears on browser/tab close, no JWTs)</li>
+<li>Logout Functionality</li>
+</ul>
+</div>
+<div class="module-block">
+<h4>Catalog Module</h4>
+<p>Manages course offerings, categories, and syllabus content.</p>
+<p><strong>Features:</strong></p>
+<ul>
+<li>Course CRUD and Lifecycle Management (Admin)</li>
+<li>Lesson Management (Admin)</li>
+<li>Category Management (Admin)</li>
+<li>Browse Courses (Customer)</li>
+<li>Search by Course Title</li>
+<li>Filter by Category</li>
+<li>Pagination</li>
+</ul>
+</div>
+<div class="module-block">
+<h4>Commerce &amp; Learning Module</h4>
+<p>Manages simulated checkout, order history, and access to learning materials.</p>
+<p><strong>Features:</strong></p>
+<ul>
+<li>Simulated Single-Course Checkout</li>
+<li>Order History Reporting</li>
+<li>My Learning Dashboard (Enrolled courses overview)</li>
+<li>Lesson Viewer</li>
+<li>Progress Tracking (Checkbox-based completion)</li>
+<li>Admin Dashboard (Global reporting metrics)</li>
+</ul>
+</div>
+</section><section id="sec-8">
+<h2 class="sec-title">8. Backend Components</h2>
+<div class="service-block">
+<h3>User Service (Port: 8081)</h3>
+<p><strong>Responsibilities</strong></p>
+<ul>
+<li>Registration</li>
+<li>Login (Credential validation against Database)</li>
+</ul>
+</div>
+<div class="service-block">
+<h3>Catalog Service (Port: 8082)</h3>
+<p><strong>Responsibilities</strong></p>
+<ul>
+<li>Course Management (Draft, Active, Inactive logic)</li>
+<li>Lesson Management</li>
+<li>Category Management</li>
+<li>Browse and Filter Courses</li>
+</ul>
+</div>
+<div class="service-block">
+<h3>Commerce Service (Port: 8084)</h3>
+<p><strong>Responsibilities</strong></p>
+<ul>
+<li>Mock Order Checkout (Fetches price from Catalog Service via <strong>WebClient</strong> with Resilience4j
+              Circuit Breaker)</li>
+<li>Triggers Enrollment Service via <strong>WebClient</strong> to create enrollment on successful payment
+            </li>
+<li>Order Tracking</li>
+<li>Revenue Reporting</li>
+</ul>
+</div>
+<div class="service-block">
+<h3>Enrollment Service (Port: 8083)</h3>
+<p><strong>Responsibilities</strong></p>
+<ul>
+<li>Manage enrollments created by successful checkouts</li>
+<li>Provide My Learning access control</li>
+<li>Track and calculate lesson progress</li>
+</ul>
+</div>
+<div class="service-block">
+<h3>API Gateway (Port: 8080)</h3>
+<p><strong>Responsibilities</strong></p>
+<ul>
+<li>Routes all frontend requests to appropriate backend services.</li>
+<li>CORS configuration.</li>
+</ul>
+</div>
+</section><section id="sec-9">
+<h2 class="sec-title">9. Non-Functional Requirements</h2>
+<ul>
+<li><strong>Performance:</strong> The application should be fast and responsive, with quick load times and
+            minimal lag or delay.</li>
+<li><strong>Usability:</strong> The application should be easy to use and intuitive, with a clear and
+            consistent user interface.</li>
+<li><strong>UI/UX Design:</strong> Design an intuitive user interface that is easy to navigate and provides a
+            seamless user experience. Prioritize responsiveness and clarity across all devices.</li>
+</ul>
+</section><section id="sec-10">
+<h2 class="sec-title">10. Implementation Guidelines</h2>
+<h3 class="sub-title">10.1 General Coding Practices</h3>
+<ul>
+<li>Use Lombok to generate boilerplate code (e.g., @Data, @NoArgsConstructor) for all model classes. Prefer constructor injection for
+            dependency management.</li>
+<li>Implement logic using Lambdas and Streams.</li>
+<li>Organize code into logical layers (Controller, Service, Repository, DTO, Entity, Configuration, etc.).
+          </li>
+<li>Use meaningful package names reflecting the domain.</li>
+<li>Employ Spring Dependency Injection for effective component management.</li>
+</ul>
+<h3 class="sub-title">10.2 Error Handling</h3>
+<ul>
+<li>Handle cases where the user attempts to access resources without authorization.</li>
+<li>Implement custom exceptions with user-friendly error messages.</li>
+<li>Use a centralized exception handling mechanism to translate exceptions into appropriate HTTP responses.
+          </li>
+<li>Use <code>@RestControllerAdvice</code> (GlobalExceptionHandler) to intercept, format, and log all service
+            exceptions.</li>
+<li>Return meaningful success and error responses with appropriate HTTP status codes.</li>
+</ul>
+<h3 class="sub-title">10.3 DTOs and Mapping</h3>
+<ul>
+<li>Data Transfer Objects (DTOs) must be used for all API request and response payloads.</li>
+<li>Database Entities shall NEVER be exposed directly through REST APIs.</li>
+<li>Use <strong>ModelMapper</strong> (configured as a Spring <code>@Bean</code> in each service) for DTO/Entity conversions. Add explicit mappings for any fields that do not auto-map by convention.</li>
+</ul>
+<h3 class="sub-title">10.4 Database Interaction</h3>
+<ul>
+<li>Spring Data JPA Repositories must be used for all database operations and query generation.</li>
+<li>Configure appropriate database properties and table generation strategies
+            (<code>spring.jpa.hibernate.ddl-auto=update</code> is used here to ensure schema synchronization).</li>
+</ul>
+<h3 class="sub-title">10.5 API Design</h3>
+<ul>
+<li>All APIs should be mapped with an appropriate base URI representing the resource collection (e.g.,
+            <code>/api/courses</code>).
+          </li>
+<li>Ensure strict isolation of server port numbers for each microservice (e.g., Gateway: 8080, User: 8081,
+            Catalog: 8082, Commerce: 8084, Enrollment: 8083).</li>
+<li>Use appropriate HTTP methods (GET, POST, PUT, DELETE, PATCH) and let Spring automatically resolve
+            appropriate status codes.</li>
+</ul>
+<h3 class="sub-title">10.6 Microservice Communication</h3>
+<ul>
+<li>Register all microservices with Spring Cloud Consul for dynamic service discovery and health monitoring.
+          </li>
+<li>Route all frontend and external client requests exclusively through the Spring Cloud Gateway.</li>
+<li>Use <code>WebClient</code> (from Spring WebFlux) for inter-service HTTP communication. The
+            <code>@LoadBalanced WebClient.Builder</code> bean enables load-balanced calls using Consul service names
+            (e.g., <code>http://catalog-service</code>). Do NOT use the deprecated <code>RestTemplate</code>.
+          </li>
+<li>Implement Spring Cloud Circuit Breaker (Resilience4j) for inter-service calls using the following precise
+            configuration:
+            <ul>
+<li><code>slidingWindowSize</code>: 10 (Evaluates the last 10 calls)</li>
+<li><code>failureRateThreshold</code>: 50% (Opens the circuit if 50% of calls fail)</li>
+<li><code>waitDurationInOpenState</code>: 60 seconds (Time before transitioning to half-open state)</li>
+<li><code>permittedNumberOfCallsInHalfOpenState</code>: 3</li>
+<li>All circuit breaker configuration must be defined in <code>application.yml</code> under
+                <code>resilience4j.circuitbreaker.instances</code>.
+              </li>
+<li>Define appropriate <code>@CircuitBreaker</code> fallback methods to ensure graceful degradation.</li>
+</ul>
+</li>
+<li>All services must use <code>application.yml</code> for all configuration (not
+            <code>application.properties</code>).
+          </li>
+</ul>
+<h3 class="sub-title">10.7 Validation</h3>
+<ul>
+<li>Bean Validation should be used for all user inputs.</li>
+<li>Custom Validators should be implemented for complex validations.</li>
+<li>All request parameters must be validated for null or empty values. Return standard Bean Validation error
+            messages.</li>
+</ul>
+<h3 class="sub-title">10.8 Testing</h3>
+<ul>
+<li>Write unit test cases for critical service methods using <strong>JUnit</strong> and
+            <strong>Mockito</strong>.
+          </li>
+<li>Achieve a minimum of 80% code coverage.</li>
+<li>Test all REST APIs using Postman or Swagger/OpenAPI.</li>
+</ul>
+</section><section id="sec-11">
+<h2 class="sec-title">11. Code Quality</h2>
+<p>
+          To ensure adherence to coding standards, the project should be analyzed using SonarQube. The following minimum
+          acceptable values must be met:
+        </p>
+<div class="tbl-wrap">
+<table>
+<thead>
+<tr>
+<th>SonarQube Metric</th>
+<th>Minimum Acceptable Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Security</td>
+<td class="sonar-a">A</td>
+</tr>
+<tr>
+<td>Reliability</td>
+<td class="sonar-a">A</td>
+</tr>
+<tr>
+<td>Issues</td>
+<td>≤ 5</td>
+</tr>
+<tr>
+<td>Coverage</td>
+<td>≥ 80%</td>
+</tr>
+<tr>
+<td>Duplications</td>
+<td>≤ 3%</td>
+</tr>
+<tr>
+<td>Security Hotspots</td>
+<td class="sonar-a">A</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section><section id="sec-12">
+<h2 class="sec-title">12. Trainee Implementation Guide</h2>
+<p>The following <strong>19 files</strong> contain all <code>TODO[TRAINEE]</code> markers and must be implemented in full.
+  Controllers (CategoryController, CourseController, UserController), entities, DTOs, and repositories are pre-provided — do not modify them.</p>
+
+<h3 class="sub-title">12.1 Backend — Service Layer (2 Java files)</h3>
+<div class="file-group">
+  <div class="fg-label">Catalog Service</div>
+  <ul>
+    <li>backend/catalog-service/src/main/java/com/coursecart/catalog/service/<strong>CatalogServiceImpl.java</strong>
+      <span class="tag">← TODO[TRAINEE] for US04, US05, US07, US08, US09</span></li>
+  </ul>
+  <div class="fg-label" style="margin-top:10px;">Commerce Service</div>
+  <ul>
+    <li>backend/commerce-service/src/main/java/com/coursecart/commerce/controller/<strong>CommerceController.java</strong>
+      <span class="tag">← TODO[TRAINEE] for US10, US11</span></li>
+    <li>backend/commerce-service/src/main/java/com/coursecart/commerce/service/<strong>CommerceServiceImpl.java</strong>
+      <span class="tag">← TODO[TRAINEE] for US10, US11</span></li>
+  </ul>
+</div>
+
+<h3 class="sub-title">12.2 Frontend — Angular Services (3 TypeScript files)</h3>
+<div class="file-group">
+  <div class="fg-label">Frontend Services</div>
+  <ul>
+    <li>frontend/coursecart-ui/src/app/services/<strong>user.service.ts</strong>
+      <span class="tag">← TODO[TRAINEE] — getProfile() for US03</span></li>
+    <li>frontend/coursecart-ui/src/app/services/<strong>catalog.service.ts</strong>
+      <span class="tag">← TODO[TRAINEE] — all category &amp; course methods for US04, US05, US07, US08, US09</span></li>
+    <li>frontend/coursecart-ui/src/app/services/<strong>commerce.service.ts</strong>
+      <span class="tag">← TODO[TRAINEE] — checkout() and getOrders() for US10, US11</span></li>
+  </ul>
+</div>
+
+<h3 class="sub-title">12.3 Frontend — Angular Feature Components (14 files)</h3>
+<div class="file-group">
+  <div class="fg-label">User / Profile (US03)</div>
+  <ul>
+    <li>frontend/coursecart-ui/src/app/components/user/profile/<strong>profile.component.ts</strong>
+      <span class="tag">← TODO[TRAINEE]</span></li>
+    <li>frontend/coursecart-ui/src/app/components/user/profile/<strong>profile.component.html</strong>
+      <span class="tag">← TODO[TRAINEE]</span></li>
+  </ul>
+  <div class="fg-label" style="margin-top:10px;">Admin — Category Management (US04)</div>
+  <ul>
+    <li>frontend/coursecart-ui/src/app/components/admin/category-management/<strong>category-management.component.ts</strong>
+      <span class="tag">← TODO[TRAINEE]</span></li>
+    <li>frontend/coursecart-ui/src/app/components/admin/category-management/<strong>category-management.component.html</strong>
+      <span class="tag">← TODO[TRAINEE]</span></li>
+  </ul>
+  <div class="fg-label" style="margin-top:10px;">Admin — Course Management (US05, US07)</div>
+  <ul>
+    <li>frontend/coursecart-ui/src/app/components/admin/course-management/<strong>course-management.component.ts</strong>
+      <span class="tag">← TODO[TRAINEE]</span></li>
+    <li>frontend/coursecart-ui/src/app/components/admin/course-management/<strong>course-management.component.html</strong>
+      <span class="tag">← TODO[TRAINEE]</span></li>
+  </ul>
+  <div class="fg-label" style="margin-top:10px;">Catalog — Browse Courses (US08)</div>
+  <ul>
+    <li>frontend/coursecart-ui/src/app/components/catalog/course-discovery/<strong>course-discovery.component.ts</strong>
+      <span class="tag">← TODO[TRAINEE]</span></li>
+    <li>frontend/coursecart-ui/src/app/components/catalog/course-discovery/<strong>course-discovery.component.html</strong>
+      <span class="tag">← TODO[TRAINEE]</span></li>
+  </ul>
+  <div class="fg-label" style="margin-top:10px;">Catalog — Course Details (US09)</div>
+  <ul>
+    <li>frontend/coursecart-ui/src/app/components/catalog/course-detail/<strong>course-detail.component.ts</strong>
+      <span class="tag">← TODO[TRAINEE]</span></li>
+    <li>frontend/coursecart-ui/src/app/components/catalog/course-detail/<strong>course-detail.component.html</strong>
+      <span class="tag">← TODO[TRAINEE]</span></li>
+  </ul>
+  <div class="fg-label" style="margin-top:10px;">Commerce — Checkout (US10)</div>
+  <ul>
+    <li>frontend/coursecart-ui/src/app/components/commerce/checkout/<strong>checkout.component.ts</strong>
+      <span class="tag">← TODO[TRAINEE]</span></li>
+    <li>frontend/coursecart-ui/src/app/components/commerce/checkout/<strong>checkout.component.html</strong>
+      <span class="tag">← TODO[TRAINEE]</span></li>
+  </ul>
+  <div class="fg-label" style="margin-top:10px;">Commerce — Order History (US11)</div>
+  <ul>
+    <li>frontend/coursecart-ui/src/app/components/commerce/order-history/<strong>order-history.component.ts</strong>
+      <span class="tag">← TODO[TRAINEE]</span></li>
+    <li>frontend/coursecart-ui/src/app/components/commerce/order-history/<strong>order-history.component.html</strong>
+      <span class="tag">← TODO[TRAINEE]</span></li>
+  </ul>
+</div>
+</section><section id="sec-13">
+<h2 class="sec-title">13. Trainee Verification Checklist</h2>
+<div class="checklist-block">
+<h4>Before submitting, verify:</h4>
+<ul>
+<li>All <code>TODO[TRAINEE]</code> markers are implemented across all 19 files (backend + frontend).</li>
+<li>The application compiles and runs without errors.</li>
+<li>Pre-implemented features (Registration, Login, Lesson Management, My Learning Dashboard, Lesson Viewer, Admin Dashboard) still work perfectly.</li>
+<li>An Admin can successfully create and manage categories and courses, and toggle course status.</li>
+<li>A Customer can browse the course catalog, apply category/search filters, and view full course details.</li>
+<li>A Customer can successfully complete a simulated purchase via checkout (Card, UPI, or Net Banking).</li>
+<li>A Customer's order history correctly reflects their completed purchases.</li>
+<li>A Customer can view their own profile information.</li>
+</ul>
+</div>
+</section><section id="sec-14">
+<h2 class="sec-title">14. Final Deliverables</h2>
+<ul>
+<li>Application archive with complete source code</li>
+<li>Database DDL/DML Scripts</li>
+<li>Running Microservices implementation</li>
+</ul>
+<p style="text-align:center; color: var(--primary); font-weight:700; margin-top:32px; font-size:1.05rem;">
+          Good Luck! Build clean, maintainable, and well-tested code.
+        </p>
+</section></main>
+</div>
+</body>
+
+</html>
